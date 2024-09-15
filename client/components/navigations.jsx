@@ -1,8 +1,12 @@
+"use client";
+
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Navigations() {
+  const router = useRouter();
   return (
     <Box
       sx={{
@@ -20,17 +24,27 @@ export default function Navigations() {
           Likelion UCSD
         </Typography>
       </Link>
-      <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-        <Link href="/">
-          <Typography variant="h6">Home</Typography>
+      <Box sx={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        <Link
+          href="/lessons"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Typography variant="h6">Lessons</Typography>
         </Link>
-        <Link href="/about">
+        <Link href="/about" style={{ textDecoration: "none", color: "black" }}>
           <Typography variant="h6">About</Typography>
         </Link>
-        <Link href="/events">
-          <Typography variant="h6">Events</Typography>
+        <Link
+          href="/projects"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Typography variant="h6">Projects</Typography>
         </Link>
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => router.push("/login")}
+        >
           Login
         </Button>
       </Box>
