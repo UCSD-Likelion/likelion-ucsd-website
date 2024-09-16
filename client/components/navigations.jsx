@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Button, styled } from "@mui/material";
+import { Box, Typography, Button, styled, Divider } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import LikeLionLogo from "../assets/images/likelion-logo.png";
+import LikeLionLogo from "../public/images/likelion-logo.png";
 
 const MenuBox = styled(Box)({
   display: "flex",
@@ -19,8 +19,8 @@ const MenuBox = styled(Box)({
   borderRadius: "0.5rem",
   cursor: "pointer",
   ":hover": {
-    color: "white",
-    backgroundColor: "#1976d2",
+    color: "blue",
+    textDecoration: "underline",
     transition: "all 0.3s ease-in-out",
   },
   "&.active": {
@@ -80,13 +80,38 @@ export default function Navigations() {
             <Typography variant="h6">Projects</Typography>
           </MenuBox>
         </Link>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => router.push("/login")}
-        >
-          Login
-        </Button>
+        <Divider orientation="vertical" flexItem />
+        <Box sx={{ display: "flex", gap: "1rem" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => router.push("/login")}
+            sx={(theme) => ({
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.secondary,
+              ":hover": {
+                backgroundColor: "white",
+                color: "blue",
+              },
+            })}
+          >
+            Login
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => router.push("/signup")}
+            sx={(theme) => ({
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.secondary,
+              ":hover": {
+                backgroundColor: "white",
+                color: "blue",
+              },
+            })}
+          >
+            Signup
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

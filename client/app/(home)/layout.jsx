@@ -1,5 +1,7 @@
 import React from "react";
 import Navigations from "../../components/navigations";
+import { Divider, ThemeProvider } from "@mui/material";
+import { theme } from "../../theme";
 
 export const metadata = {
   title: "Likelion UCSD | UCSD 멋쟁이사자처럼",
@@ -8,11 +10,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <Navigations />
-        {children}
-      </body>
-    </html>
+    <ThemeProvider theme={theme}>
+      <Navigations />
+      <Divider />
+      {children}
+    </ThemeProvider>
   );
 }
