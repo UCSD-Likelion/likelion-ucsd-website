@@ -8,7 +8,7 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "90vh",
       }}
     >
       <Typography variant="h1">Likelion UCSD</Typography>
