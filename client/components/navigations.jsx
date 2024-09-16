@@ -1,9 +1,12 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, styled } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import LikeLionLogo from "../assets/images/likelion-logo.png";
 
 export default function Navigations() {
   const router = useRouter();
@@ -17,12 +20,20 @@ export default function Navigations() {
       }}
     >
       <Link href="/" style={{ textDecoration: "none", color: "black" }}>
-        <Typography
-          variant="h4"
-          sx={{ fontWeight: "bold", cursor: "pointer", color: "black" }}
-        >
-          Likelion UCSD
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Image
+            src={LikeLionLogo}
+            alt="Likelion UCSD Logo"
+            width={55}
+            height={50}
+          />
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: "bold", cursor: "pointer", color: "black" }}
+          >
+            Likelion UCSD
+          </Typography>
+        </Box>
       </Link>
       <Box sx={{ display: "flex", gap: "2rem", alignItems: "center" }}>
         <Link
