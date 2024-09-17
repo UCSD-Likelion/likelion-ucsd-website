@@ -91,21 +91,20 @@ export default function Navigations() {
               color: theme.palette.primary.secondary,
               ":hover": {
                 backgroundColor: "white",
-                color: "blue",
+                color: theme.palette.primary.main,
               },
             })}
           >
             Login
           </Button>
           <Button
-            variant="contained"
+            variant="outlined"
             onClick={() => router.push("/signup")}
             sx={(theme) => ({
-              backgroundColor: theme.palette.primary.main,
-              color: theme.palette.primary.secondary,
+              backgroundColor: "white",
+              color: theme.palette.primary.main,
               ":hover": {
                 backgroundColor: "white",
-                color: "blue",
               },
             })}
           >
