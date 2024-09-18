@@ -6,9 +6,11 @@ export default function Projects() {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        flexDirection: "column",
+        px: "1rem",
+        py: "1rem",
       }}
     >
       <Typography variant="h1">Projects</Typography>

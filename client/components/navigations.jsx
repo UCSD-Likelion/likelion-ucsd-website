@@ -20,7 +20,6 @@ const MenuBox = styled(Box)({
   cursor: "pointer",
   ":hover": {
     color: "blue",
-    textDecoration: "underline",
     transition: "all 0.3s ease-in-out",
   },
   "&.active": {
@@ -50,10 +49,7 @@ export default function Navigations() {
             width={55}
             height={50}
           />
-          <Typography
-            variant="h4"
-            sx={{ fontWeight: "bold", cursor: "pointer", color: "black" }}
-          >
+          <Typography variant="h4" sx={{ cursor: "pointer", color: "black" }}>
             Likelion UCSD
           </Typography>
         </Box>
@@ -65,11 +61,6 @@ export default function Navigations() {
         >
           <MenuBox className={pathname === "/lessons" ? "active" : ""}>
             <Typography variant="h6">Lessons</Typography>
-          </MenuBox>
-        </Link>
-        <Link href="/about" style={{ textDecoration: "none", color: "black" }}>
-          <MenuBox className={pathname === "/about" ? "active" : ""}>
-            <Typography variant="h6">About</Typography>
           </MenuBox>
         </Link>
         <Link
