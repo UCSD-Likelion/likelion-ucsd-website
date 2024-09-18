@@ -35,10 +35,17 @@ export default function Navigations() {
   return (
     <Box
       sx={{
+        position: "fixed", // Fix the navbar to the top
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000, // Make sure the navbar is on top of other content
+        backgroundColor: "white", // Optional: Add background color to the navbar
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         padding: "1rem",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add a shadow for better visibility
       }}
     >
       <Link href="/" style={{ textDecoration: "none", color: "black" }}>
@@ -55,20 +62,35 @@ export default function Navigations() {
         </Box>
       </Link>
       <Box sx={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-        <Link
-          href="/lessons"
-          style={{ textDecoration: "none", color: "black" }}
-        >
+      <Link href="/lessons" style={{ textDecoration: "none", color: "black" }}>
           <MenuBox className={pathname === "/lessons" ? "active" : ""}>
-            <Typography variant="h6">Lessons</Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "black", // Default color
+                ":hover": {
+                  color: "#be9238", // Hover color for Lessons link
+                },
+              }}
+            >
+              Lessons
+            </Typography>
           </MenuBox>
         </Link>
-        <Link
-          href="/projects"
-          style={{ textDecoration: "none", color: "black" }}
-        >
+
+        <Link href="/projects" style={{ textDecoration: "none", color: "black" }}>
           <MenuBox className={pathname === "/projects" ? "active" : ""}>
-            <Typography variant="h6">Projects</Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "black", // Default color
+                ":hover": {
+                  color: "#be9238", // Hover color for Projects link
+                },
+              }}
+            >
+              Projects
+            </Typography>
           </MenuBox>
         </Link>
         <Divider orientation="vertical" flexItem />
@@ -81,8 +103,7 @@ export default function Navigations() {
               backgroundColor: theme.palette.primary.main,
               color: theme.palette.primary.secondary,
               ":hover": {
-                backgroundColor: "white",
-                color: theme.palette.primary.main,
+                backgroundColor: "#2c2d2d",
               },
             })}
           >
@@ -94,8 +115,10 @@ export default function Navigations() {
             sx={(theme) => ({
               backgroundColor: "white",
               color: theme.palette.primary.main,
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               ":hover": {
-                backgroundColor: "white",
+                backgroundColor: "#dbdbdb",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
               },
             })}
           >
