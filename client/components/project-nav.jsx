@@ -1,7 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { Box, Typography, Tabs, Tab, CustomTabPanel } from "@mui/material";
+import { Box, Typography, Tabs, Tab } from "@mui/material";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
 
 export default function ProjectNav() {
   const [value, setValue] = useState(0);
