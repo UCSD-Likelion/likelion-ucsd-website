@@ -1,13 +1,20 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
-import { Box, Typography, List, ListItem, ListItemText, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+} from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Optional for GitHub flavored markdown
 import rehypeRaw from "rehype-raw"; // Optional if you want to allow raw HTML
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'; // Icon for the copy button
-import CheckIcon from '@mui/icons-material/Check'; // Icon for showing after copying
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy"; // Icon for the copy button
+import CheckIcon from "@mui/icons-material/Check"; // Icon for showing after copying
 
 export default function Lessons({ lessons }) {
   const [selectedContent, setSelectedContent] = useState(null);
@@ -34,7 +41,7 @@ export default function Lessons({ lessons }) {
     setCopiedCodeIndices((prev) => [...prev, index]); // Mark the current code block as copied
 
     setTimeout(() => {
-      setCopiedCodeIndices((prev) => prev.filter(i => i !== index)); // Reset after 3 seconds for that block
+      setCopiedCodeIndices((prev) => prev.filter((i) => i !== index)); // Reset after 3 seconds for that block
     }, 5000);
   };
 
@@ -42,47 +49,51 @@ export default function Lessons({ lessons }) {
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-  {/* Sidebar */}
-  <Box
-    sx={{
-      width: "220px",
-      position: "fixed",
-      top: "60px",
-      left: 0,
-      height: "100vh",
-      backgroundColor: "#f0f0f0",
-      overflowY: "auto",
-      marginTop: "25px",
-      display: "flex", // Make the sidebar a flex container
-      flexDirection: "column",
-      alignItems: "center", // Center the ListItem horizontally
-    }}
-  >
-    <List sx={{ width: "100%" }}> {/* Ensure ListItem takes full width */}
-      {lessons.map((lesson, index) => (
-        <ListItem
-          button
-          key={index}
-          onClick={() => handleItemClick(lesson)}
-          sx={{
-            backgroundColor: activeLesson === lesson.title ? "#ffffff" : "inherit", // Active background color
-            textAlign: "center", // Center the text
-            margin: "10px 15px", // Add margin between items
-            borderRadius: "15px", // Add border radius
-            justifyContent: "center", // Center the ListItem within the sidebar
-            '&:hover': {
-              backgroundColor: "#ece9e6", // Hover effect
-            },
-          }}
-        >
-          <ListItemText
-            primary={lesson.title}
-            sx={{ fontSize: "0.875rem", textAlign: "center" }} // Smaller font size and center text
-          />
-        </ListItem>
-      ))}
-    </List>
-  </Box>
+      {/* Sidebar */}
+      <Box
+        sx={{
+          width: "220px",
+          position: "fixed",
+          top: "60px",
+          left: 0,
+          height: "100vh",
+          backgroundColor: "#f0f0f0",
+          overflowY: "auto",
+          marginTop: "25px",
+          display: "flex", // Make the sidebar a flex container
+          flexDirection: "column",
+          alignItems: "center", // Center the ListItem horizontally
+        }}
+      >
+        <List sx={{ width: "100%" }}>
+          {" "}
+          {/* Ensure ListItem takes full width */}
+          {lessons.map((lesson, index) => (
+            <ListItem
+              button
+              key={index}
+              onClick={() => handleItemClick(lesson)}
+              sx={{
+                backgroundColor:
+                  activeLesson === lesson.title ? "#ffffff" : "inherit", // Active background color
+                textAlign: "center", // Center the text
+                margin: "10px 15px", // Add margin between items
+                borderRadius: "15px", // Add border radius
+                justifyContent: "center", // Center the ListItem within the sidebar
+                cursor: "pointer", // Change cursor on hover
+                "&:hover": {
+                  backgroundColor: "#ece9e6", // Hover effect
+                },
+              }}
+            >
+              <ListItemText
+                primary={lesson.title}
+                sx={{ fontSize: "0.875rem", textAlign: "center" }} // Smaller font size and center text
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
 
       {/* Content Area */}
       <Box
@@ -95,7 +106,13 @@ export default function Lessons({ lessons }) {
         }}
       >
         {selectedContent ? (
-          <Box sx={{ maxWidth: "1000px", margin: "0 auto", paddingBottom: "180px" }}>
+          <Box
+            sx={{
+              maxWidth: "1000px",
+              margin: "0 auto",
+              paddingBottom: "180px",
+            }}
+          >
             <ReactMarkdown
               children={selectedContent}
               remarkPlugins={[remarkGfm]} // Optional GitHub flavor
@@ -105,7 +122,10 @@ export default function Lessons({ lessons }) {
                   <Typography
                     variant="h3"
                     gutterBottom
-                    sx={{ fontFamily: "Noto Sans, sans-serif", color: "#162548" }} // Apply Noto Sans
+                    sx={{
+                      fontFamily: "Noto Sans, sans-serif",
+                      color: "#162548",
+                    }} // Apply Noto Sans
                     {...props}
                   />
                 ),
@@ -113,7 +133,11 @@ export default function Lessons({ lessons }) {
                   <Typography
                     variant="h4"
                     gutterBottom
-                    sx={{ fontFamily: "Noto Sans, sans-serif", marginTop: "2.5rem", marginBottom: "1rem" }} // Apply Noto Sans
+                    sx={{
+                      fontFamily: "Noto Sans, sans-serif",
+                      marginTop: "2.5rem",
+                      marginBottom: "1rem",
+                    }} // Apply Noto Sans
                     {...props}
                   />
                 ),
@@ -121,7 +145,11 @@ export default function Lessons({ lessons }) {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    sx={{ fontFamily: "Noto Sans, sans-serif", marginTop: "1.7rem", marginBottom: "1rem" }} // Apply Noto Sans
+                    sx={{
+                      fontFamily: "Noto Sans, sans-serif",
+                      marginTop: "1.7rem",
+                      marginBottom: "1rem",
+                    }} // Apply Noto Sans
                     {...props}
                   />
                 ),
@@ -129,7 +157,11 @@ export default function Lessons({ lessons }) {
                   <Typography
                     variant="body1"
                     paragraph
-                    sx={{ fontFamily: "Noto Sans, sans-serif", marginBottom: "0.7rem", fontSize: "18px" }} // Apply Noto Sans with space between paragraphs
+                    sx={{
+                      fontFamily: "Noto Sans, sans-serif",
+                      marginBottom: "0.7rem",
+                      fontSize: "18px",
+                    }} // Apply Noto Sans with space between paragraphs
                     {...props}
                   />
                 ),
@@ -138,17 +170,30 @@ export default function Lessons({ lessons }) {
                     variant="body1"
                     component="a"
                     href={props.href}
-                    sx={{ color: "#0070f3", textDecoration: "underline", fontFamily: "Noto Sans, sans-serif", fontSize: "18px" }} // Apply Noto Sans
+                    sx={{
+                      color: "#0070f3",
+                      textDecoration: "underline",
+                      fontFamily: "Noto Sans, sans-serif",
+                      fontSize: "18px",
+                    }} // Apply Noto Sans
                     {...props}
                   />
                 ),
                 li: ({ node, ...props }) => (
-                  <li style={{ marginBottom: "0.4rem", fontFamily: "Noto Sans, sans-serif", marginLeft: "-15px", lineHeight: "1.5", fontSize: "18px" }}>
+                  <li
+                    style={{
+                      marginBottom: "0.4rem",
+                      fontFamily: "Noto Sans, sans-serif",
+                      marginLeft: "-15px",
+                      lineHeight: "1.5",
+                      fontSize: "18px",
+                    }}
+                  >
                     {props.children}
                   </li>
                 ),
                 code: ({ node, inline, className, children, ...props }) => {
-                  const match = /language-(\w+)/.exec(className || ''); // Detect language from markdown
+                  const match = /language-(\w+)/.exec(className || ""); // Detect language from markdown
                   const codeFont = `'Fira Code', 'Fira Mono', 'Courier New', Courier, monospace`;
                   const currentIndex = codeBlockIndex++; // Increment index for each code block
 
@@ -156,7 +201,9 @@ export default function Lessons({ lessons }) {
                     <Box sx={{ position: "relative" }}>
                       {/* Copy button */}
                       <IconButton
-                        onClick={() => handleCopyCode(String(children).trim(), currentIndex)}
+                        onClick={() =>
+                          handleCopyCode(String(children).trim(), currentIndex)
+                        }
                         sx={{
                           position: "absolute",
                           top: "10px",
@@ -164,13 +211,19 @@ export default function Lessons({ lessons }) {
                           width: "25px", // Make the icon smaller
                           height: "25px", // Make the icon smaller
                           zIndex: 1,
-                          color: copiedCodeIndices.includes(currentIndex) ? "#4caf50" : "#fff", // Change color for the copied block
-                          '&:hover': {
+                          color: copiedCodeIndices.includes(currentIndex)
+                            ? "#4caf50"
+                            : "#fff", // Change color for the copied block
+                          "&:hover": {
                             color: "#4caf50", // Hover effect for the icon
                           },
                         }}
                       >
-                        {copiedCodeIndices.includes(currentIndex) ? <CheckIcon /> : <ContentCopyIcon />}
+                        {copiedCodeIndices.includes(currentIndex) ? (
+                          <CheckIcon />
+                        ) : (
+                          <ContentCopyIcon />
+                        )}
                       </IconButton>
                       <SyntaxHighlighter
                         style={darcula}
@@ -197,8 +250,8 @@ export default function Lessons({ lessons }) {
                   );
                 },
                 hr: () => (
-                    <hr style={{ marginTop: "50px", marginBottom: "15px" }} /> // Add margin above and below the horizontal line
-                  ),
+                  <hr style={{ marginTop: "50px", marginBottom: "15px" }} /> // Add margin above and below the horizontal line
+                ),
                 pre: ({ node, ...props }) => (
                   <pre
                     style={{
