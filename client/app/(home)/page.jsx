@@ -15,10 +15,15 @@ export default function Home() {
           gap: "1rem",
           py: "2rem",
           px: "2rem",
+          backgroundColor: "#012a4d",
+          backgroundImage: "url(/images/likelion_logo.png)",
+          backgroundSize: "33.33%" ,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
         }}
       >
-        <Typography variant="h1">Welcome To</Typography>
-        <Typography variant="h1">Likelion UCSD</Typography>
+        <Typography variant="h1" sx={{ color: "#fff", fontWeight: 'bold'}}>Welcome To</Typography>
+        <Typography variant="h1" sx={{ color: "#fff", fontWeight: 'bold'}}>Likelion UCSD</Typography>
       </Box>
       <Box
         sx={{
@@ -30,6 +35,8 @@ export default function Home() {
           gap: "1rem",
           py: "2rem",
           px: "2rem",
+          backgroundColor: "#012A4D", 
+          color: "#fff",
         }}
       >
         <Typography variant="h2">UCSD 멋쟁이사자처럼이란?</Typography>
@@ -61,6 +68,8 @@ export default function Home() {
           gap: "1rem",
           py: "2rem",
           px: "2rem",
+          backgroundColor: "#012a4d",
+          color: "#fff",
         }}
       >
         <Typography variant="h2">UCSD 멋쟁이사자처럼의 운영 방식</Typography>

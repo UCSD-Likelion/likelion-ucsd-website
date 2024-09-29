@@ -30,7 +30,7 @@ export default function ProjectNav() {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center"}}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -38,8 +38,8 @@ export default function ProjectNav() {
             fontFamily: "var(--font-gmarket)",
           }}
         >
-          <Tab label={<Typography variant="h6">기초 프로젝트 팀</Typography>} />
-          <Tab label={<Typography variant="h6">프로젝트 팀</Typography>} />
+          <Tab label={<Typography variant="h6" sx={{color:"white"}}>기초 프로젝트 팀</Typography>} />
+          <Tab label={<Typography variant="h6" sx={{color:"white"}}>프로젝트 팀</Typography>} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
