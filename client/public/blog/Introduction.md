@@ -84,7 +84,7 @@ Git은 2005년에 리누스 토발즈에 의해 개발된 ‘**소프트웨어**
 
 그래서 이러한 버전관리를 더욱 효율적으로 돕는 시스템이 바로 git이다.
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled.png)
+![Untitled](/Untitled.png)
 
 ### Git의 장점
 

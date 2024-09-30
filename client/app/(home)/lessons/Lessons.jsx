@@ -15,6 +15,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"; // Icon for the copy button
 import CheckIcon from "@mui/icons-material/Check"; // Icon for showing after copying
+import Image from "next/image";
 
 export default function Lessons({ lessons }) {
   const [selectedContent, setSelectedContent] = useState(null);
@@ -153,18 +154,34 @@ export default function Lessons({ lessons }) {
                     {...props}
                   />
                 ),
-                p: ({ node, ...props }) => (
-                  <Typography
-                    variant="body1"
-                    paragraph
-                    sx={{
-                      fontFamily: "Noto Sans, sans-serif",
-                      marginBottom: "0.7rem",
-                      fontSize: "18px",
-                    }} // Apply Noto Sans with space between paragraphs
-                    {...props}
-                  />
-                ),
+                p: ({ node, ...props }) => {
+                  if (node.children[0].tagName === "img") {
+                    const image = node.children[0];
+                    console.log(image);
+                    return (
+                      <div className="image">
+                        <Image
+                          src={`/images${image.properties.src}`}
+                          alt={image.properties.alt}
+                          width="600"
+                          height="300"
+                        />
+                      </div>
+                    );
+                  }
+                  return (
+                    <Typography
+                      variant="body1"
+                      paragraph
+                      sx={{
+                        fontFamily: "Noto Sans, sans-serif",
+                        marginBottom: "0.7rem",
+                        fontSize: "18px",
+                      }} // Apply Noto Sans with space between paragraphs
+                      {...props}
+                    />
+                  );
+                },
                 a: ({ node, ...props }) => (
                   <Typography
                     variant="body1"
