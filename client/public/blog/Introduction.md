@@ -93,7 +93,7 @@ Git은 2005년에 리누스 토발즈에 의해 개발된 ‘**소프트웨어**
 
 ### Git vs GitHub
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%201.png)
+![Untitled](/Untitled-1.png)
 
 Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비스이다. Git은 설명했듯이 분산버전 관리 시스템이며, GitHub는 Git을 사용하는 프로젝트를 지원하는 웹호스팅 서비스이다.
 
@@ -130,7 +130,7 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%202.png)
+![Untitled](/Untitled-2.png)
 
 2. 그리고 Visual Studio Code를 열면 아래 화면이 나옵니다. 왼쪽 상단의 Extensions 탭으로 들어갑니다.
 
@@ -138,13 +138,13 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 3. 아래에 있는 3개의 Extension을 다운로드 하고 enable 해줍니다.
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%203.png)
+![Untitled](/Untitled-3.png)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%204.png)
+![Untitled](/Untitled-4.png)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%205.png)
+![Untitled](/Untitled-5.png)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%206.png)
+![Untitled](/Untitled-6.png)
 
 4. 그다음 [https://nodejs.org/en](https://nodejs.org/en) 이 링크로 들어가서 Node.js LTS 버전을 다운받아 컴퓨터에 Install 시켜줍니다.
 
@@ -156,7 +156,7 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 [https://github.com/LIKELION-UCSD-Beginner-Project/Spring-2024](https://github.com/LIKELION-UCSD-Beginner-Project/Spring-2024)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%207.png)
+![Untitled](/Untitled-7.png)
 
 **그리고 GitHub repository를 로컬컴퓨터에 clone 해줍니다.**
 
@@ -174,7 +174,7 @@ git checkout main #main branch로 이동
 git pull origin main
 ```
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%208.png)
+![Untitled](/Untitled-8.png)
 
 1. **새 브랜치 생성하기**
 
