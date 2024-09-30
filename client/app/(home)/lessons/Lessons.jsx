@@ -159,14 +159,22 @@ export default function Lessons({ lessons }) {
                     const image = node.children[0];
                     console.log(image);
                     return (
-                      <div className="image">
+                      <Box
+                        className="image"
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          marginBottom: "1rem",
+                        }}
+                      >
                         <Image
                           src={`/images${image.properties.src}`}
                           alt={image.properties.alt}
-                          width="600"
-                          height="300"
+                          width={600}
+                          height={400}
                         />
-                      </div>
+                      </Box>
                     );
                   }
                   return (

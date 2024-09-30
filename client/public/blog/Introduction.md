@@ -134,9 +134,9 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 2. 그리고 Visual Studio Code를 열면 아래 화면이 나옵니다. 왼쪽 상단의 Extensions 탭으로 들어갑니다.
 
-![Screenshot 2024-04-09 at 6.43.30 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-09_at_6.43.30_PM.png)
+![vs-code-extensions.png](/vs-code-extensions.png)
 
-3. 아래에 있는 3개의 Extension을 다운로드 하고 enable 해줍니다.
+1. 아래에 있는 3개의 Extension을 다운로드 하고 enable 해줍니다.
 
 ![Untitled](/Untitled-3.png)
 
@@ -148,7 +148,7 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 4. 그다음 [https://nodejs.org/en](https://nodejs.org/en) 이 링크로 들어가서 Node.js LTS 버전을 다운받아 컴퓨터에 Install 시켜줍니다.
 
-![Screenshot 2024-04-09 at 7.11.12 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-09_at_7.11.12_PM.png)
+![node-js-webiste.png](/node-js-website.png)
 
 ### 2. GitHub 세팅하기
 
@@ -184,17 +184,17 @@ git pull origin main
 git checkout -b new-branch-name(이름)
 ```
 
-![Screenshot 2024-04-11 at 3.15.58 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/ad8d17ca-9bf5-465d-9619-8b700c2a8598.png)
+![Screenshot 2024-04-11 at 3.15.58 PM.png](/ad8d17ca-9bf5-465d-9619-8b700c2a8598.png)
 
 1.  **`Start.html` 실행하기**
 
 그리고 Visual Studio Code에서 `Start.html` 파일을 열고 Visual Studio Code 하단에 있는 Go Live 버튼을 눌러줍니다.
 
-![Screenshot 2024-04-11 at 6.20.27 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-11_at_6.20.27_PM.png)
+![visual-studio-code.png](/visual-studio-code.png)
 
 그러면 아래와 같이 웹사이트가 실행됩니다.
 
-![Screenshot 2024-04-11 at 6.25.56 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-11_at_6.25.56_PM.png)
+![launch-website.png](/launch-website.png)
 
 1. **웹사이트 내용 변경하기**
 
