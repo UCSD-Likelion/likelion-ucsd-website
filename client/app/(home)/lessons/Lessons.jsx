@@ -159,14 +159,27 @@ export default function Lessons({ lessons }) {
                     const image = node.children[0];
                     console.log(image);
                     return (
-                      <div className="image">
+                      <Box
+                        className="image"
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          marginBottom: "1rem",
+                        }}
+                      >
                         <Image
                           src={`/images${image.properties.src}`}
                           alt={image.properties.alt}
-                          width="600"
-                          height="300"
+                          width={600}
+                          height={400}
+                          style={{
+                            borderRadius: "8px",
+                            height: "auto",
+                            width: "80%",
+                          }}
                         />
-                      </div>
+                      </Box>
                     );
                   }
                   return (
@@ -187,8 +200,10 @@ export default function Lessons({ lessons }) {
                     variant="body1"
                     component="a"
                     href={props.href}
+                    target="_blank" // Open in new tab
+                    rel="noopener noreferrer" // Security measure
                     sx={{
-                      color: "#0070f3",
+                      color: "#3a62ac",
                       textDecoration: "underline",
                       fontFamily: "Noto Sans, sans-serif",
                       fontSize: "18px",

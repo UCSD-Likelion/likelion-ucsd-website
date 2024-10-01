@@ -6,13 +6,14 @@
 
 ## Class Schedule
 
-- Week 2: Orientation
-- Week 3: 웹개발 기초, html +css
-- Week 4: javascript
-- Week 5 - 6: react
-- Week 7: 미니 프로젝트 구상
-- Week 8-9: 미니 프로젝트
-- Week 10: 미니 프로젝트 발표
+- Week 2: Orientation, 웹개발 기초
+- Week 3: HTML + CSS, JavaScript
+- Week 4: React
+- Week 5: Node.js
+- Week 6: GraphQL, MongoDB
+- Week 7: 프론트엔드 프로젝트
+- Week 8-9: 파이널 프로젝트
+- Week 10: 발표
 
 ## Class 진행방식
 
@@ -93,7 +94,7 @@ Git은 2005년에 리누스 토발즈에 의해 개발된 ‘**소프트웨어**
 
 ### Git vs GitHub
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%201.png)
+![Untitled](/Untitled-1.png)
 
 Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비스이다. Git은 설명했듯이 분산버전 관리 시스템이며, GitHub는 Git을 사용하는 프로젝트를 지원하는 웹호스팅 서비스이다.
 
@@ -130,35 +131,37 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%202.png)
+![Untitled](/Untitled-2.png)
 
 2. 그리고 Visual Studio Code를 열면 아래 화면이 나옵니다. 왼쪽 상단의 Extensions 탭으로 들어갑니다.
 
-![Screenshot 2024-04-09 at 6.43.30 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-09_at_6.43.30_PM.png)
+![vs-code-extensions.png](/vs-code-extensions.png)
 
-3. 아래에 있는 3개의 Extension을 다운로드 하고 enable 해줍니다.
+1. 아래에 있는 3개의 Extension을 다운로드 하고 enable 해줍니다.
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%203.png)
+![Untitled](/Untitled-3.png)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%204.png)
+![Untitled](/Untitled-4.png)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%205.png)
+![Untitled](/Untitled-5.png)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%206.png)
+![Untitled](/Untitled-6.png)
 
 4. 그다음 [https://nodejs.org/en](https://nodejs.org/en) 이 링크로 들어가서 Node.js LTS 버전을 다운받아 컴퓨터에 Install 시켜줍니다.
 
-![Screenshot 2024-04-09 at 7.11.12 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-09_at_7.11.12_PM.png)
+![node-js-webiste.png](/node-js-website.png)
 
 ### 2. GitHub 세팅하기
 
 **먼저 아래 링크에 접속하여 LIKELION UCSD Beginner Project의 Spring-2024 repository에 접속합니다.**
 
-[https://github.com/LIKELION-UCSD-Beginner-Project/Spring-2024](https://github.com/LIKELION-UCSD-Beginner-Project/Spring-2024)
+[https://github.com/UCSD-Likelion/Beginner-Project-Fall-2024](https://github.com/UCSD-Likelion/Beginner-Project-Fall-2024)
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%207.png)
+![Untitled](/Untitled-7.png)
 
-**그리고 GitHub repository를 로컬컴퓨터에 clone 해줍니다.**
+**위의 페이지로 접속이 됬으면 folk 버튼을 눌러 자신의 계정으로 복사해줍니다.**
+
+**folk 가 완료되면 GitHub repository를 로컬컴퓨터에 clone 해줍니다.**
 
 [https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
@@ -174,7 +177,7 @@ git checkout main #main branch로 이동
 git pull origin main
 ```
 
-![Untitled](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Untitled%208.png)
+![Untitled](/Untitled-8.png)
 
 1. **새 브랜치 생성하기**
 
@@ -184,17 +187,17 @@ git pull origin main
 git checkout -b new-branch-name(이름)
 ```
 
-![Screenshot 2024-04-11 at 3.15.58 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/ad8d17ca-9bf5-465d-9619-8b700c2a8598.png)
+![Screenshot 2024-04-11 at 3.15.58 PM.png](/ad8d17ca-9bf5-465d-9619-8b700c2a8598.png)
 
 1.  **`Start.html` 실행하기**
 
 그리고 Visual Studio Code에서 `Start.html` 파일을 열고 Visual Studio Code 하단에 있는 Go Live 버튼을 눌러줍니다.
 
-![Screenshot 2024-04-11 at 6.20.27 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-11_at_6.20.27_PM.png)
+![visual-studio-code.png](/visual-studio-code.png)
 
 그러면 아래와 같이 웹사이트가 실행됩니다.
 
-![Screenshot 2024-04-11 at 6.25.56 PM.png](Introduction%20bb298fae95ab44fb882af8180a2e25ce/Screenshot_2024-04-11_at_6.25.56_PM.png)
+![launch-website.png](/launch-website.png)
 
 1. **웹사이트 내용 변경하기**
 
