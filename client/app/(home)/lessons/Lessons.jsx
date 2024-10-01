@@ -200,8 +200,10 @@ export default function Lessons({ lessons }) {
                     variant="body1"
                     component="a"
                     href={props.href}
+                    target="_blank" // Open in new tab
+                    rel="noopener noreferrer" // Security measure
                     sx={{
-                      color: "#0070f3",
+                      color: "#3a62ac",
                       textDecoration: "underline",
                       fontFamily: "Noto Sans, sans-serif",
                       fontSize: "18px",
