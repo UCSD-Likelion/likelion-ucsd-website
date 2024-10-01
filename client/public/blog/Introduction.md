@@ -6,13 +6,14 @@
 
 ## Class Schedule
 
-- Week 2: Orientation
-- Week 3: 웹개발 기초, html +css
-- Week 4: javascript
-- Week 5 - 6: react
-- Week 7: 미니 프로젝트 구상
-- Week 8-9: 미니 프로젝트
-- Week 10: 미니 프로젝트 발표
+- Week 2: Orientation, 웹개발 기초
+- Week 3: HTML + CSS, JavaScript
+- Week 4: React
+- Week 5: Node.js
+- Week 6: GraphQL, MongoDB
+- Week 7: 프론트엔드 프로젝트
+- Week 8-9: 파이널 프로젝트
+- Week 10: 발표
 
 ## Class 진행방식
 
@@ -154,11 +155,13 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 **먼저 아래 링크에 접속하여 LIKELION UCSD Beginner Project의 Spring-2024 repository에 접속합니다.**
 
-[https://github.com/LIKELION-UCSD-Beginner-Project/Spring-2024](https://github.com/LIKELION-UCSD-Beginner-Project/Spring-2024)
+[https://github.com/UCSD-Likelion/Beginner-Project-Fall-2024](https://github.com/UCSD-Likelion/Beginner-Project-Fall-2024)
 
 ![Untitled](/Untitled-7.png)
 
-**그리고 GitHub repository를 로컬컴퓨터에 clone 해줍니다.**
+**위의 페이지로 접속이 됬으면 folk 버튼을 눌러 자신의 계정으로 복사해줍니다.**
+
+**folk 가 완료되면 GitHub repository를 로컬컴퓨터에 clone 해줍니다.**
 
 [https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
