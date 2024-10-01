@@ -173,6 +173,11 @@ export default function Lessons({ lessons }) {
                           alt={image.properties.alt}
                           width={600}
                           height={400}
+                          style={{
+                            borderRadius: "8px",
+                            height: "auto",
+                            width: "100%",
+                          }}
                         />
                       </Box>
                     );
