@@ -176,7 +176,7 @@ export default function Lessons({ lessons }) {
                           style={{
                             borderRadius: "8px",
                             height: "auto",
-                            width: "100%",
+                            width: "80%",
                           }}
                         />
                       </Box>
