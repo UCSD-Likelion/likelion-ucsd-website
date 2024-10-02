@@ -12,7 +12,7 @@ export default function Home() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "90vh",
+          height: "100vh",
           flexDirection: "column",
           gap: "1rem",
           py: "2rem",
@@ -54,7 +54,7 @@ export default function Home() {
           py: "2rem",
           px: "2rem",
           backgroundColor: theme.palette.primary.background,
-          color: "#fff",
+          color: theme.palette.primary.white,
         })}
       >
         <Typography variant="h2">UCSD 멋쟁이사자처럼이란?</Typography>
