@@ -8,7 +8,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import LikeLionLogo from "../public/images/likelion-logo.png";
 
-const MenuBox = styled(Box)({
+const MenuBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: "0.5rem",
@@ -19,14 +19,14 @@ const MenuBox = styled(Box)({
   borderRadius: "0.5rem",
   cursor: "pointer",
   ":hover": {
-    color: "blue",
+    color: theme.palette.primary.orange,
     transition: "all 0.3s ease-in-out",
   },
   "&.active": {
-    color: "blue",
+    color: theme.palette.primary.orange,
     fontWeight: "bold",
   },
-});
+}));
 
 export default function Navigations() {
   const router = useRouter();
@@ -62,35 +62,21 @@ export default function Navigations() {
         </Box>
       </Link>
       <Box sx={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-      <Link href="/lessons" style={{ textDecoration: "none", color: "black" }}>
+        <Link
+          href="/lessons"
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <MenuBox className={pathname === "/lessons" ? "active" : ""}>
-            <Typography
-              variant="h6"
-              sx={{
-                color: "black", // Default color
-                ":hover": {
-                  color: "#be9238", // Hover color for Lessons link
-                },
-              }}
-            >
-              Lessons
-            </Typography>
+            <Typography variant="h6">Lessons</Typography>
           </MenuBox>
         </Link>
 
-        <Link href="/projects" style={{ textDecoration: "none", color: "black" }}>
+        <Link
+          href="/projects"
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <MenuBox className={pathname === "/projects" ? "active" : ""}>
-            <Typography
-              variant="h6"
-              sx={{
-                color: "black", // Default color
-                ":hover": {
-                  color: "#be9238", // Hover color for Projects link
-                },
-              }}
-            >
-              Projects
-            </Typography>
+            <Typography variant="h6">Projects</Typography>
           </MenuBox>
         </Link>
         <Divider orientation="vertical" flexItem />
