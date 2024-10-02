@@ -10,6 +10,7 @@ export const theme = createTheme({
       background: "#012A4D",
       white: "#fff",
       orange: "#FF7710",
+      yellow: "#FFC600",
     },
   },
   typography: {
