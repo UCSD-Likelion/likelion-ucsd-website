@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import ProjectNav from "../../components/project-nav";
@@ -6,27 +8,43 @@ export default function Home() {
   return (
     <>
       <Box
-        sx={{
+        sx={(theme) => ({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "90vh",
+          height: "100vh",
           flexDirection: "column",
           gap: "1rem",
           py: "2rem",
           px: "2rem",
-          backgroundColor: "#012a4d",
+          backgroundColor: theme.palette.primary.background,
           backgroundImage: "url(/images/likelion_logo.png)",
-          backgroundSize: "33.33%" ,
+          backgroundSize: "33.33%",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-        }}
+        })}
       >
-        <Typography variant="h1" sx={{ color: "#fff", fontWeight: 'bold'}}>Welcome To</Typography>
-        <Typography variant="h1" sx={{ color: "#fff", fontWeight: 'bold'}}>Likelion UCSD</Typography>
+        <Typography
+          variant="h1"
+          sx={(theme) => ({
+            color: theme.palette.primary.white,
+            fontWeight: "bold",
+          })}
+        >
+          Welcome To
+        </Typography>
+        <Typography
+          variant="h1"
+          sx={(theme) => ({
+            color: theme.palette.primary.white,
+            fontWeight: "bold",
+          })}
+        >
+          Likelion UCSD
+        </Typography>
       </Box>
       <Box
-        sx={{
+        sx={(theme) => ({
           display: "flex",
           alignItems: "center",
           height: "100vh",
@@ -35,9 +53,9 @@ export default function Home() {
           gap: "1rem",
           py: "2rem",
           px: "2rem",
-          backgroundColor: "#012A4D", 
-          color: "#fff",
-        }}
+          backgroundColor: theme.palette.primary.background,
+          color: theme.palette.primary.white,
+        })}
       >
         <Typography variant="h2">UCSD 멋쟁이사자처럼이란?</Typography>
         <Typography variant="h4">"내 아이디어는 내 손으로 실천한다"</Typography>
@@ -59,7 +77,7 @@ export default function Home() {
         </Box>
       </Box>
       <Box
-        sx={{
+        sx={(theme) => ({
           display: "flex",
           alignItems: "center",
           height: "100vh",
@@ -68,9 +86,9 @@ export default function Home() {
           gap: "1rem",
           py: "2rem",
           px: "2rem",
-          backgroundColor: "#012a4d",
-          color: "#fff",
-        }}
+          backgroundColor: theme.palette.primary.background,
+          color: theme.palette.primary.white,
+        })}
       >
         <Typography variant="h2">UCSD 멋쟁이사자처럼의 운영 방식</Typography>
         <Typography variant="h4">
