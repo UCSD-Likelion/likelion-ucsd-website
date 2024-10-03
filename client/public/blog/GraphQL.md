@@ -1,7 +1,5 @@
 # GraphQL
 
-## GraphQ과 백앤드 특강
-
 1) GraphQL 소개
 2) Apollo Server 셋업
 
@@ -90,8 +88,74 @@ GraphQL은 가장 대중적인 REST API가 가지고 있던 문제점을 해결�
 
 하지만 GraphQL API로는 단 한번의 요청으로 원하는 모든 정보를 얻을 수 있습니다. 이로서 GraphQL을 사용하는 프로젝트들은 속도가 훨씬 빨라집니다. 
 
+### 요약: 
+
+1. GraphQL API는 over-fetching과 underfetching의 문제점을 해결함으로서 REST API보다 빠르다
+2. Over-fetching이란 한 번의 API 요청으로 과도하게 많은 데이터를 받는 현상을 말한다.
+3. Under-fetching이란 어떠한 정보를 취득하기 위해서 여러 번의 요청을 보내야하는 현상을 말한다. 
+
+## GraphQL 셋업
+
+### Apollo Server
+
+Apollo Server는 GraphQL 언어를 알아들을 수 있는 백앤드 서버입니다. 
+
+### 셋업 방법
+
+1. 새로운 다이렉토리 생성: 
+
+```bash
+mkdir my-graphql-app
+cd my-graphql-app
+```
+
+2. package.json 생성
+
+```bash
+npm init -y
+```
+
+3. Apollo Server & GraphQL 설치
+
+```bash
+npm install apollo-server graphql
+npm install nodemon -D
+```
+
+> (**Nodemon** 은 파일에 변경사항이 있을 때마다 서버를 자동으로 다시 시작해줍니다)
+
+4. 스크립트 변경
+
+`package.json` 파일의 `scripts`를 변경 및 `module` 추가: 
+```JSON
+{
+  "name": "my-graphql-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev":  "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "graphql": "^16.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }, 
+  "type": "module"
+}
+```
+
+> (`type`이 `"module"` 이라면 `import` syntax를 사용할 수 있다.)
+
 **Reference**
 
 [https://www.redhat.com/ko/topics/api/what-is-graphql](https://www.redhat.com/ko/topics/api/what-is-graphql)
 
 [https://graphql.org/](https://graphql.org/)
+
+[https://apollographql.com/docs/apollo-server/](https://apollographql.com/docs/apollo-server/)
