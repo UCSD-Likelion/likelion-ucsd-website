@@ -6,14 +6,13 @@
 
 ## Class Schedule
 
-- Week 2: Orientation, 웹개발 기초
-- Week 3: HTML + CSS, JavaScript
-- Week 4: React
-- Week 5: Node.js
-- Week 6: GraphQL, MongoDB
-- Week 7: 프론트엔드 프로젝트
-- Week 8-9: 파이널 프로젝트
-- Week 10: 발표
+- Week 2: Orientation, 웹개발 기초, HTML + CSS, JavaScript
+- Week 3: React
+- Week 4: Next.js, GraphQL
+- Week 5: MongoDB
+- Week 6: 프론트엔드 프로젝트
+- Week 7-8: 파이널 프로젝트
+- Week 9: 발표
 
 ## Class 진행방식
 
