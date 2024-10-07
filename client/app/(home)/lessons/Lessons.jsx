@@ -25,8 +25,18 @@ export default function Lessons({ lessons }) {
   // Set the first lesson as default content
   useEffect(() => {
     if (lessons.length > 0) {
-      setSelectedContent(lessons[0].content); // Display the first lesson by default
-      setActiveLesson(lessons[0].title); // Set the first lesson as active
+      // Find the lesson with the title "Introduction"
+      const introLesson = lessons.find((lesson) => lesson.title === "Introduction");
+  
+      if (introLesson) {
+        // If "Introduction" exists, set it as the default content
+        setSelectedContent(introLesson.content);
+        setActiveLesson(introLesson.title);
+      } else {
+        // Otherwise, fallback to the first lesson in the list
+        setSelectedContent(lessons[0].content);
+        setActiveLesson(lessons[0].title);
+      }
     }
   }, [lessons]);
 
@@ -45,6 +55,22 @@ export default function Lessons({ lessons }) {
       setCopiedCodeIndices((prev) => prev.filter((i) => i !== index)); // Reset after 3 seconds for that block
     }, 5000);
   };
+
+  const lessonOrder = [
+    "Introduction",
+    "웹개발 기초",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "프로젝트 1",
+    "React",
+    "Next.js",
+    "프로젝트 2",
+    "GraphQL",
+    "MongoDB",
+    "프로젝트 3",
+    // ... other lesson titles in the desired order
+  ];
 
   let codeBlockIndex = 0; // Initialize an index to track code blocks
 
@@ -67,32 +93,33 @@ export default function Lessons({ lessons }) {
         }}
       >
         <List sx={{ width: "100%" }}>
-          {" "}
-          {/* Ensure ListItem takes full width */}
-          {lessons.map((lesson, index) => (
+              {lessonOrder.map((title) => {
+          const lesson = lessons.find((lesson) => lesson.title === title);
+          return lesson ? (
             <ListItem
               button
-              key={index}
+              key={lesson.title}
               onClick={() => handleItemClick(lesson)}
               sx={{
                 backgroundColor:
-                  activeLesson === lesson.title ? "#ffffff" : "inherit", // Active background color
-                textAlign: "center", // Center the text
-                margin: "10px 15px", // Add margin between items
-                borderRadius: "15px", // Add border radius
-                justifyContent: "center", // Center the ListItem within the sidebar
-                cursor: "pointer", // Change cursor on hover
+                  activeLesson === lesson.title ? "#ffffff" : "inherit",
+                textAlign: "left",
+                margin: "6px 15px",
+                borderRadius: "30px",
+                justifyContent: "center",
+                cursor: "pointer",
                 "&:hover": {
-                  backgroundColor: "#ece9e6", // Hover effect
+                  backgroundColor: "#ece9e6",
                 },
               }}
             >
               <ListItemText
                 primary={lesson.title}
-                sx={{ fontSize: "0.875rem", textAlign: "center" }} // Smaller font size and center text
+                sx={{ fontSize: "0.7rem", textAlign: "left", marginLeft: "10px" }}
               />
             </ListItem>
-          ))}
+          ) : null; // Ignore if lesson is not found
+        })}
         </List>
       </Box>
 
@@ -138,6 +165,8 @@ export default function Lessons({ lessons }) {
                       fontFamily: "Noto Sans, sans-serif",
                       marginTop: "2.5rem",
                       marginBottom: "1rem",
+                      fontWeight: "bold",
+                      fontSize: "32px",
                     }} // Apply Noto Sans
                     {...props}
                   />
@@ -148,8 +177,24 @@ export default function Lessons({ lessons }) {
                     gutterBottom
                     sx={{
                       fontFamily: "Noto Sans, sans-serif",
-                      marginTop: "1.7rem",
+                      marginTop: "2.2rem",
                       marginBottom: "1rem",
+                      fontWeight: "bold",
+                      fontSize: "24px",
+                    }} // Apply Noto Sans
+                    {...props}
+                  />
+                ),
+                h4: ({ node, ...props }) => (
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    sx={{
+                      fontFamily: "Noto Sans, sans-serif",
+                      marginTop: "2rem",
+                      marginBottom: "1rem",
+                      fontSize: "19px",
+                      fontWeight: "bold",
                     }} // Apply Noto Sans
                     {...props}
                   />
@@ -297,6 +342,26 @@ export default function Lessons({ lessons }) {
                     }}
                     {...props}
                   />
+                ),
+                blockquote: ({ node, ...props }) => (
+                  <Box
+                    sx={{
+                      borderLeft: "4px solid #ddd",
+                      paddingLeft: "16px",
+                      margin: "1.5em 0",
+                      color: "#555",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontFamily: "Noto Sans, sans-serif",
+                        fontSize: "18px",
+                      }}
+                      {...props}
+                    />
+                  </Box>
                 ),
               }}
             />

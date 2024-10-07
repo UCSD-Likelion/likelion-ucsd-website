@@ -19,7 +19,7 @@
 
 - 일주일 3시간 미팅 (1시간 반 X 2)
 - 40분 강의 + 40분 실습
-- 매주 1회 실습과제
+- 매주 1회정도의 실습과제
 - 결석은 24시간 전에 멘토에게 연락
 - 무단결석/과제 미수행 3회 이하권장
 
@@ -28,20 +28,20 @@
 ### **파일 관리**
 
 - **`ls`**: 현재 디렉토리에 있는 모든 파일과 디렉토리를 나열합니다.
-- **`cd 디렉토리명`**: 현재 디렉토리를 **`디렉토리명`**으로 변경합니다.
-- **`mkdir 디렉토리명`**: **`디렉토리명`**이라는 새 디렉토리를 생성합니다.
+- **`cd 디렉토리명`**: 현재 디렉토리를 **디렉토리명**으로 변경합니다.
+- **`mkdir 디렉토리명`**: **디렉토리명**이라는 새 디렉토리를 생성합니다.
 - **`rmdir 디렉토리명`**: 디렉토리를 제거합니다 (비어 있어야 합니다).
-- **`touch 파일명`**: **`파일명`**이라는 새로운 빈 파일을 생성합니다.
-- **`cp 원본 목적지`**: 파일이나 디렉토리를 **`원본`**에서 **`목적지`**로 복사합니다.
-- **`mv 원본 목적지`**: 파일이나 디렉토리를 **`원본`**에서 **`목적지`**로 이동합니다.
-- **`rm 파일명`**: **`파일명`**을 제거(삭제)합니다. **`rm -r 디렉토리명`**을 사용하면 디렉토리와 그 내용을 모두 제거합니다.
+- **`touch 파일명`**: **파일명**이라는 새로운 빈 파일을 생성합니다.
+- **`cp 원본 목적지`**: 파일이나 디렉토리를 **원본**에서 **목적지**로 복사합니다.
+- **`mv 원본 목적지`**: 파일이나 디렉토리를 **원본**에서 **목적지**로 이동합니다.
+- **`rm 파일명`**: **파일명**을 제거(삭제)합니다. **rm -r 디렉토리명**을 사용하면 디렉토리와 그 내용을 모두 제거합니다.
 
 ### **파일 보기 & 편집**
 
-- **`cat 파일명`**: **`파일명`**의 내용을 표시합니다.
-- **`less 파일명`**: 한 페이지씩 **`파일명`**의 내용을 볼 수 있습니다.
-- **`nano 파일명`**: **`파일명`**을 나노 에디터로 엽니다.
-- **`vim 파일명`**: **`파일명`**을 Vim 에디터로 엽니다.
+- **`cat 파일명`**: **파일명**의 내용을 표시합니다.
+- **`less 파일명`**: 한 페이지씩 **파일명**의 내용을 볼 수 있습니다.
+- **`nano 파일명`**: **파일명**을 나노 에디터로 엽니다.
+- **`vim 파일명`**: **파일명**을 Vim 에디터로 엽니다.
 
 ### **시스템 정보**
 
@@ -58,20 +58,20 @@
 
 ### **네트워킹**
 
-- **`ping 호스트`**: **`호스트`**에 대한 연결성을 확인합니다.
+- **`ping 호스트`**: **호스트**에 대한 연결성을 확인합니다.
 - **`ifconfig`** (유닉스/리눅스에서) 또는 **`ipconfig`** (윈도우에서): 네트워크 구성을 표시합니다.
 - **`netstat`**: 네트워크 통계를 표시합니다.
 
 ### **파일 권한**
 
-- **`chmod 권한 파일명`**: **`파일명`**의 권한을 변경합니다.
-- **`chown 소유자 파일명`**: **`파일명`**의 소유자를 변경합니다.
+- **`chmod 권한 파일명`**: **파일명**의 권한을 변경합니다.
+- **`chown 소유자 파일명`**: **파일명**의 소유자를 변경합니다.
 
 ### **검색 및 정렬**
 
 - **`find 위치 기준`**: 기준에 따라 파일이나 디렉토리를 검색합니다.
-- **`grep 패턴 파일`**: **`파일`**에서 **`패턴`**을 검색합니다.
-- **`sort 파일명`**: **`파일명`**의 내용을 정렬합니다.
+- **`grep 패턴 파일`**: **파일**에서 **패턴**을 검색합니다.
+- **`sort 파일명`**: **파일명**의 내용을 정렬합니다.
 
 ## Git 배워보기
 
@@ -121,23 +121,23 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 - **`git pull [remote] [branch]`**: 원격 저장소의 변경사항을 로컬 저장소에 가져와 현재 브랜치와 병합합니다.
 - **`git push [remote] [branch]`**: 로컬 브랜치의 변경사항을 원격 저장소에 업로드합니다.
 
-## Environment Setting (Week 2 과제)
+## Environment Setting
 
 ### 1. Visual Studio Code 다운로드 및 세팅
 
 저희 프로젝트에서는 Microsoft에서 개발한 Visual Studio Code라는 텍스트 에디터를 사용해서 진행합니다.
 
-1. 먼저 아래 링크에 들어가서 각자의 OS에 맞는 버전을 다운로드합니다.
+#### 1. 먼저 아래 링크에 들어가서 각자의 OS에 맞는 버전을 다운로드합니다.
 
 [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
 
 ![Untitled](/Untitled-2.png)
 
-2. 그리고 Visual Studio Code를 열면 아래 화면이 나옵니다. 왼쪽 상단의 Extensions 탭으로 들어갑니다.
+#### 2. 그리고 Visual Studio Code를 열면 아래 화면이 나옵니다. 왼쪽 상단의 Extensions 탭으로 들어갑니다.
 
 ![vs-code-extensions.png](/vs-code-extensions.png)
 
-1. 아래에 있는 3개의 Extension을 다운로드 하고 enable 해줍니다.
+#### 3. 아래에 있는 3개의 Extension을 다운로드 하고 enable 해줍니다.
 
 ![Untitled](/Untitled-3.png)
 
@@ -147,7 +147,7 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 ![Untitled](/Untitled-6.png)
 
-4. 그다음 [https://nodejs.org/en](https://nodejs.org/en) 이 링크로 들어가서 Node.js LTS 버전을 다운받아 컴퓨터에 Install 시켜줍니다.
+#### 4. 그다음 [https://nodejs.org/en](https://nodejs.org/en) 이 링크로 들어가서 Node.js LTS 버전을 다운받아 컴퓨터에 Install 시켜줍니다.
 
 ![node-js-webiste.png](/node-js-website.png)
 
@@ -159,9 +159,7 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 ![Untitled](/Untitled-7.png)
 
-**위의 페이지로 접속이 됬으면 folk 버튼을 눌러 자신의 계정으로 복사해줍니다.**
-
-**folk 가 완료되면 GitHub repository를 로컬컴퓨터에 clone 해줍니다.**
+**위의 페이지로 접속이 됬으면 GitHub repository를 로컬컴퓨터에 clone 해줍니다.**
 
 [https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
@@ -170,7 +168,7 @@ Git과 GitHub를 혼용해서 사용하기 쉬운데 둘은 서로 다른 서비
 
 **Clone이 완료되면 Visual Studio Code로 Clone된 파일을 열어서 Terminal을 열어줍니다.**
 
-1. **로컬저장소에 최신 `main` 브랜치 받기**
+#### 1. **로컬저장소에 최신 `main` 브랜치 받기**
 
 ```bash
 git checkout main #main branch로 이동
@@ -179,7 +177,9 @@ git pull origin main
 
 ![Untitled](/Untitled-8.png)
 
-1. **새 브랜치 생성하기**
+#### 2. **새 브랜치 생성하기**
+
+**개발과정에서는 기능이나 수정사항을 독립적으로 작업하여 충돌을 방지하고, 안정성을 유지하기 위해서 branch를 나누어서 작업합니다.**
 
 자기 이름을 넣어서 개인 branch를 생성합니다.
 
@@ -189,9 +189,9 @@ git checkout -b new-branch-name(이름)
 
 ![Screenshot 2024-04-11 at 3.15.58 PM.png](/ad8d17ca-9bf5-465d-9619-8b700c2a8598.png)
 
-1.  **`Start.html` 실행하기**
+#### 3. **`Start.html` 실행하기**
 
-그리고 Visual Studio Code에서 `Start.html` 파일을 열고 Visual Studio Code 하단에 있는 Go Live 버튼을 눌러줍니다.
+그리고 Visual Studio Code에서 _0.Introduction_ 디렉토리 안에 있는 **`Start.html`** 파일을 열고 Visual Studio Code 하단에 있는 Go Live 버튼을 눌러줍니다.
 
 ![visual-studio-code.png](/visual-studio-code.png)
 
@@ -199,7 +199,7 @@ git checkout -b new-branch-name(이름)
 
 ![launch-website.png](/launch-website.png)
 
-1. **웹사이트 내용 변경하기**
+#### 4. **웹사이트 내용 변경하기**
 
 이제 웹사이트에 있는 이름을 변경해보겠습니다. 다시 `Start.html` 파일로 돌아와
 
@@ -218,7 +218,7 @@ git checkout -b new-branch-name(이름)
 
 이 파트를 찾아서 이름과, 학년, 전공을 변경 해줍니다. 변경해준 뒤에는 저장(`ctrl` +`s`)를 한뒤 브라우저를 refresh 해주면 내용이 바뀌어 있는 것을 확인 할 수 있습니다.
 
-1. **변경사항을 커밋하기**
+#### 5. **변경사항을 커밋하기**
 
 이제 변경된 사항을 새로운 브랜치로 커밋해보겠습니다.
 
@@ -229,7 +229,7 @@ git add .
 git commit -m "커밋 메시지"
 ```
 
-1. **새 브랜치를 GitHub로 푸쉬합니다.**
+#### 6. **새 브랜치를 GitHub로 푸쉬합니다.**
 
 이제 변경한 내용을 원격 저장소에 반영하기 위해 새 브랜치를 푸시합니다.
 
