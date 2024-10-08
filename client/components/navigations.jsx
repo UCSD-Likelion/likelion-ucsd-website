@@ -57,7 +57,7 @@ export default function Navigations() {
             height={50}
           />
           <Typography variant="h4" sx={{ cursor: "pointer", color: "black" }}>
-            Likelion UCSD test
+            Likelion UCSD
           </Typography>
         </Box>
       </Link>
