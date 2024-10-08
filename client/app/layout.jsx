@@ -11,6 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <link rel="shortcut icon" href="/favicon/favicon.ico" />
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <body>
