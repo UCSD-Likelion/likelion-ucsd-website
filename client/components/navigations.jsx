@@ -79,38 +79,6 @@ export default function Navigations() {
             <Typography variant="h6">Projects</Typography>
           </MenuBox>
         </Link>
-        <Divider orientation="vertical" flexItem />
-        <Box sx={{ display: "flex", gap: "1rem" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => router.push("/login")}
-            sx={(theme) => ({
-              backgroundColor: theme.palette.primary.main,
-              color: theme.palette.primary.secondary,
-              ":hover": {
-                backgroundColor: "#2c2d2d",
-              },
-            })}
-          >
-            Login
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => router.push("/signup")}
-            sx={(theme) => ({
-              backgroundColor: "white",
-              color: theme.palette.primary.main,
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              ":hover": {
-                backgroundColor: "#dbdbdb",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-              },
-            })}
-          >
-            Signup
-          </Button>
-        </Box>
       </Box>
     </Box>
   );
