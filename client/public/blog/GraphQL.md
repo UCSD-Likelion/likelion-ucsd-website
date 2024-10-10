@@ -153,6 +153,12 @@ Apollo Server는 GraphQL 요청을 처리할 수 있는 백엔드 서버입니�
 
    > (`type`을 `"module"`로 설정하면 `import` 구문을 사용할 수 있습니다.)
 
+## Query Type
+
+## Mutation Type
+
+## Query Resolverfs
+
 **Reference**
 
 [https://www.redhat.com/ko/topics/api/what-is-graphql](https://www.redhat.com/ko/topics/api/what-is-graphql)
