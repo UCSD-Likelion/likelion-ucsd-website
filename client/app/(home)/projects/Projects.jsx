@@ -1,28 +1,63 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Stack, Card, CardMedia, CardContent } from "@mui/material";
+import Link from 'next/link';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Optional GitHub flavored markdown
 import rehypeRaw from "rehype-raw"; // Optional if you want to allow raw HTML
 import Image from "next/image";
 
+// Projects data
+const projectBoxes = [
+  {
+    id: 1,
+    title: "UCSD Classual",
+    description: "Course Visualizer specialized for UCSD",
+    imageUrl: "images/classual.png",
+    linkTo: "Classual.md",
+  },
+  {
+    id: 2,
+    title: "P2",
+    description: "",
+    imageUrl: "",
+    linkTo: "Project2.md",
+  },
+  {
+    id: 3,
+    title: "P3",
+    description: "",
+    imageUrl: "",
+    linkTo: "",
+  },
+];
+
 export default function Projects({ projects }) {
-  const [selectedContent, setSelectedContent] = useState(null);
+  const [selectedContent, setSelectedContent] = useState("");
   const [activeProject, setActiveProject] = useState(null);
 
-  // Set the first project as default content
-  useEffect(() => {
-    if (projects.length > 0) {
-      // Default to the first project
-      setSelectedContent(projects[0].content);
-      setActiveProject(projects[0].title);
+  const fetchMarkdownContent = async (linkTo) => {
+    const response = await fetch(`blog2/${linkTo}`); // Adjust the path based on your setup
+    if (response.ok) {
+      const content = await response.text();
+      setSelectedContent(content);
+    } else {
+      setSelectedContent("Content not found.");
     }
-  }, [projects]);
+  };
 
   const handleItemClick = (project) => {
-    setSelectedContent(project.content);
+    fetchMarkdownContent(project.linkTo);
     setActiveProject(project.title);
   };
+
+  useEffect(() => {
+    // Set the content for the first project by default
+    if (projectBoxes.length > 0) {
+      fetchMarkdownContent(projectBoxes[0].linkTo);
+      setActiveProject(projectBoxes[0].title);
+    }
+  }, []);
 
   return (
     <Box
@@ -41,6 +76,22 @@ export default function Projects({ projects }) {
           paddingBottom: "180px",
         }}
       >
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: "1rem", py: "1rem" }}>
+          <Typography variant="h1" sx={{ marginTop: 12, marginBottom: 4 }}>Projects</Typography>
+          <Stack spacing={2} direction="row" flexWrap="wrap" justifyContent="center">
+            {projectBoxes.map((project) => (
+              <div key={project.id} onClick={() => handleItemClick(project.linkTo)}>
+                <Card sx={{ width: 300, margin: 1, cursor: 'pointer' }} target="_blank" rel="noopener noreferrer">
+                  <CardMedia component="img" height="140" image={project.imageUrl} alt={project.title} />
+                  <CardContent>
+                    <Typography variant="h5">{project.title}</Typography>
+                  <Typography variant="body2" color="text.secondary">{project.description}</Typography>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </Stack>
+        </Box>
         <ReactMarkdown
           children={selectedContent}
           remarkPlugins={[remarkGfm]} // Optional GitHub flavor
@@ -173,29 +224,6 @@ export default function Projects({ projects }) {
               />
             ),
           }}
-        />
-        <Box>
-          {/* Render project titles */}
-          {projects.map((project) => (
-            <div key={project.title} onClick={() => handleItemClick(project)}>
-              <Typography
-                variant="h5"
-                sx={{
-                  cursor: 'pointer',
-                  fontWeight: activeProject === project.title ? 'bold' : 'normal',
-                  color: activeProject === project.title ? 'blue' : 'black',
-                }}
-              >
-                {project.title}
-              </Typography>
-            </div>
-          ))}
-        </Box>
-        {/* Display selected project content */}
-        <ReactMarkdown
-          children={selectedContent}
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw]}
         />
       </Box>
     </Box>
