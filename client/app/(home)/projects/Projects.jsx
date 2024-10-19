@@ -20,8 +20,8 @@ const projectBoxes = [
   {
     id: 2,
     title: "P2",
-    description: "",
-    imageUrl: "",
+    description: "P2",
+    imageUrl: "P2",
     linkTo: "Project2.md",
   },
   {
