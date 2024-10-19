@@ -1,7 +1,11 @@
 // Import necessary modules
 import fs from 'fs';
 import path from 'path';
+<<<<<<< HEAD
 import { Box } from '@mui/material';
+=======
+import Link from 'next/link';
+>>>>>>> 527df52 (ver2)
 import Projects from './Projects'; // Adjust the path as necessary
 
 // Function to fetch markdown files
@@ -32,6 +36,7 @@ export default async function ProjectsPage() {
 
   return (
   
+<<<<<<< HEAD
     <Box
       sx={{
         display: "flex",
@@ -50,5 +55,8 @@ export default async function ProjectsPage() {
     >
       <Projects projects={projects} />
     </Box>
+=======
+    <Projects projects={projects} /> 
+>>>>>>> 527df52 (ver2)
   );
 }

@@ -33,6 +33,7 @@ const projectBoxes = [
   },
 ];
 
+
 export default function Projects({ projects }) {
   const [selectedContent, setSelectedContent] = useState("");
   const [activeProject, setActiveProject] = useState(null);
