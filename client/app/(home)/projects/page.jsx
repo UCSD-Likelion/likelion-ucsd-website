@@ -1,7 +1,7 @@
 // Import necessary modules
 import fs from 'fs';
 import path from 'path';
-import Link from 'next/link';
+import { Box } from '@mui/material';
 import Projects from './Projects'; // Adjust the path as necessary
 
 // Function to fetch markdown files
@@ -32,6 +32,23 @@ export default async function ProjectsPage() {
 
   return (
   
-    <Projects projects={projects} /> 
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+        gap: "1rem",
+        py: "2rem",
+        px: "2rem",
+        backgroundImage: "url(/images/likelion_logo.png)",
+        backgroundSize: "33.33%",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
+      <Projects projects={projects} />
+    </Box>
   );
 }
