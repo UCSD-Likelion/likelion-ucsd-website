@@ -19,14 +19,14 @@ const projectBoxes = [
   },
   {
     id: 2,
-    title: "P2",
+    title: "Project 2 --------",
     description: "P2",
     imageUrl: "P2",
     linkTo: "Project2.md",
   },
   {
     id: 3,
-    title: "P3",
+    title: "Project 3 --------",
     description: "",
     imageUrl: "",
     linkTo: "",
@@ -71,14 +71,21 @@ export default function Projects({ projects }) {
 
   return (
     <Box
-      sx={{
-        flexGrow: 1,
-        padding: 4,
-        marginLeft: "-270px",
-        marginRight: "-500px",
-        marginTop: "80px",
-        padding: "1rem",
-      }}
+      sx={(theme) => ({
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+        gap: "1rem",
+        py: "2rem",
+        px: "2rem",
+        backgroundColor: theme.palette.primary.background,
+        backgroundImage: "url(/images/likelion_logo.png)",
+        backgroundSize: "25%",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      })}
     >
       <Box
         sx={{
@@ -87,18 +94,14 @@ export default function Projects({ projects }) {
           paddingBottom: "180px",
         }}
       >
-        <Box sx={{ flexGrow: 1, padding: 4, marginLeft: "-270px", marginTop: "80px", padding: "1rem" }}>
+        <Box sx={{ flexGrow: 1, padding: 4, marginTop: "350px", padding: "1rem" }}>
           <Box sx={{ maxWidth: "1000px", margin: "0 auto", paddingBottom: "180px" }}>
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: "1rem", py: "1rem" }}>
-              <Typography variant="h1" sx={{ marginTop: 12, marginBottom: 8 }}>Projects</Typography>
+              <Typography variant="h1" sx={{color:"white" }}>Projects</Typography>
               {projectBoxes.map((project) => (
                 <div 
                   key={project.id} 
-                  className={styles.bubble} 
-                  // style={{
-                  //   top: `${Math.random() * 400}px`, 
-                  //   left: `${Math.random() * 800}px` 
-                  // }} 
+                  className={styles.bubble}  
                   onClick={() => handleItemClick(project)}
                 >
                   <Card className={styles.card}>

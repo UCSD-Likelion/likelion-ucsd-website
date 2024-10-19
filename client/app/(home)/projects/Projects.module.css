@@ -23,8 +23,15 @@
     position: absolute;
     cursor: pointer;
     transition: transform 0.3s ease;
-    width: 200px; 
-    height: 250px;
+    background-color: orange;
+    width: 250px; 
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     &:hover {
         transform: scale(1.05);
     }
@@ -32,17 +39,20 @@
 }
 
 .card {
-    border-radius: 12px; /* Adjust as necessary */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center content */
+  border-radius: 50%; /* Make card circular as well */
+  background-color: transparent; 
 }
 
 /* Random positioning */
-.bubble:nth-child(2) { top: 120px; left: 50px; }
-.bubble:nth-child(3) { top: 600px; left: 500px; }
-.bubble:nth-child(4) { top: 300px; left: 100px; }
-.bubble:nth-child(5) { top: 250px; left: 350px; }
-.bubble:nth-child(6) { top: 200px; left: 500px; }
+.bubble:nth-child(2) { top: 120px; margin-left: 800px; }
+.bubble:nth-child(3) { top: 500px; margin-right: 800px; }
+.bubble:nth-child(4) { top: 500px; margin-left: 800px; }
+.bubble:nth-child(5) { top: 500px; margin-left: 800px; }
+.bubble:nth-child(6) { top: 500px; margin-left: 800px; }
 
 .detailCard {
     position: fixed;

@@ -31,24 +31,7 @@ export default async function ProjectsPage() {
   const projects = await getProjects(); // Fetch markdown files
 
   return (
-  
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        flexDirection: "column",
-        gap: "1rem",
-        py: "2rem",
-        px: "2rem",
-        backgroundImage: "url(/images/likelion_logo.png)",
-        backgroundSize: "33.33%",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
-    >
+    
       <Projects projects={projects} />
-    </Box>
   );
 }
