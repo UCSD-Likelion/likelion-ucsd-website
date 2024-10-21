@@ -40,7 +40,7 @@ export default function Projects({ projects }) {
   const [showDetail, setShowDetail] = useState(false);
 
   const fetchMarkdownContent = async (linkTo) => {
-    const response = await fetch(`blog2/${linkTo}`); // Adjust the path based on your setup
+    const response = await fetch(`blog2/${linkTo}`); 
     if (response.ok) {
       const content = await response.text();
       setSelectedContent(content);
@@ -60,6 +60,8 @@ export default function Projects({ projects }) {
     setSelectedContent("");
     setActiveProject(null);
   };
+
+  const animations = ['float1', 'float2', 'float3', 'float1', 'float2', 'float3'];
 
   useEffect(() => {
     // Set the content for the first project by default
@@ -81,7 +83,7 @@ export default function Projects({ projects }) {
         py: "2rem",
         px: "2rem",
         backgroundColor: theme.palette.primary.background,
-        backgroundImage: "url(/images/likelion_logo.png)",
+        backgroundImage: "url(/images/likelion-logo.png)",
         backgroundSize: "25%",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -98,10 +100,11 @@ export default function Projects({ projects }) {
           <Box sx={{ maxWidth: "1000px", margin: "0 auto", paddingBottom: "180px" }}>
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: "1rem", py: "1rem" }}>
               <Typography variant="h1" sx={{color:"white" }}>Projects</Typography>
-              {projectBoxes.map((project) => (
+              
+              {projectBoxes.map((project, index) => (
                 <div 
                   key={project.id} 
-                  className={styles.bubble}  
+                  className={`${styles.bubble} ${styles[animations[index % animations.length]]}`}  
                   onClick={() => handleItemClick(project)}
                 >
                   <Card className={styles.card}>
@@ -115,7 +118,14 @@ export default function Projects({ projects }) {
               ))}
             </Box>
             {showDetail && (
-              <Box className={styles.detailCard}>
+              <Box className={styles.detailCard} sx={{ 
+                marginTop: "40px", 
+                width: "80%", 
+                maxWidth: "800px",
+                padding: "20px", 
+                backgroundColor: "#fff", 
+                borderRadius: "8px", 
+              }}>
                 <IconButton onClick={handleClose} sx={{ position: 'absolute', top: 16, right: 16 }}>
                   <CloseIcon />
                 </IconButton>
@@ -205,22 +215,6 @@ export default function Projects({ projects }) {
                         />
                       );
                     },
-                    a: ({ node, ...props }) => (
-                      <Typography
-                        variant="body1"
-                        component="a"
-                        href={props.href}
-                        target="_blank" // Open in new tab
-                        rel="noopener noreferrer" // Security measure
-                        sx={{
-                          color: "#3a62ac",
-                          textDecoration: "underline",
-                          fontFamily: "Noto Sans, sans-serif",
-                          fontSize: "18px",
-                        }}
-                        {...props}
-                      />
-                    ),
                     li: ({ node, ...props }) => (
                       <li
                         style={{
@@ -237,20 +231,7 @@ export default function Projects({ projects }) {
                     hr: () => (
                       <hr style={{ marginTop: "50px", marginBottom: "15px" }} />
                     ),
-                    pre: ({ node, ...props }) => (
-                      <pre
-                        style={{
-                          backgroundColor: "#282c34",
-                          padding: "10px",
-                          borderRadius: "8px",
-                          color: "#fff",
-                          overflow: "auto",
-                          fontSize: "15px",
-                          fontFamily: "Noto Sans, sans-serif",
-                        }}
-                        {...props}
-                      />
-                    ),
+                  
                   }}
                 />
               </Box>

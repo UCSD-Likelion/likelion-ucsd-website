@@ -19,10 +19,29 @@
     transform: translateY(0);
 }
 
+@keyframes float {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(15px, -10px); 
+    }
+    50% {
+      transform: translate(-15px, 10px); 
+    }
+    75% {
+      transform: translate(10px, 5px); 
+    }
+    100% {
+      transform: translate(0, 0); 
+    }
+  }
+
 .bubble {
-    position: absolute;
+    position: relative;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: box-shadow 0.2s ease;
+    animation: float 4s ease-in-out infinite;
     background-color: orange;
     width: 250px; 
     height: 200px;
@@ -38,6 +57,11 @@
     
 }
 
+.bubble:hover {
+    transform: translateY(-10px); /* Moves the card up */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+}
+
 .card {
     display: flex;
   flex-direction: column;
@@ -47,10 +71,9 @@
   background-color: transparent; 
 }
 
-/* Random positioning */
-.bubble:nth-child(2) { top: 120px; margin-left: 800px; }
-.bubble:nth-child(3) { top: 500px; margin-right: 800px; }
-.bubble:nth-child(4) { top: 500px; margin-left: 800px; }
+.bubble:nth-child(2) { top: 150px; margin-left: 1400px; }
+.bubble:nth-child(3) { top: 200px; margin-right: 1200px; }
+.bubble:nth-child(4) { top: -400px; margin-right: 1400px; }
 .bubble:nth-child(5) { top: 500px; margin-left: 800px; }
 .bubble:nth-child(6) { top: 500px; margin-left: 800px; }
 
