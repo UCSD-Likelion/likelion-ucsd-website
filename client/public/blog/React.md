@@ -871,7 +871,7 @@ useEffect(() => {
 
 ```jsx
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 // Home 컴포넌트
 function Home() {
@@ -907,18 +907,12 @@ function App() {
           </ul>
         </nav>
 
-        {/* 경로에 따라 다른 컴포넌트를 렌더링 */}
-        <Switch>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/contact">
-            <Contact />
-          </Route>
-        </Switch>
+        {/* 라우트 설정 */}
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
       </div>
     </Router>
   );
