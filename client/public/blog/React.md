@@ -709,64 +709,375 @@ CSS 파일을 사용하여 스타일을 적용하는 방법은 가장 일반적�
 
 ### 1. **Hooks (훅)**
 
-리액트에서 함수형 컴포넌트에서 상태를 관리하거나, 생명주기 메서드를 사용할 수 있게 해주는 기능입니다. 특히, `useState`와 `useEffect`는 리액트에서 필수적인 훅입니다.
+리액트에서 **훅(Hooks)**는 함수형 컴포넌트에서도 상태 관리와 생명주기 관련 작업을 할 수 있게 해주는 기능입니다. 훅을 사용하면 클래스형 컴포넌트 없이도 상태와 생명주기(lifecycle) 기능을 함수형 컴포넌트에서 간단하게 구현할 수 있습니다. 특히, **`useState`**와 **`useEffect`**는 리액트에서 가장 많이 사용하는 기본 훅입니다.
 
-- **설명**: 리액트 훅은 함수형 컴포넌트에서 `state`와 `lifecycle` 기능을 사용할 수 있게 해줍니다. 클래스형 컴포넌트가 아닌 함수형 컴포넌트에서 상태를 쉽게 관리할 수 있게 도와줍니다.
-- **주요 훅**:
-  - **`useState`**: 상태를 관리하기 위한 훅.
-  - **`useEffect`**: 컴포넌트가 렌더링되거나 업데이트될 때 특정 작업을 실행하기 위한 훅.
-- **예시**:
+---
+
+#### **`useState`**
+
+- **설명**: `useState`는 컴포넌트 내에서 상태를 관리하는 데 사용되는 훅입니다. 상태는 컴포넌트가 기억해야 할 데이터나 값들을 의미합니다. 클래스형 컴포넌트에서는 `this.state`로 상태를 관리하지만, 함수형 컴포넌트에서는 `useState`로 간단하게 상태를 선언하고 사용할 수 있습니다.
+- **사용법**:
 
   ```jsx
-  import React, { useState, useEffect } from "react";
-
-  function Counter() {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      console.log("Counter updated:", count);
-    }, [count]);
-
-    return (
-      <div>
-        <p>{count}번 클릭했습니다.</p>
-        <button onClick={() => setCount(count + 1)}>클릭</button>
-      </div>
-    );
-  }
-
-  export default Counter;
+  const [state, setState] = useState(initialValue);
   ```
 
-  - **`useState`**는 `count`라는 상태를 저장하고, **`useEffect`**는 `count`가 업데이트될 때마다 실행됩니다.
+  - **`state`**: 현재 상태 값을 나타냅니다.
+  - **`setState`**: 상태를 변경하는 함수입니다. 이 함수를 호출하면 컴포넌트가 다시 렌더링되며, 상태 값이 업데이트됩니다.
+  - **`initialValue`**: 상태의 초기값을 설정합니다.
+
+- **예시**: 카운터의 상태를 관리하는 간단한 예시
+  ```jsx
+  const [count, setCount] = useState(0); // count라는 상태 변수 선언, 초기값은 0
+  ```
+
+#### **`useEffect`**
+
+- **설명**: `useEffect`는 컴포넌트의 **생명주기**(lifecycle) 이벤트를 처리하는 훅입니다. 예를 들어, 컴포넌트가 처음 렌더링될 때 실행하거나, 상태가 변경될 때 특정 작업을 수행하고, 컴포넌트가 제거될 때 정리 작업을 하는 등의 기능을 처리할 수 있습니다.
+- **사용법**:
+
+  ```jsx
+  useEffect(() => {
+    // 여기에 효과를 작성
+    return () => {
+      // 선택적으로 정리 작업을 수행
+    };
+  }, [dependencies]);
+  ```
+
+  - 첫 번째 인자는 실행할 함수이고, 두 번째 인자인 **의존성 배열**(dependencies)은 이 배열에 있는 값이 변경될 때만 효과가 다시 실행되도록 제어합니다.
+  - 의존성 배열을 빈 배열 `[]`로 설정하면, 컴포넌트가 처음 렌더링될 때 한 번만 실행됩니다.
+  - 반환하는 함수는 컴포넌트가 언마운트(제거)될 때 정리 작업을 하는 함수로 사용됩니다.
+
+- **예시**: 상태가 변경될 때마다 콘솔에 로그를 출력하는 예시
+  ```jsx
+  useEffect(() => {
+    console.log("Counter updated:", count);
+  }, [count]); // count 값이 변경될 때마다 실행
+  ```
+
+#### **실습 예제: 타이머 앱 (useEffect 필수적인 예시)**
+
+이 예제에서는 **`useEffect`**가 필수적인 상황을 다룹니다. 여기서 우리는 컴포넌트가 마운트될 때 타이머를 시작하고, 언마운트될 때 타이머를 정리하는 작업을 처리합니다. 이러한 상황에서는 **`useEffect`**가 반드시 필요합니다.
+
+```jsx
+import React, { useState, useEffect } from "react";
+
+function TimerApp() {
+  const [seconds, setSeconds] = useState(0); // 상태 변수 선언
+
+  // 컴포넌트가 처음 렌더링될 때 타이머를 시작하고, 컴포넌트가 사라질 때 타이머를 정리
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSeconds((prev) => prev + 1); // 1초마다 상태 값 증가
+    }, 1000);
+
+    // 컴포넌트가 언마운트될 때 타이머 정리
+    return () => clearInterval(timer);
+  }, []); // 빈 배열: 컴포넌트가 처음 렌더링될 때 한 번만 실행
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>타이머: {seconds}초</h1>
+    </div>
+  );
+}
+
+export default TimerApp;
+```
+
+#### **실습 설명**:
+
+1. **`useState`**: `seconds`라는 상태 변수를 선언하여 타이머가 흐를 때마다 증가하는 시간을 저장합니다.
+2. **`useEffect`**: 컴포넌트가 처음 렌더링될 때마다 1초마다 `setSeconds`를 호출하여 `seconds` 값을 증가시키는 타이머를 설정합니다. 그리고 컴포넌트가 사라질 때(`언마운트될 때`) `clearInterval`을 사용하여 타이머를 정리합니다. 이렇게 타이머를 설정하고 정리하는 작업은 `useEffect` 없이는 구현할 수 없습니다.
+
+---
+
+#### **생명주기 쉽게 설명하기**
+
+생명주기를 쉽게 설명하자면, **컴포넌트가 태어나고, 활동하고, 사라지는 과정**을 뜻한다고 생각하면 됩니다. 컴포넌트는 우리가 웹 페이지에서 어떤 화면을 구성하는 조각(블록)인데, 이 컴포넌트도 시간이 지나면서 여러 단계를 거칩니다. 이 단계를 **컴포넌트 생명주기**라고 부릅니다.
+
+리액트 컴포넌트는 크게 **3가지 주요 단계**를 거칩니다:
+
+#### 1. **태어날 때 (Mount)**
+
+- 컴포넌트가 처음으로 화면에 등장할 때입니다.
+- 예를 들어, 웹 페이지를 처음 열었을 때 버튼이나 타이머가 화면에 나타나는 순간을 생각하면 됩니다.
+- 이때 리액트는 컴포넌트를 만들고, 준비한 코드를 실행합니다.
+- 이 단계에서 **초기화 작업**을 할 수 있어요. 예를 들어, **타이머를 시작**하거나 **API 데이터를 불러오는 작업**을 시작할 수 있습니다.
+
+#### 2. **활동할 때 (Update)**
+
+- 컴포넌트가 사용자와 상호작용하면서 **상태**나 **props**가 변경될 때입니다.
+- 예를 들어, 버튼을 클릭하면 숫자가 증가하는 경우, 상태가 업데이트되면서 화면이 다시 그려집니다.
+- 이때 **변경된 값**에 따라 컴포넌트가 **다시 렌더링**됩니다.
+
+#### 3. **사라질 때 (Unmount)**
+
+- 컴포넌트가 더 이상 필요 없어져서 **화면에서 사라질 때**입니다.
+- 예를 들어, 페이지를 이동하거나, 특정 컴포넌트가 더 이상 필요하지 않아서 없어질 때가 이에 해당합니다.
+- 이 단계에서는 컴포넌트가 **정리 작업**을 할 수 있습니다. 예를 들어, **타이머를 중지**하거나 **네트워크 요청을 취소**하는 작업을 할 수 있습니다.
+
+---
+
+#### **생명주기와 `useEffect`의 관계**
+
+- **`useEffect`**는 바로 이 생명주기의 각 단계에서 특정 작업을 실행하고, 또 필요하면 정리하는 역할을 합니다.
+  - **처음 컴포넌트가 태어날 때(마운트)**: `useEffect`에서 특정 코드를 실행할 수 있습니다. 예를 들어, 타이머를 시작하는 코드.
+  - **컴포넌트가 사라질 때(언마운트)**: `useEffect`에서 정리(clean-up) 작업을 할 수 있습니다. 예를 들어, 타이머를 중지하는 코드.
+
+이 개념을 통해 컴포넌트가 웹 페이지에 등장하고 사라질 때 해야 할 일을 정의할 수 있습니다. 예를 들어, **타이머 예제**에서는 컴포넌트가 처음 나타날 때 `setInterval`로 시간을 측정하기 시작하고, 컴포넌트가 사라질 때 `clearInterval`로 타이머를 멈추는 정리 작업을 합니다.
+
+---
+
+#### 다시 타이머 예제를 보면:
+
+```jsx
+useEffect(() => {
+  const timer = setInterval(() => {
+    setSeconds((prev) => prev + 1); // 타이머 작동
+  }, 1000);
+
+  return () => clearInterval(timer); // 컴포넌트가 사라질 때 타이머 정리
+}, []); // 이 코드는 컴포넌트가 처음 렌더링될 때 한 번만 실행됩니다.
+```
+
+- **컴포넌트가 처음 화면에 나타날 때** (`useEffect`의 첫 번째 부분): 타이머를 시작합니다.
+- **컴포넌트가 화면에서 사라질 때** (`useEffect`의 반환 함수): 타이머를 정리합니다.
 
 ### 2. **React Router (라우팅)**
 
-리액트는 **싱글 페이지 애플리케이션(SPA)**을 위한 라이브러리이기 때문에 여러 페이지처럼 보이도록 라우팅을 설정할 필요가 있습니다. **React Router**는 이 역할을 도와줍니다.
+리액트는 **싱글 페이지 애플리케이션(SPA, Single Page Application)**을 개발하기에 적합한 라이브러리입니다. 여러 페이지처럼 보이지만, 실제로는 하나의 HTML 파일로 구동되는 SPA에서는 페이지 간 이동을 구현하기 위해 **React Router**를 사용합니다.
 
-- **설명**: 여러 페이지를 가진 것처럼 보이는 싱글 페이지 애플리케이션(SPA)을 구현할 때 **React Router**를 사용합니다.
-- **예시**:
+#### **설명**
 
-  ```jsx
-  import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-  import Home from "./Home";
-  import About from "./About";
+- **SPA (Single Page Application)**: SPA는 한 번 로드된 페이지 내에서 필요한 부분만 변경하는 방식으로, 페이지 전환 시 전체 페이지를 다시 로드하지 않고 빠르게 렌더링됩니다. React Router를 사용하면 이런 SPA에서 URL 경로에 따라 화면에 다른 컴포넌트를 표시할 수 있습니다.
+- **React Router**는 **경로 기반 네비게이션**을 처리해주며, 각 경로에 따라 보여줄 컴포넌트를 지정할 수 있습니다. 이렇게 하면 여러 페이지가 있는 것처럼 애플리케이션을 구성할 수 있습니다.
 
-  function App() {
-    return (
-      <Router>
+### **주요 개념**
+
+1. **`Router`**: 라우팅 기능을 제공하는 최상위 컴포넌트입니다. 일반적으로 `BrowserRouter`가 사용됩니다.
+2. **`Route`**: 각 경로(path)에 맞는 컴포넌트를 매핑해주는 컴포넌트입니다.
+3. **`Switch`**: 첫 번째로 매칭되는 경로에 대해 해당 컴포넌트를 렌더링합니다. 일반적으로 여러 `Route`를 묶어서 사용합니다.
+4. **`Link`**: URL을 변경하여 페이지 이동을 가능하게 해주는 리액트의 내장 링크 컴포넌트입니다.
+
+### **중요한 설명**
+
+- **`BrowserRouter`**: 가장 일반적으로 사용되는 Router로, HTML5의 `history` API를 사용하여 브라우저 URL을 조작합니다. 이를 통해 사용자는 백엔드 서버의 추가 요청 없이 경로를 변경할 수 있습니다.
+- **`Route`**: 특정 경로에 도달하면 렌더링할 컴포넌트를 정의합니다. 각 `Route`에는 `path`와 `component`를 속성으로 지정할 수 있습니다.
+- **`Link`**: 사용자 인터페이스 내에서 경로 변경을 제공하는 내장 링크 기능입니다. `<a>` 태그를 사용하는 대신 리액트에서 SPA 전환을 위해 사용됩니다.
+
+#### **예시 코드**
+
+```jsx
+import React from "react";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
+// Home 컴포넌트
+function Home() {
+  return <h2>홈 페이지</h2>;
+}
+
+// About 컴포넌트
+function About() {
+  return <h2>소개 페이지</h2>;
+}
+
+// Contact 컴포넌트
+function Contact() {
+  return <h2>연락처 페이지</h2>;
+}
+
+function App() {
+  return (
+    <Router>
+      <div>
+        {/* 네비게이션 링크 */}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* 경로에 따라 다른 컴포넌트를 렌더링 */}
         <Switch>
-          <Route path="/home" component={Home} />
-          <Route path="/about" component={About} />
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/contact">
+            <Contact />
+          </Route>
         </Switch>
-      </Router>
-    );
-  }
+      </div>
+    </Router>
+  );
+}
 
-  export default App;
-  ```
+export default App;
+```
 
-  - 이 예시에서는 `Home`과 `About` 페이지가 각각의 경로로 나뉘어 렌더링됩니다.
+#### **코드 설명**
+
+1. **`<Router>`**: `BrowserRouter`로 감싸서 리액트 애플리케이션에 라우팅 기능을 추가합니다.
+2. **`<Link>`**: 브라우저 URL을 변경하면서 컴포넌트를 교체합니다. 여기서는 `/home`, `/about`, `/contact` 경로에 각각 링크가 연결되어 있습니다.
+3. **`<Switch>`**: 가장 처음 매칭되는 경로에 맞는 `Route`만 렌더링합니다.
+4. **`<Route>`**: 각각의 경로에 맞는 컴포넌트를 렌더링합니다. 예를 들어 `/home` 경로에서는 `Home` 컴포넌트가 렌더링됩니다.
+
+#### **실습 1: 새로운 페이지 추가하기**
+
+1. **목표**: 새로운 페이지를 추가하고, 해당 페이지로 이동할 수 있는 링크를 만들어봅시다.
+2. **추가할 페이지**: `Services`라는 페이지를 만들고, "Our Services"라는 제목을 보여주도록 합니다.
+3. **실습 과정**:
+
+   1. `src/Services.js` 파일을 만들어 아래 코드를 추가합니다.
+
+      ```jsx
+      import React from "react";
+
+      function Services() {
+        return <h2>Our Services</h2>;
+      }
+
+      export default Services;
+      ```
+
+   2. `App.js` 파일에서 새로운 경로와 링크를 추가합니다.
+
+      ```jsx
+      import Services from "./Services";
+
+      function App() {
+        return (
+          <Router>
+            <div>
+              <nav>
+                <ul>
+                  <li>
+                    <Link to="/home">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/about">About</Link>
+                  </li>
+                  <li>
+                    <Link to="/contact">Contact</Link>
+                  </li>
+                  <li>
+                    <Link to="/services">Services</Link>{" "}
+                    {/* 새로운 링크 추가 */}
+                  </li>
+                </ul>
+              </nav>
+
+              <Switch>
+                <Route path="/home">
+                  <Home />
+                </Route>
+                <Route path="/about">
+                  <About />
+                </Route>
+                <Route path="/contact">
+                  <Contact />
+                </Route>
+                <Route path="/services">
+                  <Services /> {/* 새로운 경로 추가 */}
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        );
+      }
+      ```
+
+4. **결과**: 이제 "Services"라는 페이지로 이동할 수 있는 링크가 추가되고, `/services` 경로로 이동하면 새로운 `Services` 컴포넌트가 렌더링됩니다.
+
+#### **실습 2: 기본 경로로 리다이렉션 설정하기**
+
+1. **목표**: 사용자가 지정된 경로에 없는 페이지로 접근했을 때, 기본 경로로 리다이렉션(redirect)하는 기능을 추가해봅시다.
+2. **실습 과정**:
+
+   1. `Switch` 하단에 아래 코드를 추가합니다:
+
+      ```jsx
+      <Route path="*">
+        <Redirect to="/home" /> {/* 기본 경로로 리다이렉션 */}
+      </Route>
+      ```
+
+   2. **전체 코드**:
+
+      ```jsx
+      import React from "react";
+      import {
+        BrowserRouter as Router,
+        Route,
+        Switch,
+        Link,
+        Redirect,
+      } from "react-router-dom";
+      import Home from "./Home";
+      import About from "./About";
+      import Contact from "./Contact";
+      import Services from "./Services";
+
+      function App() {
+        return (
+          <Router>
+            <div>
+              <nav>
+                <ul>
+                  <li>
+                    <Link to="/home">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/about">About</Link>
+                  </li>
+                  <li>
+                    <Link to="/contact">Contact</Link>
+                  </li>
+                  <li>
+                    <Link to="/services">Services</Link>
+                  </li>
+                </ul>
+              </nav>
+
+              <Switch>
+                <Route path="/home">
+                  <Home />
+                </Route>
+                <Route path="/about">
+                  <About />
+                </Route>
+                <Route path="/contact">
+                  <Contact />
+                </Route>
+                <Route path="/services">
+                  <Services />
+                </Route>
+                <Route path="*">
+                  <Redirect to="/home" />
+                </Route>{" "}
+                {/* 기본 경로로 리다이렉션 */}
+              </Switch>
+            </div>
+          </Router>
+        );
+      }
+
+      export default App;
+      ```
+
+3. **결과**: 존재하지 않는 경로로 접근하면 `/home` 경로로 자동으로 리다이렉션됩니다.
 
 ### (3, 4번은 일단 스킵)
 
