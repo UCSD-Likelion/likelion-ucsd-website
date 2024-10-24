@@ -1,7 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Stack, Grid, Card, CardMedia, CardContent } from "@mui/material";
-import Link from 'next/link';
+import {
+  Box,
+  Typography,
+  Stack,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Button,
+  CardActionArea,
+} from "@mui/material";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Optional GitHub flavored markdown
 import rehypeRaw from "rehype-raw"; // Optional if you want to allow raw HTML
@@ -75,22 +85,51 @@ export default function Projects({ projects }) {
           paddingBottom: "180px",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: "1rem", py: "1rem" }}>
-          <Typography variant="h1" sx={{ marginTop: 12, marginBottom: 8 }}>Projects</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            px: "1rem",
+            py: "1rem",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              gap: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <Typography variant="h2" sx={{ marginTop: "5rem" }}>
+              Project Archive
+            </Typography>
+            <Typography variant="h5">
+              멋쟁이사자처럼 UCSD가 그동안 진행한 프로젝트들을 소개합니다.
+            </Typography>
+          </Box>
           <Grid container spacing={2} justifyContent="center">
             {projectBoxes.map((project) => (
               <Grid item xs={12} sm={6} md={4} key={project.id}>
-                <div onClick={() => handleItemClick(project)}>
-                  <Card sx={{ cursor: 'pointer' }}>
-                    <CardMedia component="img" height="140" image={project.imageUrl} alt={project.title} />
+                <Card>
+                  <CardActionArea onClick={() => handleItemClick(project)}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={project.imageUrl}
+                      alt={project.title}
+                    />
                     <CardContent>
                       <Typography variant="h5">{project.title}</Typography>
                       <Typography variant="body2" color="text.secondary">
                         {project.description}
                       </Typography>
                     </CardContent>
-                  </Card>
-                </div>
+                  </CardActionArea>
+                </Card>
               </Grid>
             ))}
           </Grid>
