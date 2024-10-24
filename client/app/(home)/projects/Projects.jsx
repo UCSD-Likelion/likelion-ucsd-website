@@ -1,12 +1,20 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton} from "@mui/material";
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  IconButton,
+} from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Optional GitHub flavored markdown
 import rehypeRaw from "rehype-raw"; // Optional if you want to allow raw HTML
 import Image from "next/image";
-import styles from './Projects.module.css'; 
-import CloseIcon from '@mui/icons-material/Close';
+import styles from "./Projects.module.css";
+import CloseIcon from "@mui/icons-material/Close";
 
 // Projects data
 const projectBoxes = [
@@ -33,14 +41,13 @@ const projectBoxes = [
   },
 ];
 
-
 export default function Projects({ projects }) {
   const [selectedContent, setSelectedContent] = useState("");
   const [activeProject, setActiveProject] = useState(null);
   const [showDetail, setShowDetail] = useState(false);
 
   const fetchMarkdownContent = async (linkTo) => {
-    const response = await fetch(`blog2/${linkTo}`); 
+    const response = await fetch(`blog2/${linkTo}`);
     if (response.ok) {
       const content = await response.text();
       setSelectedContent(content);
@@ -61,7 +68,14 @@ export default function Projects({ projects }) {
     setActiveProject(null);
   };
 
-  const animations = ['float1', 'float2', 'float3', 'float1', 'float2', 'float3'];
+  const animations = [
+    "float1",
+    "float2",
+    "float3",
+    "float1",
+    "float2",
+    "float3",
+  ];
 
   useEffect(() => {
     // Set the content for the first project by default
@@ -96,37 +110,73 @@ export default function Projects({ projects }) {
           paddingBottom: "180px",
         }}
       >
-        <Box sx={{ flexGrow: 1, padding: 4, marginTop: "350px", padding: "1rem" }}>
-          <Box sx={{ maxWidth: "1000px", margin: "0 auto", paddingBottom: "180px" }}>
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: "1rem", py: "1rem" }}>
-              <Typography variant="h1" sx={{color:"white" }}>Projects</Typography>
-              
+        <Box
+          sx={{ flexGrow: 1, padding: 4, marginTop: "350px", padding: "1rem" }}
+        >
+          <Box
+            sx={{
+              maxWidth: "1000px",
+              margin: "0 auto",
+              paddingBottom: "180px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                px: "1rem",
+                py: "1rem",
+              }}
+            >
+              <Typography
+                variant="h1"
+                sx={{ color: "white", marginTop: "10rem" }}
+              >
+                Projects
+              </Typography>
+
               {projectBoxes.map((project, index) => (
-                <div 
-                  key={project.id} 
-                  className={`${styles.bubble} ${styles[animations[index % animations.length]]}`}  
+                <div
+                  key={project.id}
+                  className={`${styles.bubble} ${
+                    styles[animations[index % animations.length]]
+                  }`}
                   onClick={() => handleItemClick(project)}
                 >
                   <Card className={styles.card}>
-                    <CardMedia component="img" height="140" image={project.imageUrl} alt={project.title} />
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={project.imageUrl}
+                      alt={project.title}
+                    />
                     <CardContent>
                       <Typography variant="h5">{project.title}</Typography>
-                      <Typography variant="body2" color="text.secondary">{project.description}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {project.description}
+                      </Typography>
                     </CardContent>
                   </Card>
                 </div>
               ))}
             </Box>
             {showDetail && (
-              <Box className={styles.detailCard} sx={{ 
-                marginTop: "40px", 
-                width: "80%", 
-                maxWidth: "800px",
-                padding: "20px", 
-                backgroundColor: "#fff", 
-                borderRadius: "8px", 
-              }}>
-                <IconButton onClick={handleClose} sx={{ position: 'absolute', top: 16, right: 16 }}>
+              <Box
+                className={styles.detailCard}
+                sx={{
+                  marginTop: "40px",
+                  width: "80%",
+                  maxWidth: "800px",
+                  padding: "20px",
+                  backgroundColor: "#fff",
+                  borderRadius: "8px",
+                }}
+              >
+                <IconButton
+                  onClick={handleClose}
+                  sx={{ position: "absolute", top: 16, right: 16 }}
+                >
                   <CloseIcon />
                 </IconButton>
                 <Typography variant="h4">{activeProject}</Typography>
@@ -231,7 +281,6 @@ export default function Projects({ projects }) {
                     hr: () => (
                       <hr style={{ marginTop: "50px", marginBottom: "15px" }} />
                     ),
-                  
                   }}
                 />
               </Box>
