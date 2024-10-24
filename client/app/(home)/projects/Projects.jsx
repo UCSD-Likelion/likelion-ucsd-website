@@ -85,7 +85,9 @@ export default function Projects({ projects }) {
                     <CardMedia component="img" height="140" image={project.imageUrl} alt={project.title} />
                     <CardContent>
                       <Typography variant="h5">{project.title}</Typography>
-                      <Typography variant="body2" color="text.secondary">{project.description}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {project.description}
+                      </Typography>
                     </CardContent>
                   </Card>
                 </div>
