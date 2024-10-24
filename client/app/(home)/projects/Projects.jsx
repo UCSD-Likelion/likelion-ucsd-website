@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton} from "@mui/material";
+import { Box, Typography, Stack, Grid, Card, CardMedia, CardContent } from "@mui/material";
+import Link from 'next/link';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Optional GitHub flavored markdown
 import rehypeRaw from "rehype-raw"; // Optional if you want to allow raw HTML
 import Image from "next/image";
-import styles from './Projects.module.css'; 
-import CloseIcon from '@mui/icons-material/Close';
 
 // Projects data
 const projectBoxes = [
@@ -19,28 +18,26 @@ const projectBoxes = [
   },
   {
     id: 2,
-    title: "Project 2 --------",
-    description: "P2",
-    imageUrl: "P2",
+    title: "P2",
+    description: "",
+    imageUrl: "",
     linkTo: "Project2.md",
   },
   {
     id: 3,
-    title: "Project 3 --------",
+    title: "P3",
     description: "",
     imageUrl: "",
     linkTo: "",
   },
 ];
 
-
 export default function Projects({ projects }) {
   const [selectedContent, setSelectedContent] = useState("");
   const [activeProject, setActiveProject] = useState(null);
-  const [showDetail, setShowDetail] = useState(false);
 
   const fetchMarkdownContent = async (linkTo) => {
-    const response = await fetch(`blog2/${linkTo}`); 
+    const response = await fetch(`blog2/${linkTo}`); // Adjust the path based on your setup
     if (response.ok) {
       const content = await response.text();
       setSelectedContent(content);
@@ -52,16 +49,7 @@ export default function Projects({ projects }) {
   const handleItemClick = (project) => {
     fetchMarkdownContent(project.linkTo);
     setActiveProject(project.title);
-    setShowDetail(true);
   };
-
-  const handleClose = () => {
-    setShowDetail(false);
-    setSelectedContent("");
-    setActiveProject(null);
-  };
-
-  const animations = ['float1', 'float2', 'float3', 'float1', 'float2', 'float3'];
 
   useEffect(() => {
     // Set the content for the first project by default
@@ -73,21 +61,12 @@ export default function Projects({ projects }) {
 
   return (
     <Box
-      sx={(theme) => ({
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        flexDirection: "column",
-        gap: "1rem",
-        py: "2rem",
-        px: "2rem",
-        backgroundColor: theme.palette.primary.background,
-        backgroundImage: "url(/images/likelion-logo.png)",
-        backgroundSize: "25%",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      })}
+      sx={{
+        flexGrow: 1,
+        padding: 4,
+        marginTop: "40px",
+        padding: "1rem",
+      }}
     >
       <Box
         sx={{
@@ -96,18 +75,13 @@ export default function Projects({ projects }) {
           paddingBottom: "180px",
         }}
       >
-        <Box sx={{ flexGrow: 1, padding: 4, marginTop: "350px", padding: "1rem" }}>
-          <Box sx={{ maxWidth: "1000px", margin: "0 auto", paddingBottom: "180px" }}>
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: "1rem", py: "1rem" }}>
-              <Typography variant="h1" sx={{color:"white" }}>Projects</Typography>
-              
-              {projectBoxes.map((project, index) => (
-                <div 
-                  key={project.id} 
-                  className={`${styles.bubble} ${styles[animations[index % animations.length]]}`}  
-                  onClick={() => handleItemClick(project)}
-                >
-                  <Card className={styles.card}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", px: "1rem", py: "1rem" }}>
+          <Typography variant="h1" sx={{ marginTop: 12, marginBottom: 8 }}>Projects</Typography>
+          <Grid container spacing={2} justifyContent="center">
+            {projectBoxes.map((project) => (
+              <Grid item xs={12} sm={6} md={4} key={project.id}>
+                <div onClick={() => handleItemClick(project)}>
+                  <Card sx={{ cursor: 'pointer' }}>
                     <CardMedia component="img" height="140" image={project.imageUrl} alt={project.title} />
                     <CardContent>
                       <Typography variant="h5">{project.title}</Typography>
@@ -115,128 +89,144 @@ export default function Projects({ projects }) {
                     </CardContent>
                   </Card>
                 </div>
-              ))}
-            </Box>
-            {showDetail && (
-              <Box className={styles.detailCard} sx={{ 
-                marginTop: "40px", 
-                width: "80%", 
-                maxWidth: "800px",
-                padding: "20px", 
-                backgroundColor: "#fff", 
-                borderRadius: "8px", 
-              }}>
-                <IconButton onClick={handleClose} sx={{ position: 'absolute', top: 16, right: 16 }}>
-                  <CloseIcon />
-                </IconButton>
-                <Typography variant="h4">{activeProject}</Typography>
-                <ReactMarkdown
-                  children={selectedContent}
-                  remarkPlugins={[remarkGfm]} // Optional GitHub flavor
-                  rehypePlugins={[rehypeRaw]} // Optional if you're using HTML in markdown
-                  components={{
-                    h1: ({ node, ...props }) => (
-                      <Typography
-                        variant="h3"
-                        gutterBottom
-                        sx={{
-                          fontFamily: "Noto Sans, sans-serif",
-                          color: "#162548",
-                        }}
-                        {...props}
-                      />
-                    ),
-                    h2: ({ node, ...props }) => (
-                      <Typography
-                        variant="h4"
-                        gutterBottom
-                        sx={{
-                          fontFamily: "Noto Sans, sans-serif",
-                          marginTop: "2.5rem",
-                          marginBottom: "1rem",
-                          fontWeight: "bold",
-                          fontSize: "32px",
-                        }}
-                        {...props}
-                      />
-                    ),
-                    h3: ({ node, ...props }) => (
-                      <Typography
-                        variant="h5"
-                        gutterBottom
-                        sx={{
-                          fontFamily: "Noto Sans, sans-serif",
-                          marginTop: "2.2rem",
-                          marginBottom: "1rem",
-                          fontWeight: "bold",
-                          fontSize: "24px",
-                        }} // Apply Noto Sans
-                        {...props}
-                      />
-                    ),
-                    p: ({ node, ...props }) => {
-                      if (node.children[0]?.tagName === "img") {
-                        const image = node.children[0];
-                        return (
-                          <Box
-                            className="image"
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              marginBottom: "1rem",
-                              width: "100%",
-                            }}
-                          >
-                            <Image
-                              src={`/images${image.properties.src}`}
-                              alt={image.properties.alt}
-                              width={1000}
-                              height={600}
-                              style={{
-                                borderRadius: "8px",
-                                height: "auto",
-                                width: "80%",
-                              }}
-                            />
-                          </Box>
-                        );
-                      }
-                      return (
-                        <Typography
-                          variant="body1"
-                          paragraph
-                          sx={{
-                            fontFamily: "Noto Sans, sans-serif",
-                            marginBottom: "0.7rem",
-                            fontSize: "18px",
-                          }}
-                          {...props}
-                        />
-                      );
-                    },
-                    li: ({ node, ...props }) => (
-                      <li
-                        style={{
-                          marginBottom: "0.4rem",
-                          fontFamily: "Noto Sans, sans-serif",
-                          marginLeft: "-15px",
-                          lineHeight: "1.5",
-                          fontSize: "18px",
-                        }}
-                      >
-                        {props.children}
-                      </li>
-                    ),
-                    hr: () => (
-                      <hr style={{ marginTop: "50px", marginBottom: "15px" }} />
-                    ),
-                  
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+        <Box sx={{ marginTop: 6 }}>
+          <ReactMarkdown
+            children={selectedContent}
+            remarkPlugins={[remarkGfm]} // Optional GitHub flavor
+            rehypePlugins={[rehypeRaw]} // Optional if you're using HTML in markdown
+            components={{
+              h1: ({ node, ...props }) => (
+                <Typography
+                  variant="h3"
+                  gutterBottom
+                  sx={{
+                    fontFamily: "Noto Sans, sans-serif",
+                    color: "#162548",
                   }}
+                  {...props}
                 />
-              </Box>
-            )}
-          </Box>
+              ),
+              h2: ({ node, ...props }) => (
+                <Typography
+                  variant="h4"
+                  gutterBottom
+                  sx={{
+                    fontFamily: "Noto Sans, sans-serif",
+                    marginTop: "2.5rem",
+                    marginBottom: "1rem",
+                    fontWeight: "bold",
+                    fontSize: "32px",
+                  }}
+                  {...props}
+                />
+              ),
+              h3: ({ node, ...props }) => (
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  sx={{
+                    fontFamily: "Noto Sans, sans-serif",
+                    marginTop: "2.2rem",
+                    marginBottom: "1rem",
+                    fontWeight: "bold",
+                    fontSize: "24px",
+                  }} // Apply Noto Sans
+                  {...props}
+                />
+              ),
+              p: ({ node, ...props }) => {
+                if (node.children[0]?.tagName === "img") {
+                  const image = node.children[0];
+                  return (
+                    <Box
+                      className="image"
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginBottom: "1rem",
+                        width: "100%",
+                      }}
+                    >
+                      <Image
+                        src={`/images${image.properties.src}`}
+                        alt={image.properties.alt}
+                        width={1000}
+                        height={600}
+                        style={{
+                          borderRadius: "8px",
+                          height: "auto",
+                          width: "80%",
+                        }}
+                      />
+                    </Box>
+                  );
+                }
+                return (
+                  <Typography
+                    variant="body1"
+                    paragraph
+                    sx={{
+                      fontFamily: "Noto Sans, sans-serif",
+                      marginBottom: "0.7rem",
+                      fontSize: "18px",
+                    }}
+                    {...props}
+                  />
+                );
+              },
+              a: ({ node, ...props }) => (
+                <Typography
+                  variant="body1"
+                  component="a"
+                  href={props.href}
+                  target="_blank" // Open in new tab
+                  rel="noopener noreferrer" // Security measure
+                  sx={{
+                    color: "#3a62ac",
+                    textDecoration: "underline",
+                    fontFamily: "Noto Sans, sans-serif",
+                    fontSize: "18px",
+                  }}
+                  {...props}
+                />
+              ),
+              li: ({ node, ...props }) => (
+                <li
+                  style={{
+                    marginBottom: "0.4rem",
+                    fontFamily: "Noto Sans, sans-serif",
+                    marginLeft: "-15px",
+                    lineHeight: "1.5",
+                    fontSize: "18px",
+                  }}
+                >
+                  {props.children}
+                </li>
+              ),
+              hr: () => (
+                <hr style={{ marginTop: "50px", marginBottom: "15px" }} />
+              ),
+              pre: ({ node, ...props }) => (
+                <pre
+                  style={{
+                    backgroundColor: "#282c34",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    color: "#fff",
+                    overflow: "auto",
+                    fontSize: "15px",
+                    fontFamily: "Noto Sans, sans-serif",
+                  }}
+                  {...props}
+                />
+              ),
+            }}
+          />
         </Box>
       </Box>
     </Box>

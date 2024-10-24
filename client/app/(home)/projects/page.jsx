@@ -1,7 +1,7 @@
 // Import necessary modules
 import fs from 'fs';
 import path from 'path';
-import { Box } from '@mui/material';
+import Link from 'next/link';
 import Projects from './Projects'; // Adjust the path as necessary
 
 // Function to fetch markdown files
@@ -31,7 +31,7 @@ export default async function ProjectsPage() {
   const projects = await getProjects(); // Fetch markdown files
 
   return (
-    
-      <Projects projects={projects} />
+  
+    <Projects projects={projects} /> 
   );
 }
