@@ -172,19 +172,138 @@ Next.js에서는 CSS 파일을 통해 전역 스타일과 모듈화된 스타일
 
 ### 1. 파일 기반 라우팅
 
+- **설명**: Next.js는 React와 달리, 디렉터리 구조를 기반으로 라우팅이 자동으로 이루어집니다. 예를 들어, 프로젝트의 특정 폴더에 파일을 추가하면 해당 파일 이름을 URL로 접근할 수 있습니다. 기본적으로 `/pages` 폴더 안에 있는 파일들이 라우트 역할을 하며, 폴더 구조가 URL 경로를 결정합니다.
+- **코드 예시**:
+
+  1. **홈 페이지 (/)** 프로젝트 루트에 있는 `pages` 폴더 안에 `index.js` 파일을 생성해 아래와 같이 코드를 작성해 주세요:
+
+    ```jsx
+    function Home() {
+      return(
+        <div>
+          <h1>This is home page</h1>
+        </div>
+      )
+    }
+
+    export default Home;
+    ```
+
+    `http://localhost:3000`으로 접속하면 "This is the home page"라는 텍스트가 표시됩니다. index.js 파일은 루트 경로(/)와 자동으로 매핑됩니다.
+
+  2. **소개 페이지 (/about)** `pages` 폴더 안에 `about.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요: 
+  
+    ```jsx
+    function About() {
+      return (
+        <div>
+          <h1>About Us</h1>
+        </div>
+      );
+    }
+
+    export default About;
+    ```
+
+    `http://localhost:3000/about`으로 접속하면 "About Us" 페이지가 표시됩니다.
+
+  3. **제품 페이지 (/products/item)** `pages` 폴더 안에 `products` 다이렉토리를 만든 후 `item.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요: 
+
+    ```jsx
+    function ProductItem() {
+    return (
+      <div>
+        <h1>Product Item</h1>
+      </div>
+      );
+    }
+
+    export default ProductItem;
+    ```
+
+    `http://localhost:3000/products/item`으로 접속하면 "Product Item" 페이지가 표시됩니다.
+  
+  - **요약**: Next.js의 파일 기반 라우팅 덕분에 라우트 설정 없이도 파일과 폴더 이름에 따라 URL이 자동으로 매핑됩니다. 이 구조를 활용하면 유지보수가 용이하며 URL 경로 구조를 직관적으로 관리할 수 있습니다.
+
 ### 2. 동적 라우팅 (Dynamic Routing)
 
-### 3. 서버사이드 렌더링(SSR)과 정적 사이트 생성(SSG)
+- **설명**: Next.js에서는 동적 경로를 만들어 다양한 URL을 처리할 수 있습니다. `[]` 문법을 사용해 폴더나 파일 이름에 변수처럼 작동하는 경로를 지정하면 됩니다.
 
-#### 서버사이드 렌더링(SSR)
+- **코드 예시**: `pages` 폴더 안에 `[id].js` 파일을 생성한 뒤, 아래의 코드를 작성해 주세요:
 
-#### 정적 사이트 생성(SSG)
+  ```jsx
+  import { useRouter } from 'next/router';
 
-### 4. SEO 최적화와 페이지 속도 향상
+  function Post() {
+    const router = useRouter();
+    const { id } = router.query;
 
-### 5. 데이터 페칭 전략
+    return (
+      <div>
+        <h1>Post ID: {id}</h1>
+      </div>
+    );
+  }
 
-### 6. 환경 변수 관리
+  export default Post;
+  ```
+
+  서버가 실행 중일 때, `http://localhost:3000/1`과 같은 URL에 접속하면 Post ID: 1이 표시됩니다. 여기서 1은 URL의 동적 파라미터로, `router.query`를 통해 접근할 수 있습니다.
+
+### 3. 레이아웃 & 메타데이터 설정
+
+- **설명**: Next.js에서는 페이지를 로딩할 때, 먼저 `Layout.jsx`에 정의된 Layout 컴포넌트를 렌더링합니다. 그 후, URL 경로에 맞는 페이지 컴포넌트를 찾아 해당 위치에 렌더링합니다. 예를 들어, 프로젝트 루트 디렉토리에 `Layout.jsx`와 `Home.jsx` 파일이 있다면, Next.js는 홈 페이지를 아래와 같이 렌더링합니다:
+  ```jsx
+  <Layout>
+    <Home />
+  </Layout>
+  ```
+
+  이 방식을 사용하면 모든 페이지에 공통으로 들어가는 요소들을 Layout 컴포넌트에서 한 번에 관리할 수 있습니다. 이 레이아웃 방식은 페이지의 헤더, 푸터, 사이드바 등을 포함해 모든 페이지에 적용되는 메타데이터와 구조적인 부분을 손쉽게 정의할 수 있는 장점이 있습니다.
+
+- **코드 예시**: 이제, 위에서 사용한 프로젝트에 Layout과 메타데이터를 설정해보겠습니다.
+  1. `Layout.jsx`를 `pages` 폴더 안에 생성을 한 후에 아래와 같이 코드를 작성해주시면 페이지 공통 레이아웃과 메타데이터를 정의합니다: 
+    ```jsx
+    export const metadata = {
+      title: "Test 1",
+      description: "This is a Test",
+    };
+
+    export default function RootLayout({ children }) {
+      return (
+        <html lang="en">
+          <body>
+            <h1>This is a Layout</h1>
+            <div>{children}</div>
+          </body>
+        </html>
+      );
+    }
+    ```
+- **설명**: 이 `Layout.jsx` 파일은 기본 레이아웃을 정의하며, 페이지에 공통으로 적용될 헤더와 푸터를 포함하고 있습니다. 또한 metadata 객체를 통해 메타데이터도 설정했으며, `<title>`과 `<meta name="description">`을 페이지의 `<head>` 태그에 넣어 SEO와 페이지 설명을 지정했습니다. `children` 속성은 각 페이지의 콘텐츠가 표시될 자리입니다.
+  
+- **요약**: Next.js의 레이아웃과 메타데이터 기능을 사용하면 공통 UI 요소를 쉽게 관리하고, 각 페이지에 맞는 메타데이터를 손쉽게 설정할 수 있습니다. 이를 통해 사용자 경험과 SEO를 개선할 수 있으며, 코드의 유지보수성도 높아집니다.
+
+### 4. Server Side Rendering (SSR)과 Client Side Rendering (CSR)
+
+#### Rendering이란? 
+Next.JS가 React 컴포넌트들을 가져온 후에 브라우저가 이해할 수 있는 HTML로 변환하는 작업을 말합니다. 
+
+#### Client Side Rendering (CSR)
+CSR은 브라우저 (client)가 직접 렌더링 작업을 수행하는 방식입니다. React는 (기본적으로 CSR을 사용함) JavaScript를 사용하여 컴포넌트를 HTML로 변환하여 화면에 표시합니다. 페이지 소스 코드는 비어 있지만, Chrome의 검사 도구(Inspection Tool)를 통해 렌더링된 HTML 태그들이 브라우저에 잘 나타나는 것을 확인할 수 있습니다.
+
+이 방식의 단점은 네트워크 연결이 끊기는 경우 발생합니다. 브라우저가 JavaScript 파일을 다운로드하지 못하면 소스 코드가 비어 있게 되어, 사용자는 빈 페이지를 보게 됩니다.
+
+그래서 만약 `useState`나 `useEffect`를 사용하게 되면 그 파일 상단에 `"use client"`. 
+
+#### Server Side Rendering (SSR)
+Next.js에서의 Server Side Rendering (SSR)은 React와 달리, 컴포넌트들이 서버 (Server)에서 미리 HTML로 변환된 상태로 사용자에게 전달됩니다. 이 때문에 브라우저에서 페이지 소스 코드를 확인하면, 컴포넌트들이 HTML 태그로 완전히 렌더링된 것을 볼 수 있습니다.
+
+SSR의 주요 이점은 다음과 같습니다:
+
+- 빠른 초기 로딩 속도: 서버에서 미리 생성된 HTML을 클라이언트에 전달하기 때문에, 초기 로딩이 빠르고 네트워크 속도가 느리거나 JavaScript가 비활성화된 환경에서도 콘텐츠가 정상적으로 표시됩니다.
+
+이처럼 Next.js의 SSR 기능을 통해, 사용자 경험과 SEO를 동시에 개선할 수 있습니다.
 
 ## Next.js와 백앤드
 
