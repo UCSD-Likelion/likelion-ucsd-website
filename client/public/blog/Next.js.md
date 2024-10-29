@@ -32,141 +32,245 @@ Next.js는 웹 개발에서 자주 사용되는 프레임워크로, 넷플릭스
 
 ## Next.js 시작하기
 
-Next.js를 시작하려면 먼저 프로젝트를 생성하고, 기본적으로 제공되는 템플릿을 실행해보는 것이 좋습니다. 아래 단계에 따라 Next.js 프로젝트를 설정하고, 간단한 파일을 작성해봅시다.
+Next.js를 시작하려면 프로젝트를 생성하고, App Router 구조의 기본 템플릿을 실행해보는 것이 좋습니다. 아래 단계에 따라 **Next.js 프로젝트 설정**과 **간단한 파일 작성**을 해보겠습니다.
 
 ### 1. **Next.js 설치하기**
 
-Next.js 프로젝트를 생성하기 위해 **create-next-app**이라는 명령어를 사용합니다. 이 명령어는 기본 설정과 폴더 구조를 자동으로 생성해 줍니다.
+Next.js 프로젝트를 생성하기 위해 **create-next-app** 명령어를 사용합니다. 이 명령어는 Next.js의 기본 설정과 폴더 구조를 자동으로 생성합니다.
 
 ```bash
 npx create-next-app my-next-app
 ```
 
 - `my-next-app`은 프로젝트 이름으로, 원하는 이름으로 변경할 수 있습니다.
-- 이 명령어는 필요한 모든 dependency(사용된 패키지들)를 설치하고, Next.js의 기본 템플릿을 생성합니다.
+- 이 명령어는 필요한 모든 **의존성(dependency)**을 설치하고, Next.js의 기본 템플릿을 생성합니다.
 
-![/nextjs1.png](/nextjs1.png)
+### 2. **App Router 프로젝트 구조 이해하기**
 
-**create-next-app**을 실행하면 여러가지 선택사항들이 나옵니다. 저희 실습에서는 위의 사진대로 선택해줍니다.
+App Router가 적용된 프로젝트의 폴더 구조는 아래와 같습니다:
 
-### 2. **프로젝트 구조 이해하기**
-
-프로젝트가 생성되면 아래와 같은 폴더 구조가 나타납니다:
-
-```markdown
+```lua
 my-next-app/
-├── pages/
-│ ├── index.js
-│ └── api/
-│ └── hello.js
+├── app/
+│   ├── favicon.ico
+│   ├── layout.js
+│   ├── page.js
+│   ├── globals.css
+│   └── page.module.css
 ├── public/
-│ └── favicon.ico
-├── styles/
-│ ├── globals.css
-│ └── Home.module.css
 ├── .gitignore
-├── next.config.js
+├── next.config.mjs
 ├── package.json
+├── package-lock.json
+├── jsconfig.json
 └── README.md
 ```
 
-- **pages/**: Next.js에서 **페이지를 정의하는 폴더**로, 파일 이름이 URL 경로에 매핑됩니다.
-  - **index.js**: 기본 홈 페이지 파일로, `/` 경로에 해당합니다.
-  - **api/**: 서버리스 함수(API)를 정의하는 폴더로, 백엔드 요청을 처리할 수 있습니다.
-- **public/**: 정적 파일을 저장하는 폴더입니다. 이 폴더의 파일들은 `/` 경로로 직접 접근할 수 있습니다.
-- **styles/**: CSS 파일을 저장하는 폴더로, 전역 스타일과 모듈화된 스타일을 포함합니다.
+- **app/**: Next.js의 **App Router 폴더**로, 페이지와 레이아웃을 정의합니다.
 
-#### 3. **개발 서버 실행하기**
+  - **favicon.ico**: 프로젝트의 **파비콘 파일**로, 브라우저 탭 아이콘으로 사용됩니다.
+  - **layout.js**: 공통 레이아웃을 정의하는 파일로, **app 폴더 내 모든 페이지**에 적용됩니다.
+    - 예를 들어, 헤더나 푸터를 포함하는 레이아웃을 설정할 수 있습니다.
+  - **page.js**: 기본 홈 페이지 파일로, **`/` 경로**에 매핑됩니다.
+  - **globals.css**: **전역 스타일**을 정의하는 CSS 파일로, 애플리케이션 전체에 적용됩니다.
+  - **page.module.css**: **모듈화된 CSS 파일**로, 특정 페이지에만 스타일을 적용할 수 있습니다.
 
-Next.js 앱을 로컬 환경에서 실행하려면, 생성된 프로젝트 디렉토리로 이동한 후, 다음 명령어를 입력합니다:
+- **public/**: **정적 파일**을 저장하는 폴더입니다. 이 폴더의 파일들은 `/` 경로로 직접 접근할 수 있습니다.
+
+  - 예를 들어, `public/image.png` 파일은 `/image.png` 경로로 접근 가능합니다.
+
+- **next.config.mjs**: Next.js의 **설정 파일**로, 환경 변수, 리다이렉트, 국제화 등의 설정을 정의합니다.
+
+- **package.json**: 프로젝트의 **의존성 정보**와 **스크립트**를 포함하는 파일입니다.
+
+- **jsconfig.json**: 프로젝트 내 **경로 별칭**을 정의하는 데 사용되며, JavaScript 프로젝트에 대한 설정 파일입니다.
+
+### 3. **개발 서버 실행하기**
+
+Next.js 앱을 로컬 환경에서 실행하려면, 생성된 프로젝트 디렉토리로 이동한 후 다음 명령어를 입력합니다:
 
 ```bash
 cd my-next-app
 npm run dev
 ```
 
-- 이 명령어를 실행하면 **개발 서버**가 시작되고, 브라우저에서 `http://localhost:3000`에 접속하면 기본 Next.js 페이지가 보입니다.
-- 개발 서버는 **자동 리로드**를 지원해, 코드가 변경될 때마다 페이지가 자동으로 갱신됩니다.
+- 이 명령어를 실행하면 **개발 서버**가 시작되며, 브라우저에서 `http://localhost:3000`에 접속하면 기본 Next.js 페이지가 보입니다.
+- 개발 서버는 **자동 리로드**를 지원하여, 코드 변경 시 페이지가 자동으로 갱신됩니다.
 
-#### 4. **기본 페이지 수정하기**
+### 4. **기본 페이지 수정하기**
 
-`pages/index.js` 파일을 열어 내용을 수정해보세요:
+App Router에서는 `app/page.js`가 홈 페이지로 설정됩니다. 이 파일을 열어 내용을 수정해보세요:
 
 ```jsx
 export default function Home() {
   return (
-    <div>
-      <h1>Hello, Next.js!</h1>
-      <p>This is your first Next.js project.</p>
+    <div style={{ textAlign: "center", padding: "2rem" }}>
+      <img
+        src="https://i.imgur.com/i7pdsjX.png"
+        alt="로고"
+        style={{ width: "120px", height: "100px" }}
+      />
+      <h1>안녕하세요, Next.js!</h1>
+      <p>이 프로젝트는 Next.js를 테스트하는 예제입니다.</p>
     </div>
   );
 }
 ```
 
-- 위와 같이 간단한 텍스트를 변경하고, 브라우저에서 새로고침하면 **자동으로 반영**되는 것을 확인할 수 있습니다.
+- 위와 같이 텍스트를 변경하고, 브라우저에서 새로고침하면 **자동으로 반영**되는 것을 확인할 수 있습니다.
 
-#### 5. **새로운 페이지 추가하기**
+위의 `app/page.js`를 수정하였으면, 이번에는 `app/layout.js`으로 들어가줍니다. 여기서 Navigation bar을 추가해보겠습니다. 이 파일을 열어 내용을 수정해보세요:
 
-Next.js의 기본 라우팅은 파일 시스템 기반으로 이루어집니다. 새로운 파일을 `pages/` 폴더에 추가하면, 그 파일이 URL 경로로 매핑됩니다.
+```jsx
+export default function RootLayout({ children }) {
+  return (
+    <html lang="ko">
+      <head>
+        <title>Next.js App Router 예제</title>
+      </head>
+      <body>
+        {/* 네비게이션 바 */}
+        <nav
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "#333",
+            padding: "1rem",
+          }}
+        >
+          <ul
+            style={{
+              display: "flex",
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+            }}
+          >
+            <li style={{ marginRight: "1rem" }}>
+              <a href="/" style={{ color: "#fff", textDecoration: "none" }}>
+                홈
+              </a>
+            </li>
+            <li style={{ marginRight: "1rem" }}>
+              <a
+                href="/about"
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                소개
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contact"
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                연락처
+              </a>
+            </li>
+          </ul>
+        </nav>
+        {children}
+      </body>
+    </html>
+  );
+}
+```
 
-1. **새로운 파일 생성**: `pages/about.js`를 생성하고, 아래 내용을 추가합니다:
-   ```jsx
-   export default function About() {
-     return (
-       <div>
-         <h1>About Page</h1>
-         <p>This is the about page of your Next.js app.</p>
-       </div>
-     );
-   }
-   ```
+### 5. **새로운 페이지 추가하기**
+
+App Router에서는 파일 시스템 기반으로 페이지가 설정됩니다. 새로운 페이지를 만들려면, **`app/` 폴더에 새 파일을 추가**하면 됩니다.
+
+1. **새로운 파일 생성**: `app/about/page.js`를 생성하고, 아래 내용을 추가합니다:
+
+```jsx
+export default function About() {
+  return (
+    <div style={{ textAlign: "center", padding: "2rem" }}>
+      <h1>소개 페이지</h1>
+      <p>이 페이지는 Next.js App Router를 사용하여 만든 소개 페이지입니다.</p>
+    </div>
+  );
+}
+```
+
 2. **URL 확인**: 브라우저에서 `http://localhost:3000/about`에 접속하면, 새로 만든 페이지가 표시됩니다.
 
-#### 6. **스타일 적용하기**
+3. 이번에는 위와 똑같은 방식으로 `app/contact/page.js`를 생성하고, 아래 내용을 추가합니다:
 
-Next.js에서는 CSS 파일을 통해 전역 스타일과 모듈화된 스타일을 적용할 수 있습니다.
+```jsx
+export default function Contact() {
+  return (
+    <div style={{ textAlign: "center", padding: "2rem" }}>
+      <h1>연락처 페이지</h1>
+      <p>문의 사항이 있으면 언제든지 연락주세요!</p>
+    </div>
+  );
+}
+```
+
+### 6. **스타일 적용하기**
+
+App Router에서도 전역 스타일과 모듈화된 스타일을 지원합니다.
 
 1. **전역 스타일 적용하기**
-   - `styles/globals.css` 파일을 수정하여 전역 스타일을 추가할 수 있습니다.
+
+   - `app/globals.css` 파일을 수정하여 전역 스타일을 추가할 수 있습니다.
+
    ```css
    body {
-     font-family: Arial, sans-serif;
+     font-family: "Arial", sans-serif;
      margin: 0;
      padding: 0;
      background-color: #f4f4f4;
    }
+
+   nav ul {
+     display: flex;
+     justify-content: center;
+   }
+
+   nav a:hover {
+     text-decoration: underline;
+   }
    ```
+
 2. **모듈화된 스타일 적용하기**
 
-   - Next.js는 **CSS 모듈**을 지원하여, 컴포넌트별로 독립적인 스타일을 적용할 수 있습니다.
-   - 예를 들어, `Home.module.css` 파일을 만들어 다음과 같이 작성합니다:
-     ```css
-     .title {
-       color: blue;
-       font-size: 2rem;
-     }
-     ```
-   - `pages/index.js`에서 CSS 모듈을 사용하여 스타일을 적용합니다:
+- Next.js의 **CSS 모듈**을 사용하여 컴포넌트별로 독립적인 스타일을 적용할 수 있습니다.
+- 예를 들어, `app/page.module.css` 파일을 만들어 다음과 같이 작성합니다:
 
-     ```jsx
-     import styles from "../styles/Home.module.css";
+  ```css
+  .title {
+    color: blue;
+    font-size: 2rem;
+  }
+  ```
 
-     export default function Home() {
-       return (
-         <div>
-           <h1 className={styles.title}>Hello, Next.js!</h1>
-         </div>
-       );
-     }
-     ```
+- `app/page.js`에서 CSS 모듈을 사용하여 스타일을 적용합니다:
 
-#### 7. **Next.js의 기본 개념 요약**
+  ```jsx
+  import styles from "./page.module.css";
 
-- Next.js는 **서버사이드 렌더링(SSR)**과 **정적 사이트 생성(SSG)**을 기본으로 제공하며, 파일 기반 라우팅을 지원합니다.
-- 기본 페이지를 생성하고, 브라우저에서 실시간으로 변경 사항을 확인할 수 있습니다.
+  export default function Home() {
+    return (
+      <div style={{ textAlign: "center", padding: "2rem" }}>
+        <img
+          src="https://i.imgur.com/i7pdsjX.png"
+          alt="로고"
+          style={{ width: "120px", height: "100px" }}
+        />
+        <h1 className={styles.title}>안녕하세요, Next.js!</h1>
+        <p>이 프로젝트는 Next.js를 테스트하는 예제입니다.</p>
+      </div>
+    );
+  }
+  ```
+
+### 7. **Next.js의 기본 개념 요약**
+
+- Next.js의 **App Router**는 **파일 시스템 기반 라우팅**과 **서버사이드 렌더링(SSR)**, **정적 사이트 생성(SSG)**을 지원합니다.
+- 기본 페이지를 생성하고, 실시간으로 변경 사항을 반영할 수 있습니다.
 - 스타일링은 **전역 CSS**와 **CSS 모듈**을 통해 쉽게 적용할 수 있습니다.
-
-이로써 Next.js의 초기 설정과 기본 파일 실행 방법을 익혔습니다. 이제 더 복잡한 기능을 다루기 전에, Next.js의 구조와 동작 원리에 대해 조금 더 익숙해질 수 있습니다.
 
 ## Next.js 기본 개념
 
@@ -175,55 +279,55 @@ Next.js에서는 CSS 파일을 통해 전역 스타일과 모듈화된 스타일
 - **설명**: Next.js는 React와 달리, 디렉터리 구조를 기반으로 라우팅이 자동으로 이루어집니다. 예를 들어, 프로젝트의 특정 폴더에 파일을 추가하면 해당 파일 이름을 URL로 접근할 수 있습니다. 기본적으로 `/pages` 폴더 안에 있는 파일들이 라우트 역할을 하며, 폴더 구조가 URL 경로를 결정합니다.
 - **코드 예시**:
 
-  1. **홈 페이지 (/)** 프로젝트 루트에 있는 `pages` 폴더 안에 `index.js` 파일을 생성해 아래와 같이 코드를 작성해 주세요:
+1. **홈 페이지 (/)** 프로젝트 루트에 있는 `pages` 폴더 안에 `index.js` 파일을 생성해 아래와 같이 코드를 작성해 주세요:
 
-    ```jsx
-    function Home() {
-      return(
-        <div>
-          <h1>This is home page</h1>
-        </div>
-      )
-    }
+```jsx
+function Home() {
+  return (
+    <div>
+      <h1>This is home page</h1>
+    </div>
+  );
+}
 
-    export default Home;
-    ```
+export default Home;
+```
 
-    `http://localhost:3000`으로 접속하면 "This is the home page"라는 텍스트가 표시됩니다. index.js 파일은 루트 경로(/)와 자동으로 매핑됩니다.
+`http://localhost:3000`으로 접속하면 "This is the home page"라는 텍스트가 표시됩니다. index.js 파일은 루트 경로(/)와 자동으로 매핑됩니다.
 
-  2. **소개 페이지 (/about)** `pages` 폴더 안에 `about.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요: 
-  
-    ```jsx
-    function About() {
-      return (
-        <div>
-          <h1>About Us</h1>
-        </div>
-      );
-    }
+2. **소개 페이지 (/about)** `pages` 폴더 안에 `about.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요:
 
-    export default About;
-    ```
+```jsx
+function About() {
+  return (
+    <div>
+      <h1>About Us</h1>
+    </div>
+  );
+}
 
-    `http://localhost:3000/about`으로 접속하면 "About Us" 페이지가 표시됩니다.
+export default About;
+```
 
-  3. **제품 페이지 (/products/item)** `pages` 폴더 안에 `products` 다이렉토리를 만든 후 `item.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요: 
+`http://localhost:3000/about`으로 접속하면 "About Us" 페이지가 표시됩니다.
 
-    ```jsx
-    function ProductItem() {
-    return (
-      <div>
-        <h1>Product Item</h1>
-      </div>
-      );
-    }
+3. **제품 페이지 (/products/item)** `pages` 폴더 안에 `products` 다이렉토리를 만든 후 `item.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요:
 
-    export default ProductItem;
-    ```
+```jsx
+function ProductItem() {
+  return (
+    <div>
+      <h1>Product Item</h1>
+    </div>
+  );
+}
 
-    `http://localhost:3000/products/item`으로 접속하면 "Product Item" 페이지가 표시됩니다.
-  
-  - **요약**: Next.js의 파일 기반 라우팅 덕분에 라우트 설정 없이도 파일과 폴더 이름에 따라 URL이 자동으로 매핑됩니다. 이 구조를 활용하면 유지보수가 용이하며 URL 경로 구조를 직관적으로 관리할 수 있습니다.
+export default ProductItem;
+```
+
+`http://localhost:3000/products/item`으로 접속하면 "Product Item" 페이지가 표시됩니다.
+
+- **요약**: Next.js의 파일 기반 라우팅 덕분에 라우트 설정 없이도 파일과 폴더 이름에 따라 URL이 자동으로 매핑됩니다. 이 구조를 활용하면 유지보수가 용이하며 URL 경로 구조를 직관적으로 관리할 수 있습니다.
 
 ### 2. 동적 라우팅 (Dynamic Routing)
 
@@ -232,7 +336,7 @@ Next.js에서는 CSS 파일을 통해 전역 스타일과 모듈화된 스타일
 - **코드 예시**: `pages` 폴더 안에 `[id].js` 파일을 생성한 뒤, 아래의 코드를 작성해 주세요:
 
   ```jsx
-  import { useRouter } from 'next/router';
+  import { useRouter } from "next/router";
 
   function Post() {
     const router = useRouter();
@@ -253,6 +357,7 @@ Next.js에서는 CSS 파일을 통해 전역 스타일과 모듈화된 스타일
 ### 3. 레이아웃 & 메타데이터 설정
 
 - **설명**: Next.js에서는 페이지를 로딩할 때, 먼저 `Layout.jsx`에 정의된 Layout 컴포넌트를 렌더링합니다. 그 후, URL 경로에 맞는 페이지 컴포넌트를 찾아 해당 위치에 렌더링합니다. 예를 들어, 프로젝트 루트 디렉토리에 `Layout.jsx`와 `Home.jsx` 파일이 있다면, Next.js는 홈 페이지를 아래와 같이 렌더링합니다:
+
   ```jsx
   <Layout>
     <Home />
@@ -262,41 +367,46 @@ Next.js에서는 CSS 파일을 통해 전역 스타일과 모듈화된 스타일
   이 방식을 사용하면 모든 페이지에 공통으로 들어가는 요소들을 Layout 컴포넌트에서 한 번에 관리할 수 있습니다. 이 레이아웃 방식은 페이지의 헤더, 푸터, 사이드바 등을 포함해 모든 페이지에 적용되는 메타데이터와 구조적인 부분을 손쉽게 정의할 수 있는 장점이 있습니다.
 
 - **코드 예시**: 이제, 위에서 사용한 프로젝트에 Layout과 메타데이터를 설정해보겠습니다.
-  1. `Layout.jsx`를 `pages` 폴더 안에 생성을 한 후에 아래와 같이 코드를 작성해주시면 페이지 공통 레이아웃과 메타데이터를 정의합니다: 
-    ```jsx
-    export const metadata = {
-      title: "Test 1",
-      description: "This is a Test",
-    };
 
-    export default function RootLayout({ children }) {
-      return (
-        <html lang="en">
-          <body>
-            <h1>This is a Layout</h1>
-            <div>{children}</div>
-          </body>
-        </html>
-      );
-    }
-    ```
+  1. `Layout.jsx`를 `pages` 폴더 안에 생성을 한 후에 아래와 같이 코드를 작성해주시면 페이지 공통 레이아웃과 메타데이터를 정의합니다:
+
+  ```jsx
+  export const metadata = {
+    title: "Test 1",
+    description: "This is a Test",
+  };
+
+  export default function RootLayout({ children }) {
+    return (
+      <html lang="en">
+        <body>
+          <h1>This is a Layout</h1>
+          <div>{children}</div>
+        </body>
+      </html>
+    );
+  }
+  ```
+
 - **설명**: 이 `Layout.jsx` 파일은 기본 레이아웃을 정의하며, 페이지에 공통으로 적용될 헤더와 푸터를 포함하고 있습니다. 또한 metadata 객체를 통해 메타데이터도 설정했으며, `<title>`과 `<meta name="description">`을 페이지의 `<head>` 태그에 넣어 SEO와 페이지 설명을 지정했습니다. `children` 속성은 각 페이지의 콘텐츠가 표시될 자리입니다.
-  
 - **요약**: Next.js의 레이아웃과 메타데이터 기능을 사용하면 공통 UI 요소를 쉽게 관리하고, 각 페이지에 맞는 메타데이터를 손쉽게 설정할 수 있습니다. 이를 통해 사용자 경험과 SEO를 개선할 수 있으며, 코드의 유지보수성도 높아집니다.
 
 ### 4. Server Side Rendering (SSR)과 Client Side Rendering (CSR)
 
-#### Rendering이란? 
-Next.JS가 React 컴포넌트들을 가져온 후에 브라우저가 이해할 수 있는 HTML로 변환하는 작업을 말합니다. 
+#### Rendering이란?
+
+Next.JS가 React 컴포넌트들을 가져온 후에 브라우저가 이해할 수 있는 HTML로 변환하는 작업을 말합니다.
 
 #### Client Side Rendering (CSR)
+
 CSR은 브라우저 (client)가 직접 렌더링 작업을 수행하는 방식입니다. React는 (기본적으로 CSR을 사용함) JavaScript를 사용하여 컴포넌트를 HTML로 변환하여 화면에 표시합니다. 페이지 소스 코드는 비어 있지만, Chrome의 검사 도구(Inspection Tool)를 통해 렌더링된 HTML 태그들이 브라우저에 잘 나타나는 것을 확인할 수 있습니다.
 
 이 방식의 단점은 네트워크 연결이 끊기는 경우 발생합니다. 브라우저가 JavaScript 파일을 다운로드하지 못하면 소스 코드가 비어 있게 되어, 사용자는 빈 페이지를 보게 됩니다.
 
-그래서 만약 `useState`나 `useEffect`를 사용하게 되면 그 파일 상단에 `"use client"`. 
+그래서 만약 `useState`나 `useEffect`를 사용하게 되면 그 파일 상단에 `"use client"`.
 
 #### Server Side Rendering (SSR)
+
 Next.js에서의 Server Side Rendering (SSR)은 React와 달리, 컴포넌트들이 서버 (Server)에서 미리 HTML로 변환된 상태로 사용자에게 전달됩니다. 이 때문에 브라우저에서 페이지 소스 코드를 확인하면, 컴포넌트들이 HTML 태그로 완전히 렌더링된 것을 볼 수 있습니다.
 
 SSR의 주요 이점은 다음과 같습니다:
@@ -320,3 +430,7 @@ SSR의 주요 이점은 다음과 같습니다:
 ## Next.js Document
 
 ## Next.js 실습과제
+
+```
+
+```
