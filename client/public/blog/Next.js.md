@@ -274,12 +274,18 @@ App Router에서도 전역 스타일과 모듈화된 스타일을 지원합니�
 
 ## Next.js 기본 개념
 
+확인해볼게요! App Router에 맞춰 설명을 수정하고, Page Router로 작성된 부분을 App Router 버전으로 업데이트하겠습니다.
+
+---
+
+## Next.js 기본 개념
+
 ### 1. 파일 기반 라우팅
 
-- **설명**: Next.js는 React와 달리, 디렉터리 구조를 기반으로 라우팅이 자동으로 이루어집니다. 예를 들어, 프로젝트의 특정 폴더에 파일을 추가하면 해당 파일 이름을 URL로 접근할 수 있습니다. 기본적으로 `/pages` 폴더 안에 있는 파일들이 라우트 역할을 하며, 폴더 구조가 URL 경로를 결정합니다.
+- **설명**: Next.js의 App Router에서는 `app/` 폴더 내의 파일과 폴더 구조를 기반으로 라우팅이 자동으로 이루어집니다. 파일이나 폴더 이름에 따라 URL이 결정됩니다.
 - **코드 예시**:
 
-1. **홈 페이지 (/)** 프로젝트 루트에 있는 `app` 폴더 안에 `page.jsx` 파일을 생성해 아래와 같이 코드를 작성해 주세요:
+1. **홈 페이지 (/)** 프로젝트 루트에 있는 `app` 폴더 안에 `page.js` 파일을 생성해 아래와 같이 코드를 작성해 주세요:
 
 ```jsx
 function Home() {
@@ -293,9 +299,9 @@ function Home() {
 export default Home;
 ```
 
-`http://localhost:3000`으로 접속하면 "This is the home page"라는 텍스트가 표시됩니다. index.js 파일은 루트 경로(/)와 자동으로 매핑됩니다.
+`http://localhost:3000`으로 접속하면 "This is home page"라는 텍스트가 표시됩니다. `app/page.js` 파일은 루트 경로(`/`)와 매핑됩니다.
 
-2. **소개 페이지 (/about)** `about` 폴더 안에 `page.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요:
+2. **소개 페이지 (/about)** `app/about/` 폴더 안에 `page.js` 파일을 생성해 아래와 같이 코드를 작성해주세요:
 
 ```jsx
 function About() {
@@ -311,7 +317,7 @@ export default About;
 
 `http://localhost:3000/about`으로 접속하면 "About Us" 페이지가 표시됩니다.
 
-3. **제품 페이지 (/products/item)** `app` 폴더 안에 `products/item` 다이렉토리를 만든 후 `page.jsx` 파일을 생성해 아래와 같이 코드를 작성해주세요:
+3. **제품 페이지 (/products/item)** `app/products/item/` 폴더를 만든 후 `page.js` 파일을 생성해 아래와 같이 코드를 작성해주세요:
 
 ```jsx
 function ProductItem() {
@@ -327,20 +333,17 @@ export default ProductItem;
 
 `http://localhost:3000/products/item`으로 접속하면 "Product Item" 페이지가 표시됩니다.
 
-- **요약**: Next.js의 파일 기반 라우팅 덕분에 라우트 설정 없이도 파일과 폴더 이름에 따라 URL이 자동으로 매핑됩니다. 이 구조를 활용하면 유지보수가 용이하며 URL 경로 구조를 직관적으로 관리할 수 있습니다.
+- **요약**: Next.js의 App Router에서는 파일과 폴더 이름에 따라 URL이 자동으로 매핑됩니다. 이 구조를 활용하면 유지보수가 용이하며 URL 경로를 직관적으로 관리할 수 있습니다.
 
 ### 2. 동적 라우팅 (Dynamic Routing)
 
-- **설명**: Next.js에서는 동적 경로를 만들어 다양한 URL을 처리할 수 있습니다. `[]` 문법을 사용해 폴더나 파일 이름에 변수처럼 작동하는 경로를 지정하면 됩니다.
+- **설명**: Next.js의 App Router에서는 동적 경로를 만들기 위해 **`[]` 문법**을 사용합니다. 이를 통해 다양한 URL을 처리할 수 있습니다.
 
-- **코드 예시**: `app` 폴더 안에 `[id].js` 파일을 생성한 뒤, 아래의 코드를 작성해 주세요:
+- **코드 예시**: `app/posts/[id]/page.js` 파일을 생성한 뒤, 아래의 코드를 작성해 주세요:
 
   ```jsx
-  import { useRouter } from "next/router";
-
-  function Post() {
-    const router = useRouter();
-    const { id } = router.query;
+  export default function Post({ params }) {
+    const { id } = params;
 
     return (
       <div>
@@ -348,27 +351,15 @@ export default ProductItem;
       </div>
     );
   }
-
-  export default Post;
   ```
 
-  서버가 실행 중일 때, `http://localhost:3000/1`과 같은 URL에 접속하면 Post ID: 1이 표시됩니다. 여기서 1은 URL의 동적 파라미터로, `router.query`를 통해 접근할 수 있습니다.
+  `http://localhost:3000/posts/1`과 같은 URL에 접속하면 "Post ID: 1"이 표시됩니다. 여기서 `1`은 URL의 동적 파라미터로, `params`를 통해 접근할 수 있습니다.
 
 ### 3. 레이아웃 & 메타데이터 설정
 
-- **설명**: Next.js에서는 페이지를 로딩할 때, 먼저 `layout.jsx`에 정의된 Layout 컴포넌트를 렌더링합니다. 그 후, URL 경로에 맞는 페이지 컴포넌트를 찾아 해당 위치에 렌더링합니다. 예를 들어, 프로젝트 루트 디렉토리에 `Layout.jsx`와 `Home.jsx` 파일이 있다면, Next.js는 홈 페이지를 아래와 같이 렌더링합니다:
+- **설명**: Next.js의 App Router에서는 **`layout.js`** 파일을 통해 공통 레이아웃을 설정합니다. 모든 페이지에서 공유되는 구조적 요소를 정의하며, 메타데이터도 설정할 수 있습니다.
 
-  ```jsx
-  <Layout>
-    <Home />
-  </Layout>
-  ```
-
-  이 방식을 사용하면 모든 페이지에 공통으로 들어가는 요소들을 Layout 컴포넌트에서 한 번에 관리할 수 있습니다. 이 레이아웃 방식은 페이지의 헤더, 푸터, 사이드바 등을 포함해 모든 페이지에 적용되는 메타데이터와 구조적인 부분을 손쉽게 정의할 수 있는 장점이 있습니다.
-
-- **코드 예시**: 이제, 위에서 사용한 프로젝트에 Layout과 메타데이터를 설정해보겠습니다.
-
-  1. `Layout.jsx`를 `app` 폴더 안에 생성을 한 후에 아래와 같이 코드를 작성해주시면 페이지 공통 레이아웃과 메타데이터를 정의합니다:
+- **코드 예시**: 프로젝트의 `app/layout.js` 파일을 아래와 같이 작성합니다:
 
   ```jsx
   export const metadata = {
@@ -381,19 +372,17 @@ export default ProductItem;
       <html lang="en">
         <body>
           <h1>This is a Layout</h1>
-          <div>{children}</div>
+          {children}
         </body>
       </html>
     );
   }
   ```
 
-  이 뿐만 아니라 특정 경로(about 페이지 등)에 다른 레이아웃을 적용할 수도 있습니다. app/about 폴더 안에 layout.jsx 파일을 생성하고 다음과 같이 작성합니다:
-
-  2. 또 다른 `layout.jsx` 파일을 `about` 폴더 안에 생성합니다:
+  특정 경로에 다른 레이아웃을 적용하려면 해당 폴더에 `layout.js` 파일을 생성합니다. 예를 들어, `app/about/layout.js` 파일을 아래와 같이 작성합니다:
 
   ```jsx
-  const metadata = {
+  export const metadata = {
     title: "About",
     description: "This is the about page",
   };
@@ -402,72 +391,149 @@ export default ProductItem;
     return (
       <div>
         <h1>About Layout</h1>
-        <div>{children}</div>
+        {children}
       </div>
     );
   }
   ```
 
-  `http://localhost:3000/about`에 접속하게 되면 "About Layout"이 잘 표시되지만 `http://localhost:3000`에는 표시 안되는 걸 보실 수 있습니다.
-
-- **설명**: 이 `layout.jsx` 파일은 기본 레이아웃을 정의하며, 페이지에 공통으로 적용될 헤더와 푸터를 포함하고 있습니다. 또한 metadata 객체를 통해 메타데이터도 설정했으며, `<title>`과 `<meta name="description">`을 페이지의 `<head>` 태그에 넣어 SEO와 페이지 설명을 지정했습니다. `children` 속성은 각 페이지의 콘텐츠가 표시될 자리입니다.
-- **요약**: Next.js의 레이아웃과 메타데이터 기능을 사용하면 공통 UI 요소를 쉽게 관리하고, 각 페이지에 맞는 메타데이터를 손쉽게 설정할 수 있습니다. 이를 통해 사용자 경험과 SEO를 개선할 수 있으며, 코드의 유지보수성도 높아집니다.
+- **요약**: Next.js의 App Router는 공통 UI 요소와 메타데이터 설정을 레이아웃 파일을 통해 관리합니다. 이를 통해 사용자 경험과 SEO를 동시에 개선할 수 있으며, 코드의 유지보수성도 높아집니다.
 
 ### 4. Server Side Rendering (SSR)과 Client Side Rendering (CSR)
 
-#### Rendering이란?
-
-Next.JS가 React 컴포넌트들을 가져온 후에 브라우저가 이해할 수 있는 HTML로 변환하는 작업을 말합니다.
-
 #### Client Side Rendering (CSR)
 
-CSR은 브라우저 (client)가 직접 렌더링 작업을 수행하는 방식입니다. React는 (기본적으로 CSR을 사용함) JavaScript를 사용하여 컴포넌트를 HTML로 변환하여 화면에 표시합니다. 페이지 소스 코드는 비어 있지만, Chrome의 검사 도구(Inspection Tool)를 통해 렌더링된 HTML 태그들이 브라우저에 잘 나타나는 것을 확인할 수 있습니다.
+- **설명**: CSR은 브라우저가 직접 렌더링 작업을 수행하는 방식으로, React 컴포넌트를 클라이언트에서 렌더링합니다.
+- **코드 예시**: `app/counter/page.js` 파일을 생성하고, 아래 코드를 작성합니다:
 
-이 방식의 단점은 네트워크 연결이 끊기는 경우 발생합니다. 브라우저가 JavaScript 파일을 다운로드하지 못하면 소스 코드가 비어 있게 되어, 사용자는 빈 페이지를 보게 됩니다.
+  ```jsx
+  "use client";
 
-그래서 만약 `useState`나 `useEffect`를 사용하게 되면 그 파일 상단에 `"use client";`를 작성해야합니다.
+  import { useState } from "react";
 
-1. 같은 프로젝트의 `app` 폴더 안에 `ounter` 폴더을 생성한 후, `page.jsx` 파일을 만들고 아래 코드를 작성해 주세요:
+  export default function Counter() {
+    const [count, setCount] = useState(0);
 
-   ```jsx
-   "use client";
+    return (
+      <div>
+        <h1>Client Side Rendering Example</h1>
+        <p>Count: {count}</p>
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+      </div>
+    );
+  }
+  ```
 
-   import React, { useState, useEffect } from "react";
-
-   function Counter() {
-     const [count, setCount] = useState(0);
-
-     useEffect(() => {
-       console.log("Component mounted or updated");
-     }, [count]);
-
-     const handleIncrement = () => {
-       setCount(count + 1);
-     };
-
-     return (
-       <div>
-         <h1>Client Side Rendering Example</h1>
-         <p>Count: {count}</p>
-         <button onClick={handleIncrement}>Increment</button>
-       </div>
-     );
-   }
-
-   export default Counter;
-   ```
-
-   이 페이지에서는 `useEffect`와 `useState`를 모두 사용하므로, `"use client";` 지시어가 없으면 Next.js에서 컴파일 에러가 발생합니다.
+  `"use client";`를 추가해 클라이언트 전용 컴포넌트임을 명시합니다.
 
 #### Server Side Rendering (SSR)
 
-Next.js에서의 Server Side Rendering (SSR)은 React와 달리, 컴포넌트들이 서버 (Server)에서 미리 HTML로 변환된 상태로 사용자에게 전달됩니다. 이 때문에 브라우저에서 페이지 소스 코드를 확인하면, 컴포넌트들이 HTML 태그로 완전히 렌더링된 것을 볼 수 있습니다.
+- **설명**: Next.js의 App Router에서는 **서버에서 페이지를 렌더링**하고 HTML로 변환된 상태로 클라이언트에 전달합니다.
+- **코드 예시**: `app/server-side/page.js` 파일을 생성하고, 아래 코드를 작성합니다:
 
-SSR의 주요 이점은 다음과 같습니다:
+  ```jsx
+  export const dynamic = "force-dynamic";
 
-- 빠른 초기 로딩 속도: 서버에서 미리 생성된 HTML을 클라이언트에 전달하기 때문에, 초기 로딩이 빠르고 네트워크 속도가 느리거나 JavaScript가 비활성화된 환경에서도 콘텐츠가 정상적으로 표시됩니다.
+  export default async function ServerSidePage() {
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    const data = await res.json();
 
-이처럼 Next.js의 SSR 기능을 통해, 사용자 경험과 SEO를 동시에 개선할 수 있습니다.
+    return (
+      <div>
+        <h1>Server Side Rendering Example</h1>
+        <p>Title: {data.title}</p>
+      </div>
+    );
+  }
+  ```
+
+  여기서 `dynamic` 속성을 사용해 페이지가 SSR로 동작하도록 강제합니다.
+
+### 5. Vercel 배포
+
+Vercel은 Next.js의 공식 배포 플랫폼으로, 빠르고 안정적인 Next.js 배포를 지원합니다.
+
+#### Vercel 배포 단계
+
+1. **Vercel 계정 생성**
+
+   - [Vercel 웹사이트](https://vercel.com/)에서 계정을 생성합니다.
+
+2. **Next.js 프로젝트 연결**
+
+   - 프로젝트를 GitHub에 업로드한 후, Vercel에서 **“New Project”**를 선택하고 GitHub 리포지토리를 연결합니다.
+
+3. **배포 진행**
+
+   - 배포 설정을 확인하고, **“Deploy”** 버튼을 클릭합니다.
+
+4. **배포 완료**
+   - 배포가 완료되면 **배포 URL**이 생성됩니다. 예: `https://your-project.vercel.app`
+
+#### Vercel의 주요 기능
+
+- **자동 배포**: Git에 커밋을 푸시하면 자동으로 배포가 갱신됩니다.
+- **환경 변수 관리**: Vercel 대시보드에서 환경 변수를 설정할 수 있습니다.
+
+## **Next.js 기본 개념 실습 문제 (App Router)**
+
+다음은 **App Router 구조**를 기반으로 한 Next.js의 각 개념을 이해하기 위한 실습 문제입니다. 문제에 대한 구체적인 코드 해답은 주어지지 않았으니, 스스로 해결해 보세요!
+
+---
+
+### **1. 파일 기반 라우팅 실습**
+
+#### **문제 1: 홈 페이지 구현**
+
+- **목표**: `app/page.js` 파일을 생성하고 "Welcome to Next.js!"라는 텍스트가 표시되는 홈 페이지를 구현해 보세요.
+- **힌트**: `app/page.js`는 루트 경로(`/`)와 매핑됩니다.
+
+#### **문제 2: 소개 페이지 추가**
+
+- **목표**: `app/about/page.js` 파일을 생성하고 "This is the About Page"라는 텍스트가 표시되는 소개 페이지를 추가해 보세요.
+- **힌트**: 브라우저에서 `/about` 경로로 접속해 페이지를 확인할 수 있습니다.
+
+#### **문제 3: 다단계 경로 구현**
+
+- **목표**: `app/products/item/page.js` 파일을 생성하고 "Product Details"라는 텍스트가 표시되는 페이지를 구현해 보세요.
+- **힌트**: `/products/item` URL 경로로 접속하면 해당 페이지가 표시되어야 합니다.
+
+---
+
+### **2. 동적 라우팅 (Dynamic Routing) 실습**
+
+#### **문제 4: 동적 블로그 포스트 페이지 만들기**
+
+- **목표**: `app/posts/[id]/page.js` 파일을 생성하고, URL의 id 값을 받아 "Post ID: {id}"라는 텍스트가 표시되도록 해 보세요.
+- **힌트**: `useRouter` 대신, **params**를 활용해 URL 파라미터에서 id 값을 가져올 수 있습니다. `/posts/123`과 같은 URL로 접속하면 "Post ID: 123"이 나타나야 합니다.
+
+---
+
+### **3. 레이아웃 & 메타데이터 설정 실습**
+
+#### **문제 5: 공통 레이아웃 적용**
+
+- **목표**: `app/layout.js` 파일을 생성하고, 모든 페이지에 "My Next.js App"이라는 공통 헤더를 추가해 보세요.
+- **힌트**: `app/layout.js`는 모든 페이지의 공통 레이아웃을 설정하는 데 사용됩니다.
+
+#### **문제 6: 메타데이터 설정**
+
+- **목표**: `app/layout.js` 파일에서 **메타데이터(예: 제목, 설명)**를 추가해 보세요. 페이지의 `<head>` 태그에 `<title>`과 `<meta>`를 설정합니다.
+- **힌트**: `export const metadata` 객체를 사용하여 메타데이터를 설정할 수 있습니다.
+
+---
+
+### **4. Server Side Rendering (SSR)과 Client Side Rendering (CSR) 실습**
+
+#### **문제 7: CSR 페이지 구현**
+
+- **목표**: `app/counter/page.js` 파일을 생성하고, `useState`와 `useEffect`를 사용해 클라이언트 사이드에서 로딩되는 간단한 카운터 페이지를 구현해 보세요.
+- **힌트**: `"use client"` 문구를 파일의 최상단에 추가해 클라이언트 렌더링을 명시하세요.
+
+#### **문제 8: SSR 페이지 구현**
+
+- **목표**: `app/server-side/page.js` 파일을 생성하고, Next.js의 `getServerSideProps`에 해당하는 **async 함수**를 사용해 서버에서 데이터를 가져와 렌더링하는 페이지를 구현해 보세요.
+- **힌트**: 이 함수 내에서 API 호출을 시뮬레이션하여 서버에서 데이터를 받아오는 방식을 연습해 보세요.
 
 ## Next.js와 백앤드
 
@@ -478,8 +544,6 @@ SSR의 주요 이점은 다음과 같습니다:
 ### 3. 인증 및 권한 관리
 
 ### 4. 클라이언트와 서버 통신(CSR)
-
-### 5. Vercel 배포와 서버리스 함수
 
 ## Next.js Document
 
