@@ -425,7 +425,39 @@ CSR은 브라우저 (client)가 직접 렌더링 작업을 수행하는 방식�
 
 이 방식의 단점은 네트워크 연결이 끊기는 경우 발생합니다. 브라우저가 JavaScript 파일을 다운로드하지 못하면 소스 코드가 비어 있게 되어, 사용자는 빈 페이지를 보게 됩니다.
 
-그래서 만약 `useState`나 `useEffect`를 사용하게 되면 그 파일 상단에 `"use client"`.
+그래서 만약 `useState`나 `useEffect`를 사용하게 되면 그 파일 상단에 `"use client";`를 작성해야합니다.
+
+1. 같은 프로젝트의 `app` 폴더 안에 `ounter` 폴더을 생성한 후, `page.jsx` 파일을 만들고 아래 코드를 작성해 주세요:
+
+   ```jsx
+   "use client";
+
+   import React, { useState, useEffect } from "react";
+
+   function Counter() {
+     const [count, setCount] = useState(0);
+
+     useEffect(() => {
+       console.log("Component mounted or updated");
+     }, [count]);
+
+     const handleIncrement = () => {
+       setCount(count + 1);
+     };
+
+     return (
+       <div>
+         <h1>Client Side Rendering Example</h1>
+         <p>Count: {count}</p>
+         <button onClick={handleIncrement}>Increment</button>
+       </div>
+     );
+   }
+
+   export default Counter;
+   ```
+
+   이 페이지에서는 `useEffect`와 `useState`를 모두 사용하므로, `"use client";` 지시어가 없으면 Next.js에서 컴파일 에러가 발생합니다.
 
 #### Server Side Rendering (SSR)
 
