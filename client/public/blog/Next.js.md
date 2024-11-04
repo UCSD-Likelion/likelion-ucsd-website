@@ -582,9 +582,8 @@ Vercel은 Next.js의 공식 배포 플랫폼으로, 빠르고 안정적인 Next.
    - API는 백엔드가 프론트엔드와 데이터를 주고받을 수 있도록 해주는 인터페이스입니다. 클라이언트는 API를 통해 서버에 요청을 보내고, 서버는 API를 통해 데이터를 반환합니다. API는 주로 **REST API**나 **GraphQL** 같은 형태로 제공되며, 클라이언트가 백엔드의 기능을 쉽게 사용할 수 있도록 도와줍니다.
 
 4. **비즈니스 로직(Business Logic)**:
-   - 비즈니스 로직은 애플리케이션이 수행해야 하는 핵심 기능이나 규칙을 정의합니다. 예를 들어, 온라인 쇼핑몰에서 장바구니에 물건을 추가하는 기능, 결제하는 절차, 할인 조건 등을 처리하는 것은 비즈니스 로직에 속합니다. 백엔드는 이러한 비즈니스 로직을 구현해 클라이언트가 요청하는 작업을 수행합니다.
 
----
+   - 비즈니스 로직은 애플리케이션이 수행해야 하는 핵심 기능이나 규칙을 정의합니다. 예를 들어, 온라인 쇼핑몰에서 장바구니에 물건을 추가하는 기능, 결제하는 절차, 할인 조건 등을 처리하는 것은 비즈니스 로직에 속합니다. 백엔드는 이러한 비즈니스 로직을 구현해 클라이언트가 요청하는 작업을 수행합니다.
 
 #### 백엔드의 역할 요약
 
@@ -595,7 +594,7 @@ Vercel은 Next.js의 공식 배포 플랫폼으로, 빠르고 안정적인 Next.
 
 백엔드는 이러한 기능을 통해 사용자가 보이지 않는 곳에서 데이터를 관리하고, 클라이언트가 요구하는 기능을 원활하게 제공할 수 있도록 돕는 중요한 구성 요소입니다.
 
-![/nextjs3.png](/nextjs3.png)
+![백엔드의 역할](/nextjs3.png)
 
 ---
 
@@ -619,21 +618,23 @@ App Router 방식의 **API Routes**는 **`app/api`** 디렉토리에 파일을 �
    }
    ```
 
-이 `GET` 메서드는 클라이언트가 `/api/hello`로 요청을 보낼 때 호출되며, 상태 코드 200과 함께 `Hello, World!` 메시지를 JSON 형식으로 반환합니다.
+   이 `GET` 메서드는 클라이언트가 `/api/hello`로 요청을 보낼 때 호출되며, 상태 코드 200과 함께 `Hello, World!` 메시지를 JSON 형식으로 반환합니다.
 
 2. **클라이언트에서 요청 보내기**
 
    클라이언트에서 `/api/hello`로 요청을 보내려면, `fetch` 메서드를 사용합니다. 이 코드는 컴포넌트의 `useEffect`나 버튼 클릭 시 실행될 수 있으며, 브라우저 콘솔에 API 응답을 출력합니다.
 
    ```javascript
-   // 클라이언트 코드 예시 (예: Next.js의 페이지 컴포넌트 안)
+   // app/hello/page.js
+   "use client";
    import { useEffect } from "react";
 
    function HelloWorld() {
      useEffect(() => {
        fetch("/api/hello")
          .then((response) => response.json())
-         .then((data) => console.log(data.message)); // 콘솔에 "Hello, World!" 출력
+         .then((data) => console.log(data.message)) // 콘솔에 "Hello, World!" 출력
+         .catch((error) => console.error("Error fetching data:", error)); // 에러 핸들링 추가
      }, []);
 
      return <div>Check the console for the message from the server.</div>;
@@ -652,9 +653,353 @@ App Router 방식의 **API Routes**는 **`app/api`** 디렉토리에 파일을 �
 
 ### 3. HTTP 메서드
 
-#### 개념 설명
+**HTTP 메서드**는 클라이언트가 서버에 요청을 보낼 때 사용하는 방식입니다. 주로 사용되는 HTTP 메서드는 다음과 같습니다:
 
-(개념 설명은 동일하므로 생략합니다.)
+- **GET**: 서버에서 데이터를 요청할 때 사용합니다. 예를 들어, 사용자의 정보를 요청할 때 사용합니다.
+- **POST**: 새로운 데이터를 서버에 추가할 때 사용합니다. 회원가입을 통해 사용자의 정보를 서버에 저장할 때 POST를 사용합니다.
+- **PUT**: 서버에 있는 데이터를 수정할 때 사용합니다. 예를 들어, 사용자가 프로필 정보를 업데이트할 때 사용됩니다.
+- **DELETE**: 데이터를 삭제할 때 사용합니다.
+
+HTTP 메서드는 클라이언트와 서버가 데이터를 효율적으로 주고받을 수 있도록 돕는 중요한 개념입니다.
+
+**상황**: 당신은 새로운 계정을 만들기 위해 소셜 미디어 앱에 가입하려고 합니다. 회원가입을 하려면 이름, 이메일, 비밀번호 등의 정보를 서버에 전달해야 합니다.  
+**질문**: 이 상황에서 사용해야 할 HTTP 메서드는 무엇인가요?  
+**힌트**: 새로운 데이터를 서버에 추가할 때 사용하는 메서드입니다.
+
+<details>
+<summary>정답 보기</summary>
+POST 메서드를 사용해야 합니다. POST는 서버에 새로운 데이터를 추가할 때 사용됩니다.
+</details>
+
+**상황**: 당신은 온라인 도서관에서 책의 정보를 조회하려고 합니다. 특정 책의 제목과 저자 정보를 확인하고 싶습니다.  
+**질문**: 이 상황에서 사용해야 할 HTTP 메서드는 무엇인가요?  
+**힌트**: 이 메서드는 서버에서 데이터를 가져오기 위해 사용됩니다.
+
+<details>
+<summary>정답 보기</summary>
+GET 메서드를 사용해야 합니다. GET은 서버에서 데이터를 요청할 때 사용됩니다.
+</details>
+
+**상황**: 당신은 사용하지 않는 오래된 게시물을 삭제하고 싶습니다. 더 이상 필요하지 않은 데이터를 서버에서 제거하고자 합니다.  
+**질문**: 이 상황에서 사용해야 할 HTTP 메서드는 무엇인가요?  
+**힌트**: 서버에서 데이터를 삭제할 때 사용하는 메서드입니다.
+
+<details>
+<summary>정답 보기</summary>
+DELETE 메서드를 사용해야 합니다. DELETE는 서버에 있는 데이터를 삭제할 때 사용됩니다.
+</details>
+
+**상황**: 당신은 온라인 쇼핑몰에서 배송 주소를 잘못 입력했다는 것을 깨닫고 이를 수정하려고 합니다. 이미 입력된 주소 정보를 수정해야 합니다.  
+**질문**: 이 상황에서 사용해야 할 HTTP 메서드는 무엇인가요?  
+**힌트**: 서버에 있는 데이터를 수정할 때 사용하는 메서드입니다.
+
+<details>
+<summary>정답 보기</summary>
+PUT 메서드를 사용해야 합니다. PUT은 서버에 있는 데이터를 수정할 때 사용됩니다.
+</details>
+
+#### HTTP 테스팅
+
+```javascript
+// app/api/test/data.js
+
+// 여러 개의 데이터를 저장할 배열
+export const data = [];
+```
+
+```javascript
+// app/api/test/route.js
+import { data } from "./data";
+
+export async function GET(req) {
+  // 모든 데이터 가져오기
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+export async function POST(req) {
+  // 새로운 데이터 추가
+  const { message } = await req.json();
+  const newItem = { id: Date.now().toString(), message }; // 고유한 id를 가진 새 항목 추가
+  data.push(newItem);
+  return new Response(
+    JSON.stringify({ message: "Data added successfully", item: newItem }),
+    {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+}
+```
+
+```javascript
+// app/api/test/[id]/route.js
+import { data } from "../data";
+
+export async function PUT(req, { params }) {
+  const { id } = params;
+  const { message } = await req.json();
+
+  const itemIndex = data.findIndex((item) => item.id === id);
+
+  if (itemIndex !== -1) {
+    data[itemIndex].message = message;
+    return new Response(
+      JSON.stringify({
+        message: "Data updated successfully",
+        item: data[itemIndex],
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  } else {
+    return new Response(JSON.stringify({ message: "Item not found" }), {
+      status: 404,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
+
+export async function DELETE(req, { params }) {
+  const { id } = params;
+
+  const itemIndex = data.findIndex((item) => item.id === id);
+
+  if (itemIndex !== -1) {
+    const deletedItem = data.splice(itemIndex, 1); // 해당 id의 항목 삭제
+    return new Response(
+      JSON.stringify({
+        message: "Data deleted successfully",
+        item: deletedItem,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  } else {
+    return new Response(JSON.stringify({ message: "Item not found" }), {
+      status: 404,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
+```
+
+다음 코드는 `/app/test/page.js` 파일에 작성하여, 버튼을 클릭해 각 메서드를 호출하고 결과를 확인할 수 있는 UI를 제공합니다.
+
+```javascript
+"use client";
+
+import { useState } from "react";
+
+export default function TestAPI() {
+  const [response, setResponse] = useState([]);
+  const [id, setId] = useState(""); // ID input 상태
+  const [message, setMessage] = useState(""); // Message input 상태 (POST 및 PUT용)
+
+  const fetchData = async () => {
+    const res = await fetch("/api/test");
+    const data = await res.json();
+    setResponse(data); // 데이터 배열로 설정
+  };
+
+  const postData = async () => {
+    if (!message) {
+      alert("Please enter a message for POST request.");
+      return;
+    }
+    const res = await fetch("/api/test", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }),
+    });
+    const data = await res.json();
+    alert(`POST Response: ${JSON.stringify(data)}`);
+    fetchData(); // 데이터 갱신
+  };
+
+  const putData = async () => {
+    if (!id) {
+      alert("Please enter an ID for PUT request.");
+      return;
+    }
+    if (!message) {
+      alert("Please enter a message for PUT request.");
+      return;
+    }
+    const res = await fetch(`/api/test/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }),
+    });
+    const data = await res.json();
+    alert(`PUT Response: ${JSON.stringify(data)}`);
+    fetchData(); // 데이터 갱신
+  };
+
+  const deleteData = async () => {
+    if (!id) {
+      alert("Please enter an ID for DELETE request.");
+      return;
+    }
+    const res = await fetch(`/api/test/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    alert(`DELETE Response: ${JSON.stringify(data)}`);
+    fetchData(); // 데이터 갱신
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.header}>HTTP Methods Test</h1>
+
+      {/* Unified Input Section */}
+      <div style={styles.section}>
+        <input
+          type="text"
+          placeholder="Enter ID (for PUT/DELETE)"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          style={styles.input}
+        />
+        <input
+          type="text"
+          placeholder="Enter message (for POST/PUT)"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          style={styles.input}
+        />
+      </div>
+
+      {/* Action Buttons */}
+      <div style={styles.buttonContainer}>
+        <button onClick={fetchData} style={styles.button}>
+          GET
+        </button>
+        <button onClick={postData} style={styles.button}>
+          POST
+        </button>
+        <button onClick={putData} style={styles.button}>
+          PUT
+        </button>
+        <button onClick={deleteData} style={styles.button}>
+          DELETE
+        </button>
+      </div>
+
+      {/* Response Table */}
+      <div style={styles.tableContainer}>
+        <h2 style={styles.subheader}>Response Data</h2>
+        {Array.isArray(response) && response.length > 0 ? (
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th style={styles.th}>ID</th>
+                <th style={styles.th}>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {response.map((item) => (
+                <tr key={item.id}>
+                  <td style={styles.td}>{item.id}</td>
+                  <td style={styles.td}>{item.message}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No data available</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "600px",
+    margin: "0 auto",
+    padding: "20px",
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#f9f9f9",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    marginBottom: "20px",
+    marginTop: "50px",
+  },
+  header: {
+    fontSize: "1.5rem",
+    marginBottom: "20px",
+    textAlign: "center",
+    color: "#333",
+  },
+  subheader: {
+    fontSize: "1.25rem",
+    marginBottom: "10px",
+    color: "#333",
+  },
+  section: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    marginBottom: "20px",
+  },
+  input: {
+    padding: "8px",
+    fontSize: "1rem",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    flex: "1",
+  },
+  buttonContainer: {
+    display: "flex",
+    gap: "10px",
+    justifyContent: "center",
+    marginBottom: "20px",
+  },
+  button: {
+    padding: "8px 12px",
+    fontSize: "1rem",
+    borderRadius: "4px",
+    backgroundColor: "#0070f3",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
+  },
+  tableContainer: {
+    marginTop: "20px",
+    padding: "10px",
+    backgroundColor: "#e8e8e8",
+    borderRadius: "4px",
+  },
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+  },
+  th: {
+    borderBottom: "2px solid #0070f3",
+    padding: "8px",
+    textAlign: "left",
+    fontWeight: "bold",
+  },
+  td: {
+    borderBottom: "1px solid #ddd",
+    padding: "8px",
+  },
+};
+```
 
 #### 실습: 회원가입 API 구현
 
@@ -683,13 +1028,125 @@ export async function POST(req) {
 
 이 API는 클라이언트에서 `email`과 `password` 데이터를 받아 MongoDB에 사용자 정보를 저장합니다.
 
+#### 회원가입 페이지 (`app/register/page.js`)
+
+프론트엔드에서 회원가입 폼을 만들어 백엔드 API와 연동합니다.
+
+```javascript
+"use client";
+import { useState } from "react";
+
+export default function RegisterPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const response = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    setMessage(data.message);
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.title}>회원가입</h1>
+      <form onSubmit={handleRegister} style={styles.form}>
+        <input
+          type="email"
+          placeholder="이메일"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          style={styles.input}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={styles.input}
+        />
+        <button type="submit" style={styles.button}>
+          회원가입
+        </button>
+      </form>
+      {message && <p style={styles.message}>{message}</p>}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "2rem",
+    backgroundColor: "#f4f4f4",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    maxWidth: "400px",
+    margin: "2rem auto",
+  },
+  title: {
+    fontSize: "2rem",
+    marginBottom: "1rem",
+    color: "#333",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+  },
+  input: {
+    padding: "0.75rem",
+    margin: "0.5rem 0",
+    fontSize: "1rem",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    outline: "none",
+    transition: "border 0.3s",
+  },
+  inputFocus: {
+    borderColor: "#0070f3",
+  },
+  button: {
+    padding: "0.75rem",
+    fontSize: "1rem",
+    backgroundColor: "#0070f3",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
+  },
+  buttonHover: {
+    backgroundColor: "#005bb5",
+  },
+  message: {
+    marginTop: "1rem",
+    color: "#0070f3",
+  },
+};
+```
+
 ---
 
 ### 4. RESTful API
 
 #### 개념 설명
 
-(개념 설명은 동일하므로 생략합니다.)
+RESTful API는 클라이언트-서버 간에 데이터를 주고받을 때 일관된 규칙을 따르는 방식입니다. RESTful API의 주요 원칙은 다음과 같습니다:
+
+- **자원 기반의 URL**: 각 URL은 하나의 자원(Resource)을 나타냅니다. 예를 들어, `/api/users`는 모든 사용자를, `/api/users/1`은 특정 사용자를 나타냅니다.
+- **무상태성**: 서버는 클라이언트의 요청 상태를 기억하지 않습니다. 모든 요청은 독립적으로 이루어집니다.
+- **표준 HTTP 메서드 사용**: `GET`, `POST`, `PUT`, `DELETE` 메서드를 통해 자원 조작을 명확히 구분합니다.
+- **JSON 형식의 응답**: 대부분의 RESTful API는 JSON 형식으로 데이터를 주고받습니다.
 
 #### 실습: 로그인 API 생성
 
@@ -725,7 +1182,55 @@ export async function POST(req) {
    }
    ```
 
-이 API는 클라이언트의 로그인 요청을 처리하고, 사용자가 유효하면 성공 메시지와 함께 데이터를 반환합니다.
+2. **로그인 페이지 (`app/login/page.js`)**
+
+   프론트엔드에서 로그인 폼을 만들어 백엔드의 로그인 API와 연동합니다.
+
+   ```javascript
+   "use client";
+   import { useState } from "react";
+
+   export default function LoginPage() {
+     const [email, setEmail] = useState("");
+     const [password, setPassword] = useState("");
+     const [message, setMessage] = useState("");
+
+     const handleLogin = async (e) => {
+       e.preventDefault();
+       const response = await fetch("/api/login", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({ email, password }),
+       });
+       const data = await response.json();
+       setMessage(data.message);
+     };
+
+     return (
+       <div style={{ padding: "2rem" }}>
+         <h1>로그인</h1>
+         <form onSubmit={handleLogin}>
+           <input
+             type="email"
+             placeholder="이메일"
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+             required
+           />
+           <input
+             type="password"
+             placeholder="비밀번호"
+             value={password}
+             onChange={(e) => setPassword(e.target.value)}
+             required
+           />
+           <button type="submit">로그인</button>
+         </form>
+         {message && <p>{message}</p>}
+       </div>
+     );
+   }
+   ```
 
 ---
 
@@ -733,7 +1238,7 @@ export async function POST(req) {
 
 #### 개념 설명
 
-(개념 설명은 동일하므로 생략합니다.)
+서버는 **MongoDB** 와 같은 데이터베이스와 연동하여 데이터를 영구적으로 저장하고, 클라이언트가 필요로 할 때 데이터를 불러와 제공합니다. 데이터베이스는 서버의 데이터 요청에 응답하고, 데이터를 효율적으로 관리합니다.
 
 #### 실습: MongoDB 연결 설정
 
@@ -763,11 +1268,11 @@ export default clientPromise;
 
 #### 개념 설명
 
-(개념 설명은 동일하므로 생략합니다.)
+**인증(Authentication)** 은 사용자가 누구인지 확인하는 과정이며, **권한 관리(Authorization)** 는 인증된 사용자가 애플리케이션에서 어떤 작업을 할 수 있는지를 결정하는 과정입니다. NextAuth.js 라이브러리는 GitHub와 같은 외부 OAuth 제공자를 통해 쉽게 인증을 설정할 수 있는 라이브러리입니다.
 
 #### 실습: NextAuth로 GitHub OAuth 구현
 
-1. **App Router 방식**에서 `app/api/auth/[...nextauth]/route.js` 파일을 생성하여 GitHub OAuth 인증을 설정합니다.
+1. **백엔드 설정**: `app/api/auth/[...nextauth]/route.js` 파일을 생성하여 GitHub OAuth 인증을 설정합니다.
 
    ```javascript
    // app/api/auth/[...nextauth]/route.js
@@ -794,9 +1299,11 @@ export default clientPromise;
    export { handler as GET, handler as POST };
    ```
 
-2. **로그인 버튼을 통해 GitHub 로그인 기능 구현**:
+2. **프론트엔드에서 GitHub 로그인 버튼 구현**
 
    ```javascript
+   // components/LoginButton.js
+   "use client";
    import { useSession, signIn, signOut } from "next-auth/react";
 
    export default function LoginButton() {
@@ -816,40 +1323,123 @@ export default clientPromise;
    }
    ```
 
+3. **로그인 페이지에서 사용**
+
+   로그인 페이지에서 `LoginButton` 컴포넌트를 사용하여 GitHub OAuth 로그인을 제공합니다.
+
+   ```javascript
+   // app/login/page.js
+   "use client";
+   import LoginButton from "@/components/LoginButton";
+
+   export default function LoginPage() {
+     return (
+       <div style={{ padding: "2rem" }}>
+         <h1>로그인</h1>
+         {/* 기존 로그인 폼이 있다면 유지하거나 대체합니다 */}
+         <LoginButton />
+       </div>
+     );
+   }
+   ```
+
+4. **프로필 페이지에서 세션 정보 활용**
+
+   ```javascript
+   // app/profile/page.js
+   "use client";
+   import { useSession } from "next-auth/react";
+
+   export default function ProfilePage() {
+     const { data: session } = useSession();
+
+     if (!session) {
+       return <p>로그인이 필요합니다.</p>;
+     }
+
+     return (
+       <div style={{ padding: "2rem" }}>
+         <h1>프로필 페이지</h1>
+         <p>이메일: {session.user.email}</p>
+         <p>이름: {session.user.name}</p>
+         <img src={session.user.image} alt="User Image" />
+       </div>
+     );
+   }
+   ```
+
 ---
 
 ### 7. 클라이언트-서버 통신 (CSR)
 
 #### 개념 설명
 
-(개념 설명은 동일하므로 생략합니다.)
+**CSR(Client-Side Rendering)** 은 클라이언트에서 API를 호출하여 서버에서 데이터를 받아와 실시간으로 업데이트하는 방식입니다. 클라이언트는 서버로부터 필요한 데이터를 요청하고, 받은 데이터를 화면에 표시합니다.
 
 #### 실습: 로그인된 사용자 정보 가져오기
 
-```javascript
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+1. **사용자 정보 API 생성**
 
-function UserProfile() {
-  const { data: session } = useSession();
-  const [user, setUser] = useState(null);
+   ```javascript
+   // app/api/user/route.js
+   import { getSession } from "next-auth/react";
 
-  useEffect(() => {
-    if (session) {
-      fetch("/api/user")
-        .then((res) => res.json())
-        .then((data) => setUser(data));
-    }
-  }, [session]);
+   export async function GET(req) {
+     const session = await getSession({ req });
+     if (session) {
+       return new Response(JSON.stringify(session.user), {
+         status: 200,
+         headers: { "Content-Type": "application/json" },
+       });
+     } else {
+       return new Response(JSON.stringify({ message: "Not authenticated" }), {
+         status: 401,
+         headers: { "Content-Type": "application/json" },
+       });
+     }
+   }
+   ```
 
-  if (!user) return <p>Loading...</p>;
-  return <div>Welcome, {user.email}</div>;
-}
+2. **프론트엔드에서 사용자 정보 가져오기**
 
-export default UserProfile;
-```
+   ```javascript
+   // app/profile/page.js
+   "use client";
+   import { useEffect, useState } from "react";
+   import { useSession } from "next-auth/react";
 
-## Next.js Document
+   export default function UserProfile() {
+     const { data: session } = useSession();
+     const [user, setUser] = useState(null);
 
-[https://nextjs.org](https://nextjs.org/)
-[https://nextjs.org/docs](https://nextjs.org/docs)
+     useEffect(() => {
+       if (session) {
+         fetch("/api/user")
+           .then((res) => res.json())
+           .then((data) => setUser(data));
+       }
+     }, [session]);
+
+     if (!session) {
+       return <p>로그인이 필요합니다.</p>;
+     }
+
+     if (!user) return <p>로딩 중...</p>;
+
+     return (
+       <div style={{ padding: "2rem" }}>
+         <h1>프로필 페이지</h1>
+         <p>이메일: {user.email}</p>
+         <p>이름: {user.name}</p>
+         <img src={user.image} alt="User Image" />
+       </div>
+     );
+   }
+   ```
+
+---
+
+## Next.js 문서
+
+- [Next.js 공식 웹사이트](https://nextjs.org/)
+- [Next.js 공식 문서](https://nextjs.org/docs)

@@ -363,6 +363,34 @@ export default function Lessons({ lessons }) {
                     />
                   </Box>
                 ),
+                details: ({ node, ...props }) => (
+                  <Box
+                    component="details"
+                    sx={{
+                      margin: "1rem 0",
+                      padding: "1rem",
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      backgroundColor: "#f9f9f9",
+                      fontFamily: "Noto Sans, sans-serif",
+                    }}
+                    {...props}
+                  />
+                ),
+                summary: ({ node, ...props }) => (
+                  <Typography
+                    component="summary"
+                    sx={{
+                      cursor: "pointer",
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                      marginBottom: "0.5rem",
+                      color: "#333",
+                      fontFamily: "Noto Sans, sans-serif",
+                    }}
+                    {...props}
+                  />
+                ),
               }}
             />
           </Box>
