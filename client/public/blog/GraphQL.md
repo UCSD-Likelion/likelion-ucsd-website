@@ -267,6 +267,201 @@ server.listen().then(({url}) => {
 
 ### 3. Resolver
 
+Resolver는 GraphQL 서버에서 요청을 처리하는 함수입니다. Resolver는 Query나 Mutation을 실행하고, 요청에 대한 응답을 반환합니다.
+
+```javascript
+import {ApolloServer, gql} from "appolo-server";
+
+let users = [
+  {
+    id: "1",
+    firstName: "Chanbin",
+    lastName: "Na",
+  },
+  {
+    id: "2",
+    firstName: "Heesu",
+    lastName: "Park",
+  },
+];
+
+const typeDefs = gql`
+    type User {
+        id: ID!
+        firstName: String!
+        lastName: String!
+    }
+
+    type Query {
+        allUsers: [User!]!
+    }
+
+    type Mutation {
+        createUser(firstName: String!, lastName: String!): User!
+    }
+`;
+
+const resolvers = {
+    Query: {
+        allUsers() {
+            return users;
+        }
+    },
+
+    Mutation: {
+        createUser(_, {firstName, lastName}) {
+            const newUser = {
+                id: 1,
+                firstName: firstName,
+                lastName: lastName
+            }
+            return newUser;
+        }
+    },
+
+    User: {
+    fullName({ firstName, lastName }) {
+      return `${firstName} ${lastName}`;
+    },
+  },
+}
+
+const server = new ApolloServer({ typeDefs, resolvers })
+
+server.listen().then(({url}) => {
+    console.log(`Running on ${url}`);
+})
+```
+
+**코드 설명**:
+1. `resolvers` 객체는 `Query`와 `Mutation` 타입에 대한 함수를 포함합니다.
+2. `allUsers` 함수는 `users` 배열을 반환합니다. 이 함수는 `Query` 타입의 `allUsers` 필드에 대한 Resolver입니다.
+3. `createUser` 함수는 새로운 사용자를 추가하고 추가된 사용자를 반환합니다. 이 함수는 `Mutation` 타입의 `createUser` 필드에 대한 Resolver입니다.
+4. `createUser` 함수의 두 번째 인자는 `firstName`과 `lastName`를 받습니다. 이 인자는 클라이언트가 Mutation을 실행할 때 전달하는 인자입니다.
+5. `createUser` 함수는 새로운 사용자를 생성하고, 생성된 사용자를 반환합니다.
+
+이제 GraphQL 서버가 작동합니다. `http://localhost:4000`에 접속하면 GraphQL Playground가 열립니다.
+
+### 4. NextJS 연동
+
+1. NextJS Project 생성
+
+   ```bash
+   npx create-next-app my-graphql-app
+   cd my-graphql-app
+   ```
+
+2. Apollo Client 설치
+
+   ```bash
+    npm install graphql @apollo/client apollo-server-micro graphql-tag
+    ```
+
+3. `apollo-client.js` 파일 생성
+   
+    루트 다이렉토리에서 `lib` 폴더를 생성하고 `apollo-client.js` 파일을 생성합니다.
+
+   ```javascript
+   import { ApolloClient, InMemoryCache } from "@apollo/client";
+
+   const client = new ApolloClient({
+       uri: "http://localhost:4000",
+       cache: new InMemoryCache(),
+   });
+
+   export default client;
+   ```
+
+4. `resolvers.js`, `typeDefs.js` 파일 생성
+   
+   루트 다이렉토리에서 `graphql` 폴더를 생성하고 `resolvers.js`, `typeDefs.js` 파일을 생성합니다.
+
+    `typeDefs.js`:
+   ```javascript
+    const typeDefs = gql`
+    type User {
+        id: ID!
+        firstName: String!
+        lastName: String!
+    }
+
+    type Query {
+        allUsers: [User!]!
+    }
+
+    type Mutation {
+        createUser(firstName: String!, lastName: String!): User!
+    }
+        `;
+
+    module.exports = typeDefs;
+   ```
+
+   `resolvers.js`:
+   ```javascript
+    let users = [
+    {
+        id: "1",
+        firstName: "Chanbin",
+        lastName: "Na",
+    },
+    {
+        id: "2",
+        firstName: "Heesu",
+        lastName: "Park",
+    },
+    ];
+
+    const resolvers = {
+    Query: {
+        allUsers() {
+        return users;
+        },
+    },
+
+    Mutation: {
+        createUser(_, { firstName, lastName }) {
+        const newUser = {
+            id: 1,
+            firstName: firstName,
+            lastName: lastName,
+        };
+        return newUser;
+        },
+    },
+
+    User: {
+        fullName({ firstName, lastName }) {
+        return `${firstName} ${lastName}`;
+        },
+    },
+    };
+
+    module.exports = resolvers;
+   ```
+
+5. `api/graphql.js` 파일 생성
+   
+   `app` 폴더 안에 `api` 폴더를 생성하고 `graphql.js` 파일을 생성합니다.
+
+   ```javascript
+    const { ApolloServer } = require("apollo-server-micro");
+    const typeDefs = require("../../graphql/typeDefs");
+    const resolvers = require("../../graphql/resolvers");
+
+    const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers,
+    });
+
+    export const config = {
+    api: {
+        bodyParser: false,
+    },
+    };
+
+    export default apolloServer.createHandler({ path: "/api/graphql" });
+    ```
 
 
 **Reference**
