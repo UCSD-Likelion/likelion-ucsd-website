@@ -107,6 +107,8 @@ Apollo Server는 GraphQL 요청을 처리할 수 있는 백엔드 서버입니�
    ```bash
    mkdir my-graphql-app
    cd my-graphql-app
+   mkdir backend
+    cd backend
    ```
 
 2. package.json 생성
@@ -372,96 +374,26 @@ server.listen().then(({url}) => {
    export default client;
    ```
 
-4. `resolvers.js`, `typeDefs.js` 파일 생성
+4. NextJS에 연결
    
-   루트 다이렉토리에서 `graphql` 폴더를 생성하고 `resolvers.js`, `typeDefs.js` 파일을 생성합니다.
+   `app/layout.js` 파일을 열고 `ApolloProvider`를 추가합니다.
 
-    `typeDefs.js`:
    ```javascript
-    const typeDefs = gql`
-    type User {
-        id: ID!
-        firstName: String!
-        lastName: String!
-    }
+    "use client";
 
-    type Query {
-        allUsers: [User!]!
-    }
+    import { ApolloProvider } from "@apollo/client";
+    import client from "../lib/apollo-client";
 
-    type Mutation {
-        createUser(firstName: String!, lastName: String!): User!
+    export default function RootLayout({ children }) {
+    return (
+        <html lang="en">
+            <body>
+                <ApolloProvider client={client}>{children}</ApolloProvider>
+            </body>
+        </html>
+    );
     }
-        `;
-
-    module.exports = typeDefs;
    ```
-
-   `resolvers.js`:
-   ```javascript
-    let users = [
-    {
-        id: "1",
-        firstName: "Chanbin",
-        lastName: "Na",
-    },
-    {
-        id: "2",
-        firstName: "Heesu",
-        lastName: "Park",
-    },
-    ];
-
-    const resolvers = {
-    Query: {
-        allUsers() {
-        return users;
-        },
-    },
-
-    Mutation: {
-        createUser(_, { firstName, lastName }) {
-        const newUser = {
-            id: 1,
-            firstName: firstName,
-            lastName: lastName,
-        };
-        return newUser;
-        },
-    },
-
-    User: {
-        fullName({ firstName, lastName }) {
-        return `${firstName} ${lastName}`;
-        },
-    },
-    };
-
-    module.exports = resolvers;
-   ```
-
-5. `api/graphql.js` 파일 생성
-   
-   `app` 폴더 안에 `api` 폴더를 생성하고 `graphql.js` 파일을 생성합니다.
-
-   ```javascript
-    const { ApolloServer } = require("apollo-server-micro");
-    const typeDefs = require("../../graphql/typeDefs");
-    const resolvers = require("../../graphql/resolvers");
-
-    const apolloServer = new ApolloServer({
-    typeDefs,
-    resolvers,
-    });
-
-    export const config = {
-    api: {
-        bodyParser: false,
-    },
-    };
-
-    export default apolloServer.createHandler({ path: "/api/graphql" });
-    ```
 
 
 **Reference**
