@@ -158,7 +158,7 @@ Apollo Server는 GraphQL 요청을 처리할 수 있는 백엔드 서버입니�
 5. `server.js` 작성
    루트 다이렉토리에서 `server.js` 파일을 생성하고, 다음과 같은 코드를 작성합니다:
     ```javascript
-    import {ApolloServer, gql} from "appolo-server";
+    import {ApolloServer, gql} from "apollo-server";
 
     const server = new ApolloServer({})
 
@@ -179,7 +179,7 @@ Apollo Server는 GraphQL 요청을 처리할 수 있는 백엔드 서버입니�
 이 문제를 해결하기 위해, 데이터를 어떻게 구조화할지 명시하는 typeDefs를 정의해주어야 합니다. 아래와 같이 Tweet 타입을 포함한 typeDefs를 추가하는 코드로 이를 해결할 수 있습니다.
 
 ```javascript
-import {ApolloServer, gql} from "appolo-server";
+import {ApolloServer, gql} from "apollo-server";
 
 const typeDefs = gql`
     type Query {
@@ -203,7 +203,7 @@ server.listen().then(({url}) => {
 이걸 코드로 작성해보겠습니다
 
 ```javascript
-import {ApolloServer, gql} from "appolo-server";
+import {ApolloServer, gql} from "apollo-server";
 
 const typeDefs = gql`
     type User {
@@ -235,7 +235,7 @@ server.listen().then(({url}) => {
 Mutation 타입은 데이터를 변경하는 요청을 보낼 때 사용됩니다. 예를 들어, 새로운 사용자를 추가하거나 기존 사용자의 정보를 업데이트할 때 Mutation을 사용합니다. POST 요청과 유사하게, Mutation은 서버에 데이터를 추가하거나 수정할 때 사용됩니다.
 
 ```javascript
-import {ApolloServer, gql} from "appolo-server";
+import {ApolloServer, gql} from "apollo-server";
 
 const typeDefs = gql`
     type User {
@@ -272,7 +272,7 @@ server.listen().then(({url}) => {
 Resolver는 GraphQL 서버에서 요청을 처리하는 함수입니다. Resolver는 Query나 Mutation을 실행하고, 요청에 대한 응답을 반환합니다.
 
 ```javascript
-import {ApolloServer, gql} from "appolo-server";
+import {ApolloServer, gql} from "apollo-server";
 
 let users = [
   {
@@ -347,10 +347,10 @@ server.listen().then(({url}) => {
 ### 4. NextJS 연동
 
 1. NextJS Project 생성
-
+같은 루트 디렉토리에서 NextJS 프로젝트를 생성합니다.
    ```bash
-   npx create-next-app my-graphql-app
-   cd my-graphql-app
+   npx create-next-app frontend
+   cd frontend
    ```
 
 2. Apollo Client 설치
@@ -361,7 +361,7 @@ server.listen().then(({url}) => {
 
 3. `apollo-client.js` 파일 생성
    
-    루트 다이렉토리에서 `lib` 폴더를 생성하고 `apollo-client.js` 파일을 생성합니다.
+    localhost:4000을 켜신 상태에서 루트 다이렉토리에서 `lib` 폴더를 생성하고 `apollo-client.js` 파일을 생성합니다.
 
    ```javascript
    import { ApolloClient, InMemoryCache } from "@apollo/client";
@@ -395,6 +395,186 @@ server.listen().then(({url}) => {
     }
    ```
 
+   `app/page.js` 파일을 생성 후 다음과 같이 코드를 작성합니다. 
+
+   ```javascript
+   "use client";
+
+    import { gql, useQuery, useMutation } from "@apollo/client";
+    import { useState } from "react";
+
+    const ALL_USERS = gql`
+    query {
+    allUsers {
+        id
+        firstName
+        lastName
+        fullName
+        }
+    }`;
+
+    const CREATE_USER = gql`
+    mutation CreateUser($firstName: String!, $lastName: String!) {
+        createUser(firstName: $firstName, lastName: $lastName) {
+        id
+        firstName
+        lastName
+        fullName
+        }
+    }`;
+
+    export default function Page() {
+        const { loading, error, data, refetch } = useQuery(ALL_USERS);
+        const [createUser] = useMutation(CREATE_USER);
+
+        const [formData, setFormData] = useState({
+            firstName: "",
+            lastName: "",
+        });
+
+        const handleInputChange = (e) => {
+            const { name, value } = e.target;
+            setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+            }));
+        };
+
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            try {
+            await createUser({
+                variables: {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                },
+            });
+            setFormData({ firstName: "", lastName: "" }); // Clear the form
+            refetch(); // Refresh the list of users
+            } catch (err) {
+            console.error("Error creating user:", err);
+            }
+        };
+
+        if (loading) return <p style={{ textAlign: "center" }}>Loading...</p>;
+        if (error)
+            return (
+            <p style={{ textAlign: "center", color: "red" }}>
+                Error: {error.message}
+            </p>
+            );
+
+        return (
+            <div
+            style={{
+                maxWidth: "600px",
+                margin: "20px auto",
+                fontFamily: "Arial, sans-serif",
+            }}
+            >
+            <h1 style={{ textAlign: "center" }}>Users</h1>
+            <ul style={{ listStyleType: "none", padding: 0 }}>
+                {data.allUsers.map((user) => (
+                <li
+                    key={user.id}
+                    style={{
+                    padding: "10px",
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    marginBottom: "10px",
+                    }}
+                >
+                    {user.fullName}
+                </li>
+                ))}
+            </ul>
+            <h2 style={{ textAlign: "center" }}>Create a New User</h2>
+            <form
+                onSubmit={handleSubmit}
+                style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                padding: "20px",
+                border: "1px solid #ddd",
+                borderRadius: "5px",
+                background: "#f9f9f9",
+                }}
+            >
+                <div>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                    First Name:
+                    <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
+                    style={{
+                        width: "100%",
+                        padding: "8px",
+                        border: "1px solid #ddd",
+                        borderRadius: "5px",
+                        marginTop: "5px",
+                    }}
+                    />
+                </label>
+                </div>
+                <div>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                    Last Name:
+                    <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    required
+                    style={{
+                        width: "100%",
+                        padding: "8px",
+                        border: "1px solid #ddd",
+                        borderRadius: "5px",
+                        marginTop: "5px",
+                    }}
+                    />
+                </label>
+                </div>
+                <button
+                type="submit"
+                style={{
+                    padding: "10px",
+                    backgroundColor: "#007BFF",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                }}
+                >
+                Add User
+                </button>
+            </form>
+            </div>
+        );
+    }
+   ```
+
+   그러신 후에 터미널에서 `npm run dev`를 실행하시면 NextJS 프로젝트가 실행됩니다. 
+
+   ```bash
+    npm run dev
+    ```
+
+    > **주의**: Apollo Server와 NextJS 프로젝트를 동시에 실행하려면 두 개의 터미널 창을 열어야 합니다. 한 터미널 창에서  `frontend`에서 `npm run dev`를 실행하고, 다른 터미널 창에서 `backend` 다이렉토리에서 `npm run start`를 실행하세요.
+
+    이제 `http://localhost:3000`에 접속하면 사용자 목록과 사용자 추가 폼이 표시됩니다. 사용자를 추가하면 사용자 목록이 업데이트되는 것을 확인할 수 있습니다.
+    
+**코드 설명**: 
+1. `ALL_USERS` 쿼리는 모든 사용자를 가져오는 쿼리입니다. 이 쿼리는 `useQuery` 훅을 사용해 데이터를 가져옵니다.
+2. `CREATE_USER` 뮤테이션은 새로운 사용자를 추가하는 뮤테이션입니다. 이 뮤테이션은 `useMutation` 훅을 사용해 데이터를 추가합니다.
+3. `handleInputChange` 함수는 입력 필드의 값을 업데이트합니다.
+4. `handleSubmit` 함수는 사용자를 추가하는 함수입니다. 이 함수는 `createUser` 뮤테이션을 실행하고, 사용자를 추가한 후 사용자 목록을 `refatch()`를 통해 새로고침합니다.
+5. `loading`이 `true`이면 "Loading..."이 표시됩니다.
 
 **Reference**
 
