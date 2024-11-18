@@ -250,6 +250,7 @@ const typeDefs = gql`
 
     type Mutation {
         createUser(firstName: String!, lastName: String!): User!
+        deleteUser(id: ID!): User
     }
 `;
 
@@ -264,8 +265,9 @@ server.listen().then(({url}) => {
 1. `Mutation` 타입은 사용자를 추가하는 `createUser` 필드를 포함합니다. 이 필드는 `firstName`과 `lastName` 두 개의 인자를 받아 `User` 타입을 반환합니다.
 2. `firstName`과 `lastName`는 `String!` 타입이며, `User` 타입은 `null`이 될 수 없습니다.
 3. `createUser` 필드는 새로운 사용자를 추가하고, 추가된 사용자를 반환합니다.
+4. `deleteUser` 필드는 사용자를 삭제하고 삭제된 사용자를 반환합니다. 이 필드는 `ID!` 타입의 인자를 받습니다.
 
-아직 `createUser` 필드에 대한 로직이 없기 때문에, 이 필드를 사용하면 에러가 발생할 것입니다. 이를 해결하기 위해 **Mutation Resolver**를 추가해야 합니다.
+아직 `createUser`와 `deleteUser` 필드에 대한 로직이 없기 때문에, 이 필드를 사용하면 에러가 발생할 것입니다. 이를 해결하기 위해 **Mutation Resolver**를 추가해야 합니다.
 
 ### 3. Resolver
 
@@ -312,13 +314,25 @@ const resolvers = {
 
     Mutation: {
         createUser(_, {firstName, lastName}) {
+            const newId =
+                users.length > 0 ? Math.max(...users.map((user) => user.id)) + 1 : 1;
             const newUser = {
-                id: 1,
+                id: newId,
                 firstName: firstName,
                 lastName: lastName
             }
             return newUser;
-        }
+        },
+
+        deleteUser(_, { id }) {
+            const userIndex = users.findIndex((user) => user.id === id);
+            if (userIndex === -1) {
+                throw new Error("User not found");
+            }
+
+            const deletedUser = users.splice(userIndex, 1)[0];
+            return deletedUser;
+        },
     },
 
     User: {
