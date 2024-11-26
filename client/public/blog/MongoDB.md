@@ -52,4 +52,128 @@ MongoDB는 다양한 언어를 지원하며, 대표적으로 Node.js, Python, Ja
     }
     ```
 
-4. 
+4. `Server.js` 파일을 생성합니다.
+
+    ```javascript
+    import { ApolloServer, gql } from 'apollo-server';
+    import Mongoose from 'mongoose';
+
+    const userSchema = new Schema({
+        firstName: String,
+        lastName: String,
+    });
+
+    const User = model("User", userSchema);
+
+    const MONGODB =
+        "<YOUR_MONGODB_KEY>";
+
+    const typeDefs = gql`
+        type User {
+            id: ID!
+            firstName: String!
+            lastName: String!
+            fullName: String!
+        }
+
+        type Query {
+            allUsers: [User!]!
+        }
+
+        type Mutation {
+            createUser(firstName: String!, lastName: String!): User!
+            deleteUser(id: ID!): User
+        }
+    `;
+    const resolvers = {
+        Query: {
+            async allUsers() {
+                return await User.find();
+            },
+        },
+
+        Mutation: {
+            async createUser(_, { firstName, lastName }) {
+                const newUser = new User({ firstName, lastName });
+                return await newUser.save();
+            },
+
+            async deleteUser(_, { id }) {
+                const userToDelete = await User.findById(id);
+                if (!userToDelete) {
+                    throw new Error("User not found");
+                }
+
+                await User.deleteOne(userToDelete);
+
+                return userToDelete;
+            },
+        },
+
+        User: {
+            fullName({ firstName, lastName }) {
+            return `${firstName} ${lastName}`;
+            },
+        },
+    };
+    const server = new ApolloServer({ typeDefs, resolvers });
+
+    mongoose
+        .connect(MONGODB, { useNewUrlParser: true })
+        .then(() => {
+            console.log("MongoDB connected");
+            return server.listen({ port: 4000 });
+        })
+        .then((res) => {
+            console.log(`Server running at ${res.url}`);
+        });
+    ```
+
+5. MongoDB 서버를 실행합니다.
+
+    ```bash
+    npm run dev
+    ```
+
+6. `http://localhost:4000`에 접속하여 GraphQL Playground를 확인합니다.
+   
+   만약 서버가 잘 실행이 된다면 터미널에 `MongoDB connected`와 `Server running at http://localhost:4000`가 출력됩니다.
+
+7. GraphQL Playground에서 다음과 같은 뮤테이션을 실행합니다.
+
+    ```graphql
+    mutation($firstName: String!, $lastName: String!) {
+        createUser(firstName: $firstName, lastName: $lastName) {
+            id
+            firstName
+            lastName
+        }
+    }
+    ```
+
+    그리고 JSON 형식으로 다음과 같은 변수를 입력합니다.
+
+    ```json
+    {
+        "firstName": "Heesu",
+        "lastName": "Park"
+    }
+    ```
+
+    그렇게 하면 다음과 같은 결과가 나옵니다.
+
+    ```json
+    {
+        "data": {
+            "createUser": {
+                "id": "60f7b3b3b3b3b3b3b3b3b3b3",
+                "firstName": "Heesu",
+                "lastName": "Park"
+            }
+        }
+    }
+    ```
+
+    비슷한 방식으로 `deleteUser` 뮤테이션도 실행할 수 있습니다.
+
+8. MongoDB Compass를 이용하여 데이터베이스에 저장된 데이터를 확인합니다.
