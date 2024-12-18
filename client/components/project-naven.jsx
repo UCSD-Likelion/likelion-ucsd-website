@@ -44,14 +44,14 @@ export default function ProjectNav() {
           <Tab
             label={
               <Typography variant="h6" sx={{ color: "white" }}>
-                기초 프로젝트 팀
+                Beginner Project Team
               </Typography>
             }
           />
           <Tab
             label={
               <Typography variant="h6" sx={{ color: "white" }}>
-                프로젝트 팀
+                Project Team
               </Typography>
             }
           />
@@ -79,9 +79,7 @@ export default function ProjectNav() {
             }}
           >
             <Typography variant="h6">
-              UCSD 멋사에는 비전공자들을 위한 기본적인 웹 프로젝트를 진행하는
-              팀이 있습니다. 멋사 운영진들이 팀원들에게 기본적인 웹 프로그래밍
-              기초를 알려주고, 팀원들은 이를 바탕으로 웹 프로젝트를 진행합니다.
+            UCSD Likelion has a team dedicated to non-CS majors, focusing on basic web projects. The Likelion leadership teaches team members the fundamentals of web programming, which they use to carry out web projects.
             </Typography>
             <Image
               src={BeginnerProjectImage}
@@ -113,10 +111,7 @@ export default function ProjectNav() {
             }}
           >
             <Typography variant="h6">
-              UCSD 멋사에는 웹 개발에 경험 있는 아기사자들을 위한 웹 프로젝트를
-              진행하는 팀 입니다. 한 학기 동안 멋사 운영진들의 지도를 받아 웹
-              프로젝트를 완성하고, 팀원들끼리의 협업을 통해 프로젝트를
-              완성합니다.
+            UCSD Likelion also has a team for members with prior experience in web development. Over the course of a semester, team members complete a web project under the guidance of Likelion leaders, collaborating with their teammates to bring the project to completion.
             </Typography>
           </CardContent>
         </Card>

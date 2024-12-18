@@ -10,14 +10,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <link rel="shortcut icon" href="/favicon/favicon.ico" />
       <AppRouterCacheProvider>
-        <ThemeProvider theme={theme}>
-          <body>
+          <body style={{ margin: 0, height: "100%"}}>
             <div className={`${gmarket.variable}`}>{children}</div>
           </body>
-        </ThemeProvider>
       </AppRouterCacheProvider>
     </html>
   );

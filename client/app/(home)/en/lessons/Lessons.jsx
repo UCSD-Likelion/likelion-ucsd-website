@@ -64,17 +64,17 @@ export default function Lessons({ lessons }) {
 
   const lessonOrder = [
     "Introduction",
-    "웹개발 기초",
+    "WebDev Basic",
     "HTML",
     "CSS",
     "JavaScript",
-    "프로젝트 1",
+    "Project 1",
     "React",
     "Next.js",
-    "프로젝트 2",
+    "Project 2",
     "GraphQL",
     "MongoDB",
-    "프로젝트 3",
+    "Project 3",
     // ... other lesson titles in the desired order
   ];
 

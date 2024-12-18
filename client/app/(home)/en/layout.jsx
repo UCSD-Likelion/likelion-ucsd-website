@@ -1,7 +1,7 @@
 import React from "react";
-import Navigations from "../../components/navigations";
+import Navigations from "../../../components/navigationsen";
 import { Box, Divider, ThemeProvider } from "@mui/material";
-import { theme } from "../../theme";
+import { theme } from "../../../theme";
 
 export const metadata = {
   title: "Likelion UCSD | UCSD 멋쟁이사자처럼",
