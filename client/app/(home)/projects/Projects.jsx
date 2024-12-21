@@ -47,7 +47,7 @@ export default function Projects({ projects }) {
   const [activeProject, setActiveProject] = useState(null);
 
   const fetchMarkdownContent = async (linkTo) => {
-    const response = await fetch(`blog2/${linkTo}`); // Adjust the path based on your setup
+    const response = await fetch(`projects/${linkTo}`); // Adjust the path based on your setup
     if (response.ok) {
       const content = await response.text();
       setSelectedContent(content);

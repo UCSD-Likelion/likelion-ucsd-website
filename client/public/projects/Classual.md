@@ -34,7 +34,7 @@ Course Visualizer specialized for UCSD
 
 - Frontend: React.js
 - DB: AWS S3
-- Deploy platform: Vercel
+- Deploy Platform: Vercel
 
 ---
 
