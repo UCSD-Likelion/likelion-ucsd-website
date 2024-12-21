@@ -14,6 +14,20 @@ Mobile application that enables UCSD students to share their schedules with thei
 
 ## Screenshots
 
+<div style="text-align: center; display: flex; justify-content: space-between;">
+    <img src="images/webreg-project/schedule-app-1.png" alt="Home Page" width="40%" />
+    <img src="images/webreg-project/webreg-schedule-create.png" alt="Home Page" width="40%" />
+</div>
+
+<div style="text-align: center;">
+    <img src="images/webreg-project/webreg-friends.png" alt="Home Page" width="40%" />
+</div>
+
+<div style="text-align: center; display: flex; justify-content: space-between;">
+    <img src="images/webreg-project/webreg-profile.png" alt="Home Page" width="40%" />
+    <img src="images/webreg-project/webreg-profile-edit.png" alt="Home Page" width="40%" />
+</div>
+
 ---
 
 ## Idea Proposal
