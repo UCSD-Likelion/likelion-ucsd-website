@@ -28,10 +28,11 @@ const projectBoxes = [
   },
   {
     id: 2,
-    title: "P2",
-    description: "",
+    title: "WebReg Schedule Project",
+    description:
+      "Mobile application that enables UCSD students to share their schedules with their peers",
     imageUrl: "",
-    linkTo: "Project2.md",
+    linkTo: "webreg.md",
   },
   {
     id: 3,
