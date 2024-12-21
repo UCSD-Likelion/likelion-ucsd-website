@@ -1,6 +1,6 @@
-# Webreg Schedule App
+# Webreg App
 
-Mobile application that enables UCSD students to share their schedules with their peers
+Mobile application that enables UCSD students to share their schedules
 
 팀원: 박희수, 나찬빈, 박세아, 최진서, 고동현, 안상규
 
@@ -14,18 +14,19 @@ Mobile application that enables UCSD students to share their schedules with thei
 
 ## Screenshots
 
-<div style="text-align: center; display: flex; justify-content: space-between;">
+<div style="text-align: center; display: flex; justify-content: space-between; margin-bottom: 20px;">
     <img src="images/webreg-project/schedule-app-1.png" alt="Home Page" width="40%" />
-    <img src="images/webreg-project/webreg-schedule-create.png" alt="Home Page" width="40%" />
+    <img src="images/webreg-project/webreg-schedule-create.png" alt="Event Creation Page" width="40%" />
 </div>
 
-<div style="text-align: center;">
-    <img src="images/webreg-project/webreg-friends.png" alt="Home Page" width="40%" />
+<div style="text-align: center; display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <img src="images/webreg-project/webreg-friends.png" alt="Friends Page" width="40%" />
+    <img src="images/webreg-project/webreg-search.png" alt="Friend Search Page" width="40%" />
 </div>
 
 <div style="text-align: center; display: flex; justify-content: space-between;">
-    <img src="images/webreg-project/webreg-profile.png" alt="Home Page" width="40%" />
-    <img src="images/webreg-project/webreg-profile-edit.png" alt="Home Page" width="40%" />
+    <img src="images/webreg-project/webreg-profile.png" alt="Profile Page" width="40%" />
+    <img src="images/webreg-project/webreg-profile-edit.png" alt="Edit Profile Page" width="40%" />
 </div>
 
 ---
@@ -44,3 +45,16 @@ Mobile application that enables UCSD students to share their schedules with thei
 ---
 
 ## Specifications
+
+### Schedule Creation
+- 수강 과목을 추가하고, 시간표를 생성할 수 있습니다.
+- 시간표를 생성하면, 다른 학생들이 볼 수 있도록 공개할 수 있습니다.
+
+### Friends
+- 다른 학생들을 친구로 추가하여, 친구들의 시간표를 볼 수 있습니다.
+- 친구 삭제 및 친구 요청을 보낼 수 있습니다
+
+### Profile
+- 프로필을 설정하고, 프로필 사진을 업로드할 수 있습니다.
+- 자신의 프로필에 해쉬태그를 추가하여, 다른 학생들이 쉽게 찾을 수 있도록 할 수 있습니다.
+- 해쉬태그 삭제가 가능합니다.
