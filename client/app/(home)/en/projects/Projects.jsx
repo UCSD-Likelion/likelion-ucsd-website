@@ -28,10 +28,11 @@ const projectBoxes = [
   },
   {
     id: 2,
-    title: "P2",
-    description: "",
+    title: "WebReg Project",
+    description:
+      "Mobile app that enables UCSD students to share their schedules",
     imageUrl: "",
-    linkTo: "Project2.md",
+    linkTo: "webreg.md",
   },
   {
     id: 3,
@@ -108,7 +109,7 @@ export default function Projects({ projects }) {
               Project Archive
             </Typography>
             <Typography variant="h5">
-            Here are the projects that Likelion UCSD has worked on so far.
+              Here are the projects that Likelion UCSD has worked on so far.
             </Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
