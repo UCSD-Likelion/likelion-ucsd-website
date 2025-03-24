@@ -92,7 +92,7 @@ export default function Home() {
       >
         <Typography variant="h2">UCSD 멋쟁이사자처럼의 운영 방식</Typography>
         <Typography variant="h4">
-          UCSD 멋사 학생들은 두가지 팀으로 나뉘어집니다
+          UCSD 멋사 학생들은 두가지 팀으로 나뉘어집니다.
         </Typography>
         <ProjectNav />
       </Box>
