@@ -1,5 +1,6 @@
 import dbConnect from "../../../lib/mongodb";
 
+// TODO: Add user functionality
 export async function GET(request) {
   try {
     await dbConnect();
