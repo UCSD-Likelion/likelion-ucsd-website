@@ -5,7 +5,7 @@ services:
     image: nextjs-dev
     ports:
       - "3000:3000"
-    end_file:
+    env_file:
       - .env
     develop:
       watch:
