@@ -22,7 +22,7 @@ const Editor = ({ markdown, editorRef }) => {
     <Paper
       sx={{
         padding: 2,
-        width: "95  %",
+        width: "95%",
       }}
     >
       <MDXEditor
