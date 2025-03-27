@@ -8,10 +8,8 @@ import {
   Typography,
   Button,
   Paper,
-  Stack,
   GlobalStyles,
 } from "@mui/material";
-import { MDXEditorMethods } from "@mdxeditor/editor";
 
 const MdxEditorComponent = dynamic(
   () => import("../../../../components/editor-component"),
