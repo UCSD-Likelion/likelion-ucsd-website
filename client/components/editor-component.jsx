@@ -54,7 +54,6 @@ const Editor = ({ markdown, editorRef }) => {
           contentEditableClassName="mdx-editor-content"
           plugins={[
             headingsPlugin(),
-            headingsPlugin(),
             linkPlugin(),
             linkDialogPlugin(),
             tablePlugin(),
