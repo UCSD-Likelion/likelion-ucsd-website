@@ -18,7 +18,7 @@ Likelion is a student-run tech entrepreneurship community that empowers students
 
 ## Technologies Used
 
-- **Frontend**: Developed using HTML, CSS, and JavaScript to create interactive and engaging user interfaces.
+- **Frontend**: Developed using Next.js to create interactive and engaging user interfaces.
 
 - **Backend**: Information about backend technologies is not specified in the available sources.
 
