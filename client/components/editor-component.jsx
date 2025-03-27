@@ -31,48 +31,62 @@ const Editor = ({ markdown, editorRef }) => {
     <Paper
       sx={{
         padding: 2,
-        width: "95%",
+        width: "97%",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        overflow: "hidden",
       }}
     >
-      <MDXEditor
-        onChange={(e) => console.log(e)}
-        ref={editorRef}
-        markdown={markdown}
-        contentEditableClassName="mdx-editor-content"
-        plugins={[
-          headingsPlugin(),
-          headingsPlugin(),
-          linkPlugin(),
-          linkDialogPlugin(),
-          tablePlugin(),
-          imagePlugin(),
-          quotePlugin(),
-          listsPlugin(),
-          thematicBreakPlugin(),
-          markdownShortcutPlugin(),
-          toolbarPlugin({
-            toolbarClassName: "my-classname",
-            toolbarContents: () => (
-              <>
-                <UndoRedo />
-                <Divider orientation="vertical" flexItem />
-                <BoldItalicUnderlineToggles />
-                <Divider orientation="vertical" flexItem />
-                <InsertImage />
-                <CreateLink />
-                <Divider orientation="vertical" flexItem />
-                <ListsToggle />
-                <Divider orientation="vertical" flexItem />
-                <BlockTypeSelect />
-                <Divider orientation="vertical" flexItem />
-                <InsertThematicBreak />
-                <InsertTable />
-                <Divider orientation="vertical" flexItem />
-              </>
-            ),
-          }),
-        ]}
-      />
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+        }}
+      >
+        <MDXEditor
+          onChange={(e) => console.log(e)}
+          ref={editorRef}
+          markdown={markdown}
+          contentEditableClassName="mdx-editor-content"
+          plugins={[
+            headingsPlugin(),
+            headingsPlugin(),
+            linkPlugin(),
+            linkDialogPlugin(),
+            tablePlugin(),
+            imagePlugin(),
+            quotePlugin(),
+            listsPlugin(),
+            thematicBreakPlugin(),
+            markdownShortcutPlugin(),
+            toolbarPlugin({
+              toolbarClassName: "my-classname",
+              toolbarContents: () => (
+                <>
+                  <UndoRedo />
+                  <Divider orientation="vertical" flexItem />
+                  <BoldItalicUnderlineToggles />
+                  <Divider orientation="vertical" flexItem />
+                  <InsertImage />
+                  <CreateLink />
+                  <Divider orientation="vertical" flexItem />
+                  <ListsToggle />
+                  <Divider orientation="vertical" flexItem />
+                  <BlockTypeSelect />
+                  <Divider orientation="vertical" flexItem />
+                  <InsertThematicBreak />
+                  <InsertTable />
+                  <Divider orientation="vertical" flexItem />
+                </>
+              ),
+            }),
+          ]}
+        />
+      </Box>
     </Paper>
   );
 };

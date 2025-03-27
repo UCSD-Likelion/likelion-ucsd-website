@@ -66,14 +66,35 @@ export default function EditorPage() {
           padding: 4,
           paddingTop: 12,
           gap: 3,
+          minHeight: "80vh",
+          justifyContent: "center", // vertical centering
+          px: 2, // horizontal padding on small screens
         }}
       >
         <Typography variant="h4" fontWeight="bold">
           Archive a Project
         </Typography>
 
-        <Paper elevation={3} sx={{ p: 3, width: "100%", maxWidth: 1200 }}>
-          <Stack spacing={3}>
+        <Paper
+          elevation={3}
+          sx={{
+            p: 3,
+            width: "100%",
+            maxWidth: 1200,
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+          }}
+        >
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+              gap: 3,
+            }}
+          >
             <TextField
               label="Project Title *"
               variant="outlined"
@@ -109,7 +130,7 @@ export default function EditorPage() {
                 Submit Project
               </Button>
             </Box>
-          </Stack>
+          </Box>
         </Paper>
       </Box>
     </>
