@@ -11,7 +11,7 @@ export const GET = async (req, res) => {
     });
   } catch (error) {
     return new Response(
-      JSON.stringify({ message: "❌ Connection failed", error: error.message }),
+      JSON.stringify({ message: "Connection failed", error: error.message }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
@@ -49,7 +49,7 @@ export const POST = async (req, res) => {
     );
   } catch (error) {
     return new Response(
-      JSON.stringify({ message: "❌ Connection failed", error: error.message }),
+      JSON.stringify({ message: "Connection failed", error: error.message }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
@@ -86,7 +86,7 @@ export const DELETE = async (req, res) => {
     );
   } catch (error) {
     return new Response(
-      JSON.stringify({ message: "❌ Connection failed", error: error.message }),
+      JSON.stringify({ message: "Connection failed", error: error.message }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
@@ -130,7 +130,7 @@ export const PUT = async (req, res) => {
     );
   } catch (error) {
     return new Response(
-      JSON.stringify({ message: "❌ Connection failed", error: error.message }),
+      JSON.stringify({ message: "Connection failed", error: error.message }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
