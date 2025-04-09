@@ -12,4 +12,4 @@ const UserSchema = new mongoose.Schema({
   description: String,
 });
 
-export default mongoose.models.Item || mongoose.model("User", UserSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema);
