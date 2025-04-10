@@ -3,12 +3,14 @@
 import dynamic from "next/dynamic";
 import React, { useState, useRef } from "react";
 import {
+  Alert,
   Box,
   TextField,
   Typography,
   Button,
   Paper,
   GlobalStyles,
+  Snackbar,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 
@@ -28,6 +30,11 @@ export default function EditorPage() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [snack, setSnack] = useState({
+    open: false,
+    message: "",
+    severity: "info",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,6 +60,11 @@ export default function EditorPage() {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setSnack({
+        open: true,
+        message: "Please fill all required fields with valid data.",
+        severity: "error",
+      });
       return;
     }
 
@@ -76,9 +88,20 @@ export default function EditorPage() {
 
       console.log("Project submitted successfully");
 
+      setSnack({
+        open: true,
+        message: "Project submitted successfully!",
+        severity: "success",
+      });
+
       router.push("/projects");
     } catch (e) {
       console.error("Error submitting project:", e);
+      setSnack({
+        open: true,
+        message: "Login failed. Check your credentials.",
+        severity: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -154,6 +177,9 @@ export default function EditorPage() {
                 }
                 setTitle(e.target.value);
               }}
+              error={!!errors.title}
+              helperText={errors.title}
+              disabled={loading}
             />
 
             <TextField
@@ -170,6 +196,9 @@ export default function EditorPage() {
                 }
                 setDescription(e.target.value);
               }}
+              error={!!errors.description}
+              helperText={errors.description}
+              disabled={loading}
             />
 
             <Box>
@@ -187,12 +216,27 @@ export default function EditorPage() {
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}
+                disabled={loading}
               >
                 Submit Project
               </Button>
             </Box>
           </Box>
         </Paper>
+        <Snackbar
+          open={snack.open}
+          autoHideDuration={4000}
+          onClose={() => setSnack({ ...snack, open: false })}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <Alert
+            onClose={() => setSnack({ ...snack, open: false })}
+            severity={snack.severity}
+            sx={{ width: "100%" }}
+          >
+            {snack.message}
+          </Alert>
+        </Snackbar>
       </Box>
     </>
   );

@@ -1,8 +1,8 @@
-// Import necessary modules
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import Projects from "./Projects"; // Adjust the path as necessary
+import Projects from "./Projects";
+import { Alert, Box, Typography, Container, Snackbar } from "@mui/material";
 
 // Function to fetch markdown files
 async function getProjects() {
