@@ -21,11 +21,11 @@ export const GET = async (req, res) => {
 };
 
 export const POST = async (req, res) => {
-  const { name, description, content } = await req.json();
+  const { title, description, content } = await req.json();
 
   console.log(req.body);
 
-  if (!name || !description || !content) {
+  if (!title || !description || !content) {
     return new Response(JSON.stringify({ message: "Please fill all fields" }), {
       status: 400,
       headers: { "Content-Type": "application/json" },
@@ -35,7 +35,7 @@ export const POST = async (req, res) => {
   try {
     await dbConnect();
     const newProject = new Project({
-      name,
+      title,
       description,
       content,
     });
@@ -96,9 +96,9 @@ export const DELETE = async (req, res) => {
 };
 
 export const PUT = async (req, res) => {
-  const { id, name, description, content } = await req.json();
+  const { id, title, description, content } = await req.json();
 
-  if (!id || !name || !description || !content) {
+  if (!id || !title || !description || !content) {
     return new Response(JSON.stringify({ message: "Please fill all fields" }), {
       status: 400,
       headers: { "Content-Type": "application/json" },
@@ -109,7 +109,7 @@ export const PUT = async (req, res) => {
     await dbConnect();
     const updatedProject = await Project.findByIdAndUpdate(
       id,
-      { name, description, content },
+      { title, description, content },
       { new: true }
     );
     if (!updatedProject) {
