@@ -10,6 +10,7 @@ import {
   Paper,
   GlobalStyles,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const MdxEditorComponent = dynamic(
   () => import("../../../../components/editor-component"),
@@ -25,6 +26,8 @@ export default function EditorPage() {
   const [description, setDescription] = useState("");
   const editorRef = useRef(null);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +57,7 @@ export default function EditorPage() {
     }
 
     setErrors({});
+    setLoading(true);
 
     console.log("Submitting project:", projectData);
 
@@ -71,8 +75,12 @@ export default function EditorPage() {
       }
 
       console.log("Project submitted successfully");
+
+      router.push("/projects");
     } catch (e) {
       console.error("Error submitting project:", e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,8 +112,8 @@ export default function EditorPage() {
           paddingTop: 12,
           gap: 3,
           minHeight: "80vh",
-          justifyContent: "center", // vertical centering
-          px: 2, // horizontal padding on small screens
+          justifyContent: "center",
+          px: 2,
         }}
       >
         <Typography variant="h4" fontWeight="bold">
