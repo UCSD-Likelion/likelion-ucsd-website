@@ -3,13 +3,16 @@
 import dynamic from "next/dynamic";
 import React, { useState, useRef } from "react";
 import {
+  Alert,
   Box,
   TextField,
   Typography,
   Button,
   Paper,
   GlobalStyles,
+  Snackbar,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const MdxEditorComponent = dynamic(
   () => import("../../../../components/editor-component"),
@@ -24,17 +27,84 @@ export default function EditorPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const editorRef = useRef(null);
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [snack, setSnack] = useState({
+    open: false,
+    message: "",
+    severity: "info",
+  });
 
-  const handleSubmit = () => {
-    const markdown = editorRef.current?.getMarkdown?.() || "";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const content = editorRef.current?.getMarkdown?.() || "";
+    const validationErrors = {};
     const projectData = {
       title,
       description,
-      markdown,
+      content,
     };
 
+    if (!title.trim()) {
+      validationErrors.title = "Title is required";
+    }
+
+    if (!description.trim()) {
+      validationErrors.description = "Description is required";
+    }
+
+    if (!content.trim()) {
+      validationErrors.content = "Markdown content is required";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      setSnack({
+        open: true,
+        message: "Please fill all required fields with valid data.",
+        severity: "error",
+      });
+      return;
+    }
+
+    setErrors({});
+    setLoading(true);
+
     console.log("Submitting project:", projectData);
-    // TODO: Send to API or store in database
+
+    try {
+      const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(projectData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      console.log("Project submitted successfully");
+
+      setSnack({
+        open: true,
+        message: "Project submitted successfully!",
+        severity: "success",
+      });
+
+      router.push("/projects");
+    } catch (e) {
+      console.error("Error submitting project:", e);
+      setSnack({
+        open: true,
+        message: "Login failed. Check your credentials.",
+        severity: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,8 +135,8 @@ export default function EditorPage() {
           paddingTop: 12,
           gap: 3,
           minHeight: "80vh",
-          justifyContent: "center", // vertical centering
-          px: 2, // horizontal padding on small screens
+          justifyContent: "center",
+          px: 2,
         }}
       >
         <Typography variant="h4" fontWeight="bold">
@@ -98,7 +168,18 @@ export default function EditorPage() {
               variant="outlined"
               fullWidth
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                if (errors.title) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    title: "",
+                  }));
+                }
+                setTitle(e.target.value);
+              }}
+              error={!!errors.title}
+              helperText={errors.title}
+              disabled={loading}
             />
 
             <TextField
@@ -106,7 +187,18 @@ export default function EditorPage() {
               variant="outlined"
               fullWidth
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => {
+                if (errors.description) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    description: "",
+                  }));
+                }
+                setDescription(e.target.value);
+              }}
+              error={!!errors.description}
+              helperText={errors.description}
+              disabled={loading}
             />
 
             <Box>
@@ -124,12 +216,27 @@ export default function EditorPage() {
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}
+                disabled={loading}
               >
                 Submit Project
               </Button>
             </Box>
           </Box>
         </Paper>
+        <Snackbar
+          open={snack.open}
+          autoHideDuration={4000}
+          onClose={() => setSnack({ ...snack, open: false })}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <Alert
+            onClose={() => setSnack({ ...snack, open: false })}
+            severity={snack.severity}
+            sx={{ width: "100%" }}
+          >
+            {snack.message}
+          </Alert>
+        </Snackbar>
       </Box>
     </>
   );
