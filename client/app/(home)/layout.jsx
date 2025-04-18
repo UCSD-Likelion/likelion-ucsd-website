@@ -1,6 +1,6 @@
 import React from "react";
 import Navigations from "../../components/navigations";
-import { Box, Divider, ThemeProvider } from "@mui/material";
+import { Box, Divider, ThemeProvider, Grid } from "@mui/material";
 import { theme } from "../../theme";
 
 export const metadata = {
@@ -11,11 +11,29 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "100%", backgroundColor: "white" }}>
-        <Navigations />
+      <Grid
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <Grid item xs={12} style={{ position: "sticky", top: 0, zIndex: 2000 }}>
+          <Navigations />
+        </Grid>
         <Divider />
-        {children}
-      </Box>
+        <Grid
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box component="main" minHeight="100vh">
+            {children}
+          </Box>
+        </Grid>
+      </Grid>
     </ThemeProvider>
   );
 }
