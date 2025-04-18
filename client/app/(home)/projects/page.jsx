@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Projects from "../../../components/Projects";
-import { Alert, CircularProgress } from "@mui/material";
+import { Alert } from "@mui/material";
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -38,13 +38,11 @@ export default function ProjectsPage() {
 
   return (
     <>
-      {loading && <CircularProgress />}
-
       {!loading && projects.length === 0 && (
         <Alert severity="info">No projects found.</Alert>
       )}
 
-      <Projects projects={projects} />
+      <Projects projects={projects} loading={loading} />
     </>
   );
 }

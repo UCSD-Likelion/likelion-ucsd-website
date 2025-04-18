@@ -8,13 +8,14 @@ import {
   CardMedia,
   CardContent,
   CardActionArea,
+  CircularProgress,
 } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Optional GitHub flavored markdown
 import rehypeRaw from "rehype-raw"; // Optional if you want to allow raw HTML
 import Image from "next/image";
 
-export default function Projects({ projects }) {
+export default function Projects({ projects, loading }) {
   const [selectedContent, setSelectedContent] = useState("");
   const [activeProject, setActiveProject] = useState(null);
 
@@ -30,6 +31,21 @@ export default function Projects({ projects }) {
       setActiveProject(projects[0].title);
     }
   }, []);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress size={100} />
+      </Box>
+    );
+  }
 
   return (
     <Box
