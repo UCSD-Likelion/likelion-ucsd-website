@@ -20,17 +20,9 @@ Likelion is a student-run tech entrepreneurship community that empowers students
 
 - **Frontend**: Developed using Next.js to create interactive and engaging user interfaces.
 
-- **Backend**: Information about backend technologies is not specified in the available sources.
+- **Backend**: Utilizes Node.js for server-side operations, ensuring efficient data handling and API integration.
 
 - **Deployment**: Hosted on Vercel, providing seamless deployment and scalability.
-
-## Getting Started
-
-To explore the website:
-
-1. Visit [https://likelion-ucsd-beginner-project.vercel.app/en](https://likelion-ucsd-beginner-project.vercel.app/en).
-
-2. Navigate through the **Lessons** and **Projects** sections to access educational materials and view student projects.
 
 ## Contributing
 
