@@ -23,7 +23,6 @@ export default function ProjectsPage() {
         }
 
         const data = await res.json();
-        console.log(data);
         setProjects(data || []);
       } catch (err) {
         setError(err.message);
@@ -33,7 +32,6 @@ export default function ProjectsPage() {
     }
 
     fetchProjects();
-    console.log(loading);
   }, []);
 
   return (
