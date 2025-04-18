@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Typography,
@@ -18,10 +18,16 @@ import Image from "next/image";
 export default function Projects({ projects, loading }) {
   const [selectedContent, setSelectedContent] = useState("");
   const [activeProject, setActiveProject] = useState(null);
+  const projectRef = useRef(null);
 
   const handleItemClick = (project) => {
     setSelectedContent(project.content);
     setActiveProject(project.title);
+
+    // Scroll to the top of the project content
+    setTimeout(() => {
+      projectRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 0);
   };
 
   useEffect(() => {
@@ -112,7 +118,7 @@ export default function Projects({ projects, loading }) {
             ))}
           </Grid>
         </Box>
-        <Box sx={{ marginTop: 6 }}>
+        <Box sx={{ marginTop: 6 }} ref={projectRef}>
           <ReactMarkdown
             children={selectedContent}
             remarkPlugins={[remarkGfm]} // Optional GitHub flavor
