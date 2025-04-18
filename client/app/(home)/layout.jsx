@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "100%",
+          maxWidth: "100%",
         }}
       >
         <Grid item xs={12} style={{ position: "sticky", top: 0, zIndex: 2000 }}>

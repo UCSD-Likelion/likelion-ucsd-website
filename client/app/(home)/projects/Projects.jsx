@@ -3,70 +3,31 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
-  Stack,
   Grid,
   Card,
   CardMedia,
   CardContent,
-  Button,
   CardActionArea,
 } from "@mui/material";
-import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Optional GitHub flavored markdown
 import rehypeRaw from "rehype-raw"; // Optional if you want to allow raw HTML
 import Image from "next/image";
 
-// Projects data
-const projectBoxes = [
-  {
-    id: 1,
-    title: "UCSD Classual",
-    description: "Course Visualizer specialized for UCSD",
-    imageUrl: "images/classual.png",
-    linkTo: "Classual.md",
-  },
-  {
-    id: 2,
-    title: "WebReg Project",
-    description:
-      "Mobile app that enables UCSD students to share their schedules",
-    imageUrl: "",
-    linkTo: "webreg.md",
-  },
-  {
-    id: 3,
-    title: "P3",
-    description: "",
-    imageUrl: "",
-    linkTo: "",
-  },
-];
-
 export default function Projects({ projects }) {
   const [selectedContent, setSelectedContent] = useState("");
   const [activeProject, setActiveProject] = useState(null);
 
-  const fetchMarkdownContent = async (linkTo) => {
-    const response = await fetch(`projects/${linkTo}`); // Adjust the path based on your setup
-    if (response.ok) {
-      const content = await response.text();
-      setSelectedContent(content);
-    } else {
-      setSelectedContent("Content not found.");
-    }
-  };
-
   const handleItemClick = (project) => {
-    fetchMarkdownContent(project.linkTo);
+    setSelectedContent(project.content);
     setActiveProject(project.title);
   };
 
   useEffect(() => {
     // Set the content for the first project by default
-    if (projectBoxes.length > 0) {
-      fetchMarkdownContent(projectBoxes[0].linkTo);
-      setActiveProject(projectBoxes[0].title);
+    if (projects.length > 0) {
+      setSelectedContent(projects[0].content);
+      setActiveProject(projects[0].title);
     }
   }, []);
 
@@ -113,7 +74,7 @@ export default function Projects({ projects }) {
             </Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
-            {projectBoxes.map((project) => (
+            {projects.map((project) => (
               <Grid item xs={12} sm={6} md={4} key={project.id}>
                 <Card>
                   <CardActionArea onClick={() => handleItemClick(project)}>

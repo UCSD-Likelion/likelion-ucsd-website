@@ -1,32 +1,60 @@
-import fs from "fs";
-import path from "path";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Projects from "./Projects";
-import { Alert, Box, Typography, Container, Snackbar } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Typography,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  CircularProgress,
+} from "@mui/material";
 
-// Function to fetch markdown files
-async function getProjects() {
-  const projectDirectory = path.join(process.cwd(), "public/projects");
-  const filenames = fs.readdirSync(projectDirectory);
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const projects = filenames
-    .filter((filename) => filename.endsWith(".md")) // Only process .md files
-    .map((filename) => {
-      const filePath = path.join(projectDirectory, filename);
-      const content = fs.readFileSync(filePath, "utf8");
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const res = await fetch("/api/projects", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      return {
-        title: filename.replace(".md", ""), // Remove the .md extension for the title
-        content,
-      };
-    });
+        if (!res.ok) {
+          throw new Error("Failed to fetch projects");
+        }
 
-  return projects;
-}
+        const data = await res.json();
+        console.log(data);
+        setProjects(data || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-// Main page component
-export default async function ProjectsPage() {
-  const projects = await getProjects(); // Fetch markdown files
+    fetchProjects();
+    console.log(loading);
+  }, []);
 
-  return <Projects projects={projects} />;
+  return (
+    <>
+      {loading && <CircularProgress />}
+
+      {!loading && projects.length === 0 && (
+        <Alert severity="info">No projects found.</Alert>
+      )}
+
+      <Projects projects={projects} />
+    </>
+  );
 }
