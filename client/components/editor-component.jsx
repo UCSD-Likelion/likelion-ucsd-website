@@ -57,7 +57,19 @@ const Editor = ({ markdown, editorRef }) => {
             linkPlugin(),
             linkDialogPlugin(),
             tablePlugin(),
-            imagePlugin(),
+            imagePlugin({
+              imageUploadHandler: async (file) => {
+                return new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.onload = () => {
+                    // Returns base64 string
+                    resolve(reader.result);
+                  };
+                  reader.onerror = reject;
+                  reader.readAsDataURL(file);
+                });
+              },
+            }),
             quotePlugin(),
             listsPlugin(),
             thematicBreakPlugin(),

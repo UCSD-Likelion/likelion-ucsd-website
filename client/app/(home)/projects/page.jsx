@@ -1,18 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Projects from "./Projects";
-import {
-  Alert,
-  Box,
-  Typography,
-  Container,
-  List,
-  ListItem,
-  ListItemText,
-  CircularProgress,
-} from "@mui/material";
+import Projects from "../../../components/Projects";
+import { Alert, CircularProgress } from "@mui/material";
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
