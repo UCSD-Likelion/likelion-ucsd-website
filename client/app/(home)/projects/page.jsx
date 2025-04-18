@@ -1,32 +1,46 @@
-import fs from "fs";
-import path from "path";
-import Link from "next/link";
-import Projects from "./Projects";
-import { Alert, Box, Typography, Container, Snackbar } from "@mui/material";
+"use client";
 
-// Function to fetch markdown files
-async function getProjects() {
-  const projectDirectory = path.join(process.cwd(), "public/projects");
-  const filenames = fs.readdirSync(projectDirectory);
+import React, { useState, useEffect } from "react";
+import Projects from "../../../components/Projects";
+import { Alert } from "@mui/material";
 
-  const projects = filenames
-    .filter((filename) => filename.endsWith(".md")) // Only process .md files
-    .map((filename) => {
-      const filePath = path.join(projectDirectory, filename);
-      const content = fs.readFileSync(filePath, "utf8");
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-      return {
-        title: filename.replace(".md", ""), // Remove the .md extension for the title
-        content,
-      };
-    });
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const res = await fetch("/api/projects", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-  return projects;
-}
+        if (!res.ok) {
+          throw new Error("Failed to fetch projects");
+        }
 
-// Main page component
-export default async function ProjectsPage() {
-  const projects = await getProjects(); // Fetch markdown files
+        const data = await res.json();
+        setProjects(data || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  return <Projects projects={projects} />;
+    fetchProjects();
+  }, []);
+
+  return (
+    <>
+      {!loading && projects.length === 0 && (
+        <Alert severity="info">No projects found.</Alert>
+      )}
+
+      <Projects projects={projects} loading={loading} />
+    </>
+  );
 }
