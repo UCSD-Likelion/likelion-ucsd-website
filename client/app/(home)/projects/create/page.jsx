@@ -11,8 +11,10 @@ import {
   Paper,
   GlobalStyles,
   Snackbar,
+  Avatar,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const MdxEditorComponent = dynamic(
   () => import("../../../../components/editor-component"),
@@ -26,6 +28,8 @@ const initialMarkdown = `# Hello world\n\nWrite your project details here...`;
 export default function EditorPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const editorRef = useRef(null);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -36,14 +40,27 @@ export default function EditorPage() {
     severity: "info",
   });
 
+  // Function to convert file to base64
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Process the form data
     const content = editorRef.current?.getMarkdown?.() || "";
+    const base64Image = image ? await toBase64(image) : null;
+
     const validationErrors = {};
     const projectData = {
       title,
       description,
       content,
+      thumbnail: base64Image,
     };
 
     if (!title.trim()) {
@@ -181,7 +198,6 @@ export default function EditorPage() {
               helperText={errors.title}
               disabled={loading}
             />
-
             <TextField
               label="One-line Description *"
               variant="outlined"
@@ -200,7 +216,6 @@ export default function EditorPage() {
               helperText={errors.description}
               disabled={loading}
             />
-
             <Box>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>
                 Project Details:
@@ -210,6 +225,66 @@ export default function EditorPage() {
                 editorRef={editorRef}
               />
             </Box>
+            <Typography variant="subtitle1" sx={{ mb: 1 }}>
+              Project Thumbnail:
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 2,
+                alignItems: "center",
+              }}
+            >
+              <Button variant="outlined" component="label">
+                Choose File
+                <input
+                  hidden
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file && file.type.startsWith("image/")) {
+                      setImage(file);
+                      setPreviewUrl(URL.createObjectURL(file));
+                    }
+                  }}
+                  disabled={loading}
+                />
+              </Button>
+              {image && (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Typography variant="body2" color="textSecondary">
+                    {image.name}
+                  </Typography>
+                  <Button
+                    sx={{ minWidth: "auto", ml: 1, borderRadius: "50%" }}
+                    color="error"
+                    onClick={() => {
+                      setImage(null);
+                      setPreviewUrl(null);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </Box>
+              )}
+            </Box>
+
+            {previewUrl && (
+              <Avatar
+                alt="Project Thumbnail"
+                variant="rounded"
+                src={previewUrl}
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  mt: 2,
+                  borderRadius: "8px",
+                  alignSelf: "center",
+                }}
+              />
+            )}
 
             <Box display="flex" justifyContent="flex-end">
               <Button
