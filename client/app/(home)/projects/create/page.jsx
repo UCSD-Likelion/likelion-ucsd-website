@@ -12,6 +12,7 @@ import {
   GlobalStyles,
   Snackbar,
   Avatar,
+  CircularProgress,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -299,9 +300,20 @@ export default function EditorPage() {
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={loading || !title || !description || !image}
               >
-                Submit Project
+                {loading ? (
+                  <CircularProgress
+                    size={24}
+                    thickness={4}
+                    sx={{
+                      marginRight: "3.75rem",
+                      marginLeft: "3.75rem",
+                    }}
+                  />
+                ) : (
+                  "Submit Project"
+                )}
               </Button>
             </Box>
           </Box>
