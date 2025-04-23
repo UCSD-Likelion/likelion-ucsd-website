@@ -75,6 +75,14 @@ export default function EditorPage() {
       validationErrors.content = "Markdown content is required";
     }
 
+    if (!base64Image) {
+      validationErrors.thumbnail = "Thumbnail is required";
+    }
+
+    if (base64Image && !base64Image.startsWith("data:image/")) {
+      validationErrors.thumbnail = "Invalid image format";
+    }
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setSnack({
@@ -116,7 +124,7 @@ export default function EditorPage() {
       console.error("Error submitting project:", e);
       setSnack({
         open: true,
-        message: "Login failed. Check your credentials.",
+        message: "Failed to upload the project. Check your fields.",
         severity: "error",
       });
     } finally {
