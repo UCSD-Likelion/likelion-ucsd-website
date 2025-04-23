@@ -103,7 +103,7 @@ export default function Projects({ projects, loading }) {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={project.imageUrl}
+                      image={project.thumbnail}
                       alt={project.title}
                     />
                     <CardContent>
