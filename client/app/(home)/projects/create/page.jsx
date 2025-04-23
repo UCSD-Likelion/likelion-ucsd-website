@@ -300,7 +300,7 @@ export default function EditorPage() {
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}
-                disabled={loading || !title || !description || !image}
+                disabled={loading}
               >
                 {loading ? (
                   <CircularProgress
