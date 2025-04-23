@@ -21,7 +21,7 @@ export const GET = async (req, res) => {
 };
 
 export const POST = async (req, res) => {
-  const { title, description, content } = await req.json();
+  const { title, description, content, thumbnail } = await req.json();
 
   console.log(req.body);
 
@@ -38,6 +38,7 @@ export const POST = async (req, res) => {
       title,
       description,
       content,
+      thumbnail,
     });
     await newProject.save();
     return new Response(
